@@ -1,4 +1,6 @@
 # mycode
+# More description
+More and more
 Alta3 Training Repository
 Customized wording goes here.
 ### __ This site was built using [GitHub Pages](https://pages.github.com/) __
