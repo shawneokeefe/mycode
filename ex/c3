@@ -1,0 +1,47 @@
+#!/usr/bin/env python3
+
+print("HANGMAN")
+
+print("# ESTABLISH THE SECRET WORD")
+secret = input("Type your secret word: \n>")
+secret = secret.lower()
+print(secret)
+
+print("# BUILD THE LETTER  DICTIONARY BASED ON THE SECRET WORD")
+list_secret = list(secret)
+#split_secret = secret.split(" ")
+#print(split_secret)
+print(f"{list_secret[0]} {list_secret[1]} {list_secret[2]} {list_secret[3]} {list_secret[4]} {list_secret[5]} {list_secret[6]} {list_secret[7]} {list_secret[8]} {list_secret[9]}")
+
+print("# PROVIDE THE NUMBER OF LETTERS")
+num_letters = len(secret)
+print(num_letters)
+print(f"The secret word has {num_letters} letters.")
+
+print("STARTING THE WHILE LOOP / ROUNDS")
+hm_round = 1
+
+while hm_count <= 5 : 
+    hm_round = hm_round + 1
+    print(f"Starting round {hm_round}. Guess a letter.")
+    guess= input("Your guess: \n>")
+    if guess.lower() in list_secret:
+        print(f"Your guess {guess.lower()} is in the secret word.")
+        answer = input("What word do you think the securet word is?\n>")
+        if answer.lower() == secret:
+            print("Your answer is correct. You win.")
+        elif:
+            if hm_round = 5:
+                print("Wrong answer. That was your last guess. Better luck next game.")
+                break
+        else: print("Wrong answer. Try again next round.")
+    else:
+        if hm_round <=5:
+            print("That letter is not in the secret word. Guess again.")
+        else: 
+                print("Wrong answer. That was your last guess. Better luck next game.")
+                break
+#        break # stops the while loop
+#    elif count==3
+#        print(
+#        break

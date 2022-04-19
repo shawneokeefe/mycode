@@ -1,0 +1,23 @@
+#!usr/bin/env python3
+
+crust= ["graham","oreo","almond flour","tortilla"]
+filling= ["apple","blueberry","cherry","peach"]
+topping= ["butter","maringue","whipped cream","glaze"]
+
+input()
+
+
+# if - if below is true, runs all indented actions
+if "apple" not in crust:
+    print(1)
+
+# elif - only if if is false, skips all remaining elifs
+elif "apple" in filling:
+
+# - when none of the above are true
+else:
+    print("Go shopping")
+
+
+    
+print ("Ready to cook")
