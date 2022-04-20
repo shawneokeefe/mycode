@@ -1,25 +1,20 @@
 #!/usr/bin/env python3
-
+import os
 print(("\n")*2)
 print("===== WELCOME TO HANGMAN =====",("\n")*2)
 
 
-#ESTABLISH THE SECRET WORD
+# ESTABLISH THE SECRET WORD
 secret = input("Type your secret word: \n>")
 secret = secret.lower()
-#print(secret)
-print(("\n")*30)
+#print(("\n")*40)
+os.system("clear")
 
-
-#BUILD THE LETTER DICTIONARY BASED ON THE SECRET WORD
+# BUILD THE LETTER DICTIONARY BASED ON THE SECRET WORD
 list_secret = list(secret)
-#print(list_secret,("\n")*2)
-
-
-# PROVIDE THE NUMBER OF LETTERS
 num_letters = len(secret)
 
-
+# RUN THE GAME
 print("===== LET THE GAME BEGIN =====")
 print(f"The secret word has {num_letters} letters.\n")
 hm_round = 1
