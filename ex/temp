@@ -1,22 +1,35 @@
 #!/usr/bin/env python3
-# TEMPLATE
-# import os        import filename (no .py req)     #os.system("")
-# LIST variable_name = ["key": value, value]       slice by index [0-*]
-# DICT variable_name = {                   }       slice by name [""], order irrelevant
-# SLICE sliced_var = 
-# input(""(\n)*#)
-# print(f"Insert text {'variable'} here" )         print(r""" ABSOLUTE TEXT """)
-# shutil.copytree("source", "dest")                    relative path > exe in CWD (use fchir or os.chdir(""))
-# 
-# ========================================================================
-def main()                      # import > memorize (EXE: code_file.defined_funciton())
-#variable_name = 
+# ============================== TEMPLATE ==============================
+# import os        import filename.function             (no .py req in filename, function optial)        
+# LIST var_name = ["value","value","value"]             slice ~var_name[0,-1]        list()
+# DICT lib_name = {"key": ["value"],"key":["value"]}    slice ~lib_name["key"][0], order irrelevant
+#      lib_name.get("string","if fails")                ~.keys()    ~.values()    add~["key"] = "value"   ~.pop("key")
+# # input(""(\n)*#)
+# print(f"Insert text {'variable'} here" )               print(r""" ABSOLUTE TEXT """) print(html.unescape(var/str))
+# if: elif: else:
+# return var_name.json()
+# url = ""      resp= requests.get(url)                 if ~.status_code == 200: return ~.json()     (200 = success)
 
-#if __name__ == "__main__":
-#    while True:
-#       main()
-#       repeat = input("Run again? Y/N")
-        if repeat = "N"
-            while = False
-main()
+# ========== STANDARD LIBARY IMPORTS ==========         import filename (no .py req even if in filename)
+import shutil   # shell utilities - to move files       shutil.copytree("s","d") ~.copy ~.move, relative path > exe in CWD (use os.chdir(""))
+import os       # access to OS commands                 #os.system("")
+import random   # create random values                  random()
+
+
+# ========== DEFINING VARIABLES =========
+#variable_name = "value"
+
+# ========== BODY OF SCRIPT ==========
+def main():                                              #
+    print("Test code.") 
+# ========== PREVENT EXECUTION ON IMPORT ==========     # import > executes ~.main                  name = name of script/file
+if __name__ == "__main__":                              # indirect call (import) > this is False    ~__name__ auto-defined as __main__ ~attribute of module
+#    main()                                                  
+
+    while True:
+        main()
+        rerun = input("Run again?  (Y/N) \n>")
+        if rerun.lower() != "y":
+            break
+
 
