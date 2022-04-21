@@ -4,8 +4,10 @@
 # LIST var_name = ["value","value","value"]             slice ~var_name[0,-1]        list()
 # DICT lib_name = {"key": ["value"],"key":["value"]}    slice ~lib_name["key"][0], order irrelevant
 #      lib_name.get("string","if fails")                ~.keys()    ~.values()    add~["key"] = "value"   ~.pop("key")
+#                                                       lib_reformatted=", ".join(lib_name.keys())
 # # input(""(\n)*#)
-# print(f"Insert text {'variable'} here" )               print(r""" ABSOLUTE TEXT """) print(html.unescape(var/str))
+# print(f"Insert text {'var/func'} here" )              print(r""" ABSOLUTE TEXT """) print(html.unescape(var/str))
+#                                                       print("string","string"+" string", sep="&", end=" avoids auto new line")
 # if: elif: else:
 # return var_name.json()
 # url = ""      resp= requests.get(url)                 if ~.status_code == 200: return ~.json()     (200 = success)
@@ -20,8 +22,9 @@ import random   # create random values                  random()
 #variable_name = "value"
 
 # ========== BODY OF SCRIPT ==========
-def main():                                              #
-    print("Test code.") 
+def main():                                             
+    print("Test code.")
+    print()
 # ========== PREVENT EXECUTION ON IMPORT ==========     # import > executes ~.main                  name = name of script/file
 if __name__ == "__main__":                              # indirect call (import) > this is False    ~__name__ auto-defined as __main__ ~attribute of module
 #    main()                                                  

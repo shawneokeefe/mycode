@@ -14,6 +14,26 @@ os.system("clear")
 list_secret = list(secret)
 num_letters = len(secret)
 
+# BUILD THE ANSWER DICTIONARY BASED ON GUESSES GIVEN
+
+letter0 = "_"
+letter1 = "_"
+letter2 = "_"
+letter3 = "_"
+letter4 = "_"
+letter5 = "_"
+letter6 = "_"
+letter7 = "_"
+letter8 = "_"
+letter9 = "_"
+letter10 = "_"
+letter11 = "_"
+letter12 = "_"
+letter13 = "_"
+letter14 = "_"
+letter15 = "_"
+all_revealed =  "".join([ letter0 , letter1 , letter2 , letter3, letter4, letter5, letter6, letter7, letter8, letter9, letter10, letter11, letter12, letter13, letter14, letter15 ])
+
 # RUN THE GAME
 print("===== LET THE GAME BEGIN =====")
 print(f"The secret word has {num_letters} letters.\n")
