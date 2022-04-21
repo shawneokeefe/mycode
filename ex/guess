@@ -22,19 +22,14 @@ import random   # create random values                  random()
 #variable_name = "value"
 
 # ========== BODY OF SCRIPT ==========
-def main():                                             
-#!/usr/bin/env python3
-"""Number guessing game! User has 5 chances to guess a number between 1 and 100!"""
-
 def main():
     num= random.randint(1,100)
     
     rounds= 0
     
-    while rounds < 5 and guess != num:
+    while rounds < 5:
         guess= input("Guess a number between 1 and 100\n>")
         
-        # COOL CODE ALERT: what is the purpose of the next fourlines?
         if guess.isdigit():
             guess= int(guess)
         else:
@@ -50,7 +45,7 @@ def main():
 
         else:
             print("Correct!")
-
+            break
 
     # ========== PREVENT EXECUTION ON IMPORT ==========     # import > executes ~.main                  name = name of script/file
 if __name__ == "__main__":                              # indirect call (import) > this is False    ~__name__ auto-defined as __main__ ~attribute of module
