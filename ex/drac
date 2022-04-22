@@ -1,38 +1,32 @@
 #!/usr/bin/env python3
 # ============================== TEMPLATE ==============================
-# input(""(\n)*#)                                       if response.isdigit():   response=int()   break   else: continue
-# dir(function)                                         display possilbe functions/methods for function
-# type(object)                                          display class type of object
+# # input(""(\n)*#)                                     if response.isdigit():   response=int()   break   else: continue
+
 
 # === LISTS & DICTIONARIES ===
 # LIST var_name = ["value","value","value"]             slice ~var_name[0,-1]        list()
 
 
-from filename import filename       
-counter = 1
-for x in trivia["results"]
-    print(f"{counter}. {x['question']}")
-    counter += 1
-    all_answers = x["incorrect_answers"]
-    all_answers.append(x["correct_answer"]
-    random.shuffle(all_answers))
-    letters = ["A","B","C","D"]
+#from filename import filename       
+#counter = 1
+#for x in trivia["results"]
+#    print(f"{counter}. {x['question']}")
+#    counter += 1
+#    all_answers = x["incorrect_answers"]
+#    all_answers.append(x["correct_answer"]
+#    random.shuffle(all_answers))
+#    letters = ["A","B","C","D"]
 
-for letter,answer in zip(letters,all_ansers):           takes two lists it combines into single iterable
-    print((letter, answer)
-    bank.update({letter:answer})                        creates new list with letter as the key and answer a value
-    print()
-
-    input(">")
-    print()
-
-
-    if answer == x['']
-        print("Correct")
-    else:
-        print("Wrong")
-
-
+#for letter,answer in zip(letters,all_ansers):           takes two lists it combines into single iterable
+#    print((letter, answer)
+#    bank.update({letter:answer})                        creates new list with letter as the key and answer a value
+#    print()
+#    input(">")
+#    print()
+#    if answer == x['']
+#        print("Correct")
+#    else:
+#        print("Wrong")
 
 # DICT lib_name = {"key": ["value"],"key":["value"]}    slice ~lib_name["key"][0], order irrelevant
 #      lib_name.get("string","if fails")                ~.keys()    ~.values()    add~["key"] = "value"   ~.pop("key")
@@ -47,16 +41,37 @@ for letter,answer in zip(letters,all_ansers):           takes two lists it combi
 # === CONDITIONALS ===
 # if: elif: else:
 # while (x)  and  (y):                                  continue (return to loop start)      break (end loop)    var +=1 (iterate)
-# for i(every item) in object                           string (char)     list (element)    dict (key)    foo (line)
+# for i(every item) in object                           string (each char)     list (each element)    dict (key, dict[key])
 #               ~ executed specific item                var="X" if list.lower().startswith("var")
 #               ~ Range                                 range(start#,numafterlast#,step) provides list of # numbers
 
 # === FILE OBJECTS ===
-# foo = open("filename","permission")                   Write "w"   Read "r"   Append "a"  foo.close()
-# with open("filename","permission") as foo:            autocloses file when indent ends
-#   foo.write("New Text")
-#   foo.readline()                                      create list of lines
-#   var_read = foo.read())                              reads entire, reads from end if done twice (store read as var to use)
+drac = open("345-0.txt","r")  
+vt = open("vampytimes.txt","w")
+
+count = 0
+
+for x in drac:
+    if "vampire" in x.lower():
+       # print(x)
+        count += 1  
+        vt.write(x)
+print(count)
+
+#drac.readlines(listname)
+
+vt.close()
+drac.close()
+
+
+
+
+
+
+# with open("filename","permission") as var:            autocloses file when indent ends
+#   ~.write("New Text")
+#   ~.readline()                                        create list of lines
+#   ~.read())                                           reads entire, reads from end if done twice (store read as var to use)
 #
 #      *** SORT INTO FILES ***
 #           APPENDS - CREATES DUPLICATE OUTPUT - USE FOR LOGS
@@ -86,22 +101,9 @@ for letter,answer in zip(letters,all_ansers):           takes two lists it combi
 
 
 # ========== STANDARD LIBARY IMPORTS ==========         import filename.function (no .py req even if in filename)
-import shutil        # shell util        shutil.copytree("s","d") ~.copy ~.move, relative path > exe in CWD (use os.chdir(""))
-import os            # access to OS commands                 #os.system("")
-import random as r   # create random values                  random()
-
-#        *** EXTERNAL MODULES ***                       terminal: python3 -m pip install [modulename]
-import pandas as pd  # data tools, uses data frames
-        # Call Dataframe        DF_name =  pd.read_csv("FN", index_col=#)     read_excel
-        # Drop Duplicates       DF_name.drop_duplicates(inplace=True) 
-        # Sort (multiple)       sorted = DF_name.sort_values(["Column Name",...], ascending=False)
-        # Head - Show top       DF_name.head(#)
-        # Eliminate Col.        DF_named.drop.columns.difference([""])        1, in place=True
-import xlrd          # supports pandas
-import openpyxl      # supports pandas
-# import pyexcel       # more basic than pandas
-import matplotlib    # chart/graph data
-        # Create  h             DF.plot(kind="barh"             plt.savefig("path/file", bbox_inches="tight")
+import shutil   # shell utilities - to move files       shutil.copytree("s","d") ~.copy ~.move, relative path > exe in CWD (use os.chdir(""))
+import os       # access to OS commands                 #os.system("")
+import random   # create random values                  random()
 
 
 # ========== DEFINING VARIABLES =========
