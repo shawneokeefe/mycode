@@ -92,13 +92,16 @@ import random as r   # create random values                  random()
 
 #        *** EXTERNAL MODULES ***                       terminal: python3 -m pip install [modulename]
 import pandas as pd  # data tools, uses data frames
-        # Call Dataframe        DF_name =  pd.read_csv("FN", index_col=#)     read_excel
+        # Call Dataframe        DF_name =  pd.read_csv("FN", index_col=#)     read_excel   read_json
         # Drop Duplicates       DF_name.drop_duplicates(inplace=True) 
         # Sort (multiple)       sorted = DF_name.sort_values(["Column Name",...], ascending=False)
         # Head - Show top       DF_name.head(#)
         # Eliminate Col.        DF_named.drop.columns.difference([""])        1, in place=True
-import xlrd          # supports pandas
-import openpyxl      # supports pandas
+        # Export Data           .to_json
+        # Concatenate           pd.concat([DF1, DF2])
+import xlrd          # panda - read excel (xls)
+import xlwt          # panda - write to excel (xls)
+import openpyxl      # panda - w/r (xlsx)
 # import pyexcel       # more basic than pandas
 import matplotlib    # chart/graph data
         # Create  h             DF.plot(kind="barh"             plt.savefig("path/file", bbox_inches="tight")
