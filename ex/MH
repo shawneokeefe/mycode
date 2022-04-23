@@ -2,39 +2,43 @@
 
 # ========== IMPORTS ==========
 import os
-import fileinput
 
 # ========== DICTIONARIES / LISTS ===============
-room = {  'porch'     : { 'path'      : [ 'Return to TAXI', 'Enter and go to the RECEPTION' ],
-                          'item'      : [],
-                          'acts'      : [ 'Inspect INVITATION', 'Oh no! Where did your invitation go?'],
-                          'desc'      : 'MONTY HALL PORCH: The driver pulls the taxi up to the curb and you get out. Drizzling rain hastens you out and up the steps to Monty Hall. Renovated in the last three months, the old estate was awash with lights and pouring with music. Costumed up for the bootleg era, you are eager to join your co-workers in the interactive mystery murder theater.'
-                        },
-          'taxi'      : { 'path'      : [ 'Go to the FOYER', 'foyer' ],
-                                        [ 'Take the taxi HOME', 'home' ],
-                          'item'      : [],
-                          'acts'      : [ 'Search for your INVITATION', 'Found it!'],
-                          'desc'      : 'You flag the taxi driver down just before he leaves. "Leaving so soon?" he says.',
-                        },
+rooms = {
+        'porch'  :{
+                    'desc' : ['porch', 'MONTY HALL PORCH: Your driver pulls up to the curb and you get out. Drizzling rain hastens you out and up the steps to Monty Hall. Renovated in the last three months, the old estate was awash with lights and pouring with music. Costumed up for the bootleg era, you are eager to join your co-workers in the interactive mystery murder theater.'],
+                    'path' : ['curb', 'foyer'],
+                    'acts' : [' - Return to the CURB', ' - Enter the FOYER', ' - Check your INVITATION'],
+                    'resp' : ['', '', 'Hmmm. Surely it was here? Did I leave it on the back seat?'],
+                    'item' : []
+                  },
 
-
-
+        'curb'  :{
+                    'desc' : ['curb', 'CURBSIDE: Your ride already left. Nothing at the curb except deeping puddles, lamps, and trees swaying in the wind.'],
+                    'path' : ['foyer', 'home'],
+                    'acts' : [' - Search for your INVITATION', ' - Call an uber and go HOME', ' - Search again for your INVITATION'],
+                    'resp' : ['Found it! Too many pockets in this jacket for you.', 'Well, it will be a wait'],
+                    'item' : [
+                                ['invitation', 'Hi. George and I are attending the opening night for the Monty Hall dinner/mystery theater on 4 May. I bet you already heard about the place, but do not forget to dress the part. We will be swinging the old-timesy fashion at 7pm. Your seat is paid, so if you are late ... I will kill you. LOL!'],
+                             ],
+                  },
         }
+inv = {item_name}
 # ========== INITIAL STATE ===============
-current_room = room['porch']
-current_path = current_room['path'].values()
-current_item = current_room['item']
+current_room= rooms['porch']
+current_desc = current_room['desc'][0]
+current_path = current_room['path']
 current_acts = current_room['acts']
-current_desc = current_room['desc']
+current_item = current_room['item']
 current_inv = []
 current_input = ""
 
 print("TEST PRINT INITIAL STATE")
 print("ROOM", "\n",current_room, "\n")
+print("DESC", "\n",current_room, "\n")
 print("PATH", "\n",current_path, "\n")
-print("ITEM", "\n",current_item, "\n")
 print("ACTS", "\n",current_acts, "\n")
-print("DESC", "\n",current_desc, "\n")
+print("ITEM", "\n",current_item, "\n")
 print("INV", "\n",current_inv, "\n")
 print(input("PROCEED, PRESS ENTER"))
 
