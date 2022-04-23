@@ -19,23 +19,37 @@ def status():
   print(current_stry, "\n")
   print('=========================================================================================')
   print(f"INVENTORY: {current_inv}")
-  print(f"INTERACT:  {current_acts}")
+  print(f"AVAILABLE INTERACTIONS:  current_acts, current_path.upper(), current_item.upper()")
   print('========================================================================================', '\n')
 
 # ========== INITIAL STATE ===============
 current_room = room['Porch']
+current_path = current_room[path_desc]
 current_item = current_room[item]
 current_acts = current_room[acts]
 current_input = ""
 
 # ========== DICTIONARIES / LISTS ===============
-rooms = { 'porch' : { 'path' : 'taxi', 'foyer'}
-                    { 'item' : ''}
-                    { 'acts' : { 'invitation' : 'Oh no! Where did your invitation go?'}
-                      }              
-                },
+rooms = { 'porch' : { 'path'      : ['taxi', 'foyer'],
+                      'path_desc' : ['Return to taxi', 'Enter the foyer'],
+                      'item'      : [],
+                      'acts'      : {'Inspect invitation' : ['invitation','Oh no! Where did your invitation go?'],
+                                    },
+                    },
+          'taxi'  : {'pie'}
+        }
 
 
+
+rooms = { 'porch'     : { 'path'      : { 'taxi'    : 'Return to TAXI',
+                                          'foyer'   : 'Enter the FOYER',
+                                        },
+                          'item'      : { 
+
+                                        },
+                          'acts'      : {'Inspect INVITATION' : ['invitation','Oh no! Where did your invitation go?'],
+                                        },
+                        },
         }
 # ========== INITIAL STATE UPDATE ===============
 current_room = 'Porch'
@@ -46,17 +60,27 @@ while True:
 
   choice = ''
   while choice == '':
-    choice = input('Type the name of your next action (shown in brackets): ',)
-  
-  if choice.lower() in current_room:                            # EXECUTE ACT / INSPECT OBJECT
-    print current_room[choice]
+    choice = input('Type the name of your next action (shown in caps): ',)
+    ch = choice.lower()
+    CH = choice.UPPER()
 
-  elif choice.lower() in current_room[item]                     # ADD TO INVENTORY
-    current_
+  if CH in current_room[acts]:                      # EXECUTE ACT / INSPECT OBJECT
+    print(current_room[acts][1])
+    continue
 
-  elif choice.lower() in rooms[current_room][path]:             # CHANGE ROOM
+  elif ch in current_room[item]:                    # ADD TO INVENTORY, REMOVE FROM ROOM
+    for X in current_room[item][ch]:
+      print(f "Picked up: X")
+      remove.current_room[item][ch)]
+
+  elif ch in current_room[inventory]:               # REMOVE FROM INVENTORY
+    for X IN current_room[inventory][ch]:   
+      print(f "Dropped: X")
+      remove.current_room[item][ch)]
+
+  elif ch in rooms[current_room][path]:             # CHANGE ROOM
     current_room = choice
-    with open("choice.txt","r") as choice_stry                  # UPDATE STORY TO NEW ROOM
+    with open("choice.txt","r") as choice_stry:                  # UPDATE STORY TO NEW ROOM
       current_stry = choice_stry.read()
 
 with open(currentroom,"r") as choice_stry                  # VAR = PRINT STORY OF NEXT ROOM
