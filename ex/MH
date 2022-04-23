@@ -11,7 +11,7 @@ rooms = {
                     'curb'       : 'curb',
                     'reception'  : 'reception',
                     'invitation' : 'Hmmm. Surely it was here? Did I leave it on the back seat?',
-                    'item'       : [],
+                    'item'       : '',
                   },
 
         'curb'  :{
@@ -20,15 +20,14 @@ rooms = {
                     'foyer'      : 'foyer',
                     'home'       : 'home',
                     'porch'      : 'porch',
-                    'invitation' : 'Found it! Too many pockets in this jacket for you.',
                     'puddles'    :  'Splash, splash, splash!',
-                    'item'       : [],
+                    'item'       : 'INVITATION',
                   },
         }
 inv = { 'Item' : 'Lint'}
 item_desc = {
                     'Lint'       : 'Fluff. Always to be found when you need it.',
-                    'Invitation' : '',
+                    'Invitation' : 'Found it! The email reads:   Hi. George and I are attending the opening night for the Monty Hall dinner/mystery theater on 4 May. I bet you already heard about the place, but do not forget to dress the part. We will be swinging the old-timesy fashion at 7pm. Your seat is paid, so if you are late ... I will kill you. LOL!  - Mirri',
                     'Candle'     : 'Mmmm! Pumpkin spice.',
             }
 # ========== INITIAL STATE ===============
@@ -56,11 +55,13 @@ def status():
   for inv_elements in current_inv:
     print(inv_elements, "\n")
 
-  print(f"ACTIONS:  ", end="")
+  print(f"ACTIONS:")
   for acts_elements in current_acts:
-    print(acts_elements, end="")
-  for item_elements in current_item:
-    print(item_elements)
+    print(acts_elements)
+
+  print(f"ITEMS:  ", current_item, end="")
+  #for item_elements in current_item:
+  #  print(str(item_elements))
   print()
 
   print('========================================================================================')
