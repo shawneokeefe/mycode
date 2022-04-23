@@ -6,41 +6,31 @@ import os
 # ========== DICTIONARIES / LISTS ===============
 rooms = {
         'porch'  :{
-                    'desc' : ['porch', 'MONTY HALL PORCH: Your driver pulls up to the curb and you get out. Drizzling rain hastens you out and up the steps to Monty Hall. Renovated in the last three months, the old estate was awash with lights and pouring with music. Costumed up for the bootleg era, you are eager to join your co-workers in the interactive mystery murder theater.'],
-                    'path' : ['curb', 'foyer'],
-                    'acts' : [' - Return to the CURB', ' - Enter the FOYER', ' - Check your INVITATION'],
-                    'resp' : ['', '', 'Hmmm. Surely it was here? Did I leave it on the back seat?'],
-                    'item' : []
+                    'desc'       : 'MONTY HALL PORCH: Your driver pulls up to the curb and you get out. Drizzling rain hastens you out and up the steps to Monty Hall. Renovated in the last three months, the old estate was awash with lights and pouring with music. Costumed up for the bootleg era, you are eager to join your co-workers in the interactive mystery murder theater.',
+                    'acts'       : [' - Return to the CURB', ' - Go to the RECEPTION', ' - Check your INVITATION'],
+                    'curb'       : 'curb',
+                    'reception'  : 'reception',
+                    'invitation' : 'Hmmm. Surely it was here? Did I leave it on the back seat?',
+                    'item'       : [],
                   },
 
         'curb'  :{
-                    'desc' : ['curb', 'CURBSIDE: Your ride already left. Nothing at the curb except deeping puddles, lamps, and trees swaying in the wind.'],
-                    'path' : ['foyer', 'home'],
-                    'acts' : [' - Search for your INVITATION', ' - Call an uber and go HOME', ' - Search again for your INVITATION'],
-                    'resp' : ['Found it! Too many pockets in this jacket for you.', 'Well, it will be a wait'],
-                    'item' : [
-                                ['invitation', 'Hi. George and I are attending the opening night for the Monty Hall dinner/mystery theater on 4 May. I bet you already heard about the place, but do not forget to dress the part. We will be swinging the old-timesy fashion at 7pm. Your seat is paid, so if you are late ... I will kill you. LOL!'],
-                             ],
+                    'desc'       : 'CURBSIDE: Your ride already left. Nothing at the curb except deeping puddles, lamps, and trees swaying in the wind.',
+                    'acts'       : [' - Enter the FOYER', ' - Call an uber and go HOME', ' - Search again for your INVITATION'],
+                    'foyer'      : 'foyer',
+                    'home'       : 'home',
+                    'porch'      : 'porch'
+                    'invitation' : 'Found it! Too many pockets in this jacket for you.',
+                    'item'       : [],
                   },
         }
-inv = {item_name}
+inv = []
 # ========== INITIAL STATE ===============
-current_room= rooms['porch']
-current_desc = current_room['desc'][0]
-current_path = current_room['path']
-current_acts = current_room['acts']
-current_item = current_room['item']
+current_room = 'porch'
+current_desc = rooms[current_room]['desc']
+current_acts = rooms[current_room]['acts']
+current_item = rooms[current_room]['item']
 current_inv = []
-current_input = ""
-
-print("TEST PRINT INITIAL STATE")
-print("ROOM", "\n",current_room, "\n")
-print("DESC", "\n",current_room, "\n")
-print("PATH", "\n",current_path, "\n")
-print("ACTS", "\n",current_acts, "\n")
-print("ITEM", "\n",current_item, "\n")
-print("INV", "\n",current_inv, "\n")
-print(input("PROCEED, PRESS ENTER"))
 
 # ========== STATUS SCREEN ==========
 def status():
@@ -51,13 +41,12 @@ def status():
                       ║║║║ ║║║║ ║ ╚╦╝  ╠═╣╠═╣║  ║    ║║║║ ║╠╦╝ ║║║╣ ╠╦╝
                       ╩ ╩╚═╝╝╚╝ ╩  ╩   ╩ ╩╩ ╩╩═╝╩═╝  ╩ ╩╚═╝╩╚══╩╝╚═╝╩╚═
     ''')
-  print('=========================================================================================', '\n')
+  print('=========================================================================================')
   print()
   print(current_desc, "\n")
   print('=========================================================================================')
   print(f"INVENTORY: {current_inv}")
-  print(f"AVAILABLE INTERACTIONS:  {current_acts, current_path, current_item}")
-  #print(f"AVAILABLE INTERACTIONS:  {current_acts.keys(), current_path.keys(), current_item.keys.upper()}")
+  print(f"AVAILABLE INTERACTIONS:  {current_acts, current_item}")
   print('========================================================================================', '\n')
 
 # ========== GAME LOOP ===============
@@ -66,33 +55,36 @@ while True:
 
   choice = ''
   while choice == '':
-    choice = input('Type the name of your next action (shown in caps): ',)
-    ch = choice.lower()
-    CH = choice.upper()
+    choice = input('Type the KEYWORD of your next action: ',)
+    choice = choice.lower()
+                                 
+    if "item" in rooms[current_room] and choice in rooms[current_room]['item']:         # ADD TO INVENTORY, REMOVE FROM ROOM
+        current_inventory += rooms[currentRoom]['item']
+        del rooms[currentRoom]['item']
+        continue
 
-  if CH in current_room['acts']:                      # EXECUTE ACT / INSPECT OBJECT
-    print(current_room['acts'][1])
-    continue
+    elif "item" in current_inv and choice in rooms[current_room]:                       # REMOVE FROM INVENTORY
+        for line in current_inv:   
+            print(f"Dropped: {choice.upper()}")
+            add.rooms[current_room][line]
+        continue
 
-  elif ch in current_room['item']:                    # ADD TO INVENTORY, REMOVE FROM ROOM
-    for X in current_room['item'][ch]:
-      print(f"Picked up: X")
-      add.current_inv
-    continue
+    elif choice in rooms:                                                               # CHANGE ROOM & UPDATE ALL ROOM VARIABLES
+        current_room = rooms[current_room][choice]
+        current_desc = rooms[current_room]['desc']
+        current_acts = rooms[current_room]['acts']
+        current_item = rooms[current_room]['item']
+        break
 
-  elif CH in current_inv:                             # REMOVE FROM INVENTORY
-    for CH in current_inv:   
-      print(f"Dropped: {CH}")
-      add.current_room[item]['CH' : '']
-    continue
+    elif choice in current_room and choice != 'desc' and choice != 'acts':              # ACTIONS
+        print(current_room[choice])
+        print(input("Press ENTER to continue."))
+        continue
 
-  elif ch in current_room['path']:                    # CHANGE ROOM & UPDATE ALL ROOM VARIABLES
-    current_room = ch
-    current_path = current_room[ch]
-    current_item = current_room['item']
-    current_acts = current_room['acts']
-    current_desc = current_room['desc']
-    continue
+    else:
+      print("Action not available.")
+      choice = ''
+      continue
 
   else: continue
 
