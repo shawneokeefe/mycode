@@ -6,7 +6,7 @@ import os
 # ========== DICTIONARIES / LISTS ===============
 rooms = {
         'porch'  :{
-                    'desc'       : 'MONTY HALL PORCH: Your driver pulls up to the curb and you get out. Drizzling rain hastens you out and up the steps to Monty Hall. Renovated in the last three months, the old estate was awash with lights and pouring with music. Costumed up for the bootleg era, you are eager to join your co-workers in the interactive mystery murder theater.',
+                    'desc'       : 'MONTY HALL PORCH: Your driver pulls up to the curb and you get out. Drizzling rain hastens you up the steps to Monty Hall. Renovated in the last three months, the old estate was awash with lights and pouring with music. Costumed up for the bootleg era, you are eager to join your co-workers in the interactive mystery murder theater.',
                     'acts'       : [' - Return to the CURB', ' - Go to the RECEPTION', ' - Check your INVITATION'],
                     'curb'       : 'curb',
                     'reception'  : 'reception',
@@ -15,59 +15,80 @@ rooms = {
                   },
 
         'curb'  :{
-                    'desc'       : 'CURBSIDE: Your ride already left. Nothing at the curb except deeping puddles, lamps, and trees swaying in the wind.',
-                    'acts'       : [' - Enter the FOYER', ' - Call an uber and go HOME', ' - Search again for your INVITATION'],
+                    'desc'       : 'CURBSIDE: Your ride already left. Nothing at the curb except deep puddles, lamps, and trees swaying in the wind.',
+                    'acts'       : [' - Enter the FOYER', ' - Call an uber and go HOME', ' - Search again for your INVITATION', ' - Jump in the PUDDLES'],
                     'foyer'      : 'foyer',
                     'home'       : 'home',
-                    'porch'      : 'porch'
+                    'porch'      : 'porch',
                     'invitation' : 'Found it! Too many pockets in this jacket for you.',
+                    'puddles'    :  'Splash, splash, splash!',
                     'item'       : [],
                   },
         }
-inv = []
+inv = { 'Item' : 'Lint'}
+item_desc = {
+                    'Lint'       : 'Fluff. Always to be found when you need it.',
+                    'Invitation' : '',
+                    'Candle'     : 'Mmmm! Pumpkin spice.',
+            }
 # ========== INITIAL STATE ===============
 current_room = 'porch'
 current_desc = rooms[current_room]['desc']
 current_acts = rooms[current_room]['acts']
 current_item = rooms[current_room]['item']
-current_inv = []
+current_inv = inv.values()
 
 # ========== STATUS SCREEN ==========
 def status():
   os.system("clear")
-  print('=========================================================================================')
+  
   print('''
+=========================================================================================
                       ╔╦╗╔═╗╔╗╔╔╦╗╦ ╦  ╦ ╦╔═╗╦  ╦    ╔╦╗╦ ╦╦═╗╔╦╗╔═╗╦═╗
                       ║║║║ ║║║║ ║ ╚╦╝  ╠═╣╠═╣║  ║    ║║║║ ║╠╦╝ ║║║╣ ╠╦╝
                       ╩ ╩╚═╝╝╚╝ ╩  ╩   ╩ ╩╩ ╩╩═╝╩═╝  ╩ ╩╚═╝╩╚══╩╝╚═╝╩╚═
-    ''')
-  print('=========================================================================================')
+=========================================================================================''')
   print()
   print(current_desc, "\n")
   print('=========================================================================================')
-  print(f"INVENTORY: {current_inv}")
-  print(f"AVAILABLE INTERACTIONS:  {current_acts, current_item}")
-  print('========================================================================================', '\n')
 
+  print(f"INVENTORY: ", end="")
+  for inv_elements in current_inv:
+    print(inv_elements, "\n")
+
+  print(f"ACTIONS:  ", end="")
+  for acts_elements in current_acts:
+    print(acts_elements, end="")
+  for item_elements in current_item:
+    print(item_elements)
+  print()
+
+  print('========================================================================================')
+  print('=======================   Type a KEYWORD to make your actions.   =======================', '\n')
 # ========== GAME LOOP ===============
 while True:
   status()
 
   choice = ''
   while choice == '':
-    choice = input('Type the KEYWORD of your next action: ',)
+    choice = input('> ',)
     choice = choice.lower()
-                                 
+  
     if "item" in rooms[current_room] and choice in rooms[current_room]['item']:         # ADD TO INVENTORY, REMOVE FROM ROOM
-        current_inventory += rooms[currentRoom]['item']
-        del rooms[currentRoom]['item']
-        continue
+        current_inv += choice.upper()
+        del rooms[current_room]['item']
+        break
 
-    elif "item" in current_inv and choice in rooms[current_room]:                       # REMOVE FROM INVENTORY
-        for line in current_inv:   
-            print(f"Dropped: {choice.upper()}")
-            add.rooms[current_room][line]
-        continue
+    elif choice in current_inv and choice in item_desc:                                 # CHECK ITEM, DROP INTO ROOM
+        print(item_desc[choice])
+        q_drop = input("Drop item? (Y/N)")
+        if q_drop == "Y":
+          print(f"Dropped: {choice.upper()}")
+          add.rooms[current_room][line]
+        else:
+          choice = ''
+          continue
+        break
 
     elif choice in rooms:                                                               # CHANGE ROOM & UPDATE ALL ROOM VARIABLES
         current_room = rooms[current_room][choice]
@@ -76,9 +97,11 @@ while True:
         current_item = rooms[current_room]['item']
         break
 
-    elif choice in current_room and choice != 'desc' and choice != 'acts':              # ACTIONS
-        print(current_room[choice])
-        print(input("Press ENTER to continue."))
+    elif choice in rooms[current_room]:                                                 # ACTIONS
+      # and choice != 'desc' and choice != 'acts
+        print(rooms[current_room][choice])
+        print("\n")
+        choice = ''
         continue
 
     else:
