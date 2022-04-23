@@ -1,113 +1,67 @@
-#!/usr/bin/python3
+#!/usr/bin/env python3
 
-# Replace RPG starter project with this code when new instructions are live
+# ========== IMPORTS ==========
+import os
+import fileinput
 
-def showInstructions():
-  #print a main menu and the commands
+# ========== STATUS SCREEN ==========
+def status():
+  os.system("clear")
+  print('=========================================================================================')
   print('''
-   MONTY HALL
-========
-Commands:
-  go [direction]
-  get [item]
-''')
+                      ╔╦╗╔═╗╔╗╔╔╦╗╦ ╦  ╦ ╦╔═╗╦  ╦    ╔╦╗╦ ╦╦═╗╔╦╗╔═╗╦═╗
+                      ║║║║ ║║║║ ║ ╚╦╝  ╠═╣╠═╣║  ║    ║║║║ ║╠╦╝ ║║║╣ ╠╦╝
+                      ╩ ╩╚═╝╝╚╝ ╩  ╩   ╩ ╩╩ ╩╩═╝╩═╝  ╩ ╩╚═╝╩╚══╩╝╚═╝╩╚═
+    ''')
+  print('=========================================================================================', '\n')
+  print()
+  print(f"LOCATION:  {current_room}", "\n")
+  print(current_stry, "\n")
+  print('=========================================================================================')
+  print(f"INVENTORY: {current_inv}")
+  print(f"INTERACT:  {current_acts}")
+  print('========================================================================================', '\n')
 
-def showStatus():
-  #print the player's current status
-  print('---------------------------')
-  print('You are in the ' + currentRoom)
-  #print the current inventory
-  print('Inventory : ' + str(inventory))
-  #print an item if there is one
-  if "item" in rooms[currentRoom]:
-    print('You see a ' + rooms[currentRoom]['item'])
-  print("---------------------------")
+# ========== INITIAL STATE ===============
+current_room = room['Porch']
+current_item = current_room[item]
+current_acts = current_room[acts]
+current_input = ""
 
-#an inventory, which is initially empty
-inventory = []
-
-#a dictionary linking a room to other rooms
-## A dictionary linking a room to other rooms
-rooms = {
-
-            'Porch' : {
-                  'south' : 'Kitchen',
-                  'east'  : 'Dining Room',
-                  'item'  : 'key'
+# ========== DICTIONARIES / LISTS ===============
+rooms = { 'porch' : { 'path' : 'taxi', 'foyer'}
+                    { 'item' : ''}
+                    { 'acts' : { 'invitation' : 'Oh no! Where did your invitation go?'}
+                      }              
                 },
 
-            'Kitchen' : {
-                  'north' : 'Hall',
-                  'item'  : 'monster',
-                },
-            'Dining Room' : {
-                  'west' : 'Hall',
-                  'south': 'Garden',
-                  'item' : 'potion',
-                  'north' : 'Pantry',
-               },
-            'Garden' : {
-                  'north' : 'Dining Room'
-               },
-            'Pantry' : {
-                  'south' : 'Dining Room',
-                  'item' : 'cookie',
-            }
-         }
 
-#start the player in the Hall
-currentRoom = 'Hall'
+        }
+# ========== INITIAL STATE UPDATE ===============
+current_room = 'Porch'
 
-showInstructions()
-
-#loop forever
+# ========== GAME LOOP ===============
 while True:
+  status()
 
-  showStatus()
+  choice = ''
+  while choice == '':
+    choice = input('Type the name of your next action (shown in brackets): ',)
+  
+  if choice.lower() in current_room:                            # EXECUTE ACT / INSPECT OBJECT
+    print current_room[choice]
 
-  #get the player's next 'move'
-  #.split() breaks it up into an list array
-  #eg typing 'go east' would give the list:
-  #['go','east']
-  move = ''
-  while move == '':
-    move = input('>')
+  elif choice.lower() in current_room[item]                     # ADD TO INVENTORY
+    current_
 
-  # split allows an items to have a space on them
-  # get golden key is returned ["get", "golden key"]          
-  move = move.lower().split(" ", 1)
+  elif choice.lower() in rooms[current_room][path]:             # CHANGE ROOM
+    current_room = choice
+    with open("choice.txt","r") as choice_stry                  # UPDATE STORY TO NEW ROOM
+      current_stry = choice_stry.read()
 
-  #if they type 'go' first
-  if move[0] == 'go':
-    #check that they are allowed wherever they want to go
-    if move[1] in rooms[currentRoom]:
-      #set the current room to the new room
-      currentRoom = rooms[currentRoom][move[1]]
-    #there is no door (link) to the new room
-    else:
-        print('You can\'t go that way!')
+with open(currentroom,"r") as choice_stry                  # VAR = PRINT STORY OF NEXT ROOM
+  current_stry = choice_stry.read()
 
-  #if they type 'get' first
-  if move[0] == 'get' :
-    #if the room contains an item, and the item is the one they want to get
-    if "item" in rooms[currentRoom] and move[1] in rooms[currentRoom]['item']:
-      #add the item to their inventory
-      inventory += [move[1]]
-      #display a helpful message
-      print(move[1] + ' got!')
-      #delete the item from the room
-      del rooms[currentRoom]['item']
-    #otherwise, if the item isn't there to get
-    else:
-      #tell them they can't get it
-      print('Can\'t get ' + move[1] + '!')
 
-  ## Define how a player can win
-  if currentRoom == 'Garden' and 'key' in inventory and 'potion' in inventory:
-    print('You escaped the house with the ultra rare key and magic potion... YOU WIN!')
-    break
+  else: continue
 
-  ## If a player enters a room with a monster
-  elif 'item' in rooms[currentRoom] and 'monster' in rooms[currentRoom]['item']:
-    print('A monster has got you... GAME OVER!')
-    break
