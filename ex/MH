@@ -10,6 +10,8 @@ rooms = {
                     'curb'       : 'curb',
                     'reception'  : 'reception',
                     'invite'     : 'Hmmm. Surely it was here? Did I leave it on the seat?',
+                    'test_act_call'  : ['act', 'test_act_description', 'test_act_response'],
+                    'test_move_call' : ['move,', 'test_move_room_name']
                   },
         'curb'   :{
                     'acts'       : ['RETURN to Monty Hall', 'Call an uber and go HOME', 'Jump in the PUDDLES'],
@@ -143,9 +145,16 @@ def status():
     print(f"{inv_elements.upper()}, ", end="")
   print()
  
+#  print(f"ACTIONS:")
+#  for acts_elements in rooms[current_room]['acts']:
+#    print(f" - {acts_elements}")
+
   print(f"ACTIONS:")
-  for acts_elements in rooms[current_room]['acts']:
-    print(f" - {acts_elements}")
+  for act_elements in rooms[current_room]:
+    if rooms[current_room][act_elements][0] == "move":
+      print(f" - {rooms[current_room][act_elements][1]}")
+    if rooms[current_room][act_elements][0] == "act":
+      print(f" - {rooms[current_room][act_elements][1]}")
 
   print(f"ITEMS:  ", end="")
   for elements in rooms[current_room]:
@@ -166,7 +175,6 @@ while True:
     choice = choice.lower()
 
     if choice in rooms[current_room] and choice in item_desc:         # ADD TO INVENTORY, REMOVE FROM ROOM
-        #inventory += choice
         inventory[choice] = choice
         del rooms[current_room][choice]
         input(f"Added {choice.upper()} to inventory. Press enter to continue. \n")
@@ -188,14 +196,21 @@ while True:
         current_room = rooms[current_room][choice]
         break
 
-    elif choice in rooms[current_room]:                               # ACTIONS
-        print(f"{rooms[current_room][choice]} \n")
-        if choice in remove_acts:
+#    elif choice in rooms[current_room]:                               # ACTIONS
+#        print(f"{rooms[current_room][choice]} \n")
+#        if choice in remove_acts:
+#          rooms[current_room].pop(choice)
+#        if choice in inventory and choice in destroy_items:
+#          inventory.pop(choice)
+#        choice = ''
+#        continue
+
+    elif choice == rooms[current_room][choice] and rooms[current_room][choice][0] == "act":
+        print(f"{rooms[current_room][choice][2]} \n")
+        if "remove" in rooms[current_room][choice]:
           rooms[current_room].pop(choice)
-        if choice in inventory and choice in destroy_items:
-          inventory.pop(choice)
         choice = ''
-        continue
+        break
 
     else:
       print("Action not available.")
