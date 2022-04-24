@@ -6,23 +6,23 @@ import os
 # ========== DICTIONARIES / LISTS ===============
 rooms = {
         'porch'  :{
-                    'acts'       : ['Return to the CURB', 'Go to the RECEPTION', 'Check your INVITE'],
-                    'curb'       : 'curb',
-                    'reception'  : 'reception',
-                    'invite'     : 'Hmmm. Surely it was here? Did I leave it on the seat?',
-                    'test_act_call'  : ['act', 'test_act_description', 'test_act_response'],
-                    'test_move_call' : ['move,', 'test_move_room_name']
+                    'desc'       : 'MONTY HALL PORCH:\n  Your driver pulls up to the curb and you get out. Drizzling rain hastens you up the steps to Monty Hall.\n  Renovated in the last three months, the old estate was awash with lights and pouring with music.\n  Costumed up for the bootleg era, you are eager to join your co-workers in the interactive mystery murder theater.',
+                    'go'         : ['move', 'reception', 'GO to the reception'],
+                    'return'     : ['move', 'curb', 'RETURN to the curb'],
+                    'check'      : ['act', 'CHECK your invitation', 'Hmmm. Surely it was here? Did I leave it on the seat?'],
                   },
         'curb'   :{
-                    'acts'       : ['RETURN to Monty Hall', 'Call an uber and go HOME', 'Jump in the PUDDLES'],
-                    'return'     : 'return',
-                    'home'       : 'Then again, maybe not. You came here to enjoy yourself. Might as well do it.',
-                    'porch'      : 'porch',
-                    'puddles'    : 'Splash, splash, splash!',
-                    'wet paper'  : 'wet paper',
-                    'candle'     : 'candle',
+                    'desc'       : 'CURBSIDE:\n  Your ride already left. Nothing at the curb except deep puddles, lamps, and trees swaying in the wind.',
+                    'return'     : ['move', 'foyer', 'RETURN to Monty Hall'],
+                    'porch'      : ['move', 'porch', 'Return to the PORCH'], 
+                    'call'       : ['act', 'CALL an uber and go home', 'Then again, maybe not. You came here to enjoy yourself. Might as well do it.'],
+                    'jump'       : ['act', 'JUMP in the puddles', 'Splash, splash, splash!'],
+                    'wet paper'  : ['item', 'wet paper', 'Dripping, but readable:\nHi. George and I are attending the opening night for the Monty Hall dinner/mystery theater on 4 May. I bet you already heard about the place, but do not forget to dress the part. We will be swinging the old-timesy fashion at 7pm./n /n Your seat is paid, so if you are late .../n I will kill you. LOL!/n /n  - Mirri'],
+                    'candle'     : ['item', 'candle', 'Mmmm! Pumpkin spice.'],
+
                   },
         'reception'   :{
+                    'desc'       : 'RECETPION:\n  You take off your fedora and clack into the polished halls of an impressive foyer overlooked by a deep gallery\n  and steeped in jazz. The wait staff perks up from behind a reception counter and gestures to you.\n  "Hurry to the lounge on your left. Your soiree\'s mystery is about to kick off."',
                     'acts'       : ['Turn into the LOUNGE', 'Wander up the GALLERY', 'Sneak into the BACKROOMS', 'CALL your friends'],
                     'lounge'     : 'lounge',
                     'gallery'    : 'gallery',
@@ -30,12 +30,14 @@ rooms = {
                     'call'       : 'No reception. Monty Hall is just too far from civilization. Guess that helped the establishment and patrons avoid the law in the 1920s.',
                   },
         'gallery'   :{
+                    'desc'       : 'GALLERY:\n Taking your own time, you opt for a view from the gallery. The walls are littered with insets of period art,\n  memorabilia, and summaries of historical significance. Leaning over the railings, you imagine yourself as the host,\n  like a wealthy Jay Gatsby and patron of endless parties. As you stare into the scintillating chandelier,\n  the lights dash leaving you blind with a rainbowed afterimage. The music stopped and all is silent.',
                     'acts'       : ['WAIT a moment', 'Carefully SEARCH your way downstairs to the foyer', 'CALL to the wait staff'],
                     'wait'       : 'The false colors fade, but no time restores the lights. Only a small candle flickers from down below.',
                     'search'     : 'search',
                     'call'       : 'No response. Perhaps the staff are in the lounge or backrooms.',
                   },
         'lounge' :{
+                    'desc'       : 'LOUNGE:\n    You enter the lounge. It is art deco at its highest. The deep room hosted small army of chairs and hors d\'oeuvres.\n  No speakeasy would be complete without a bar, and there it is, a long counter highlighted by a cascade of  bottles.\n  Nothing stood out so much as the period ash tray with the sign "No Smoking." Anachronisms aside, you scour the room\n  for your party.\n    There is Mirri on the chaise. She went all out sporting a giant red hat topped with a back-dyed plume.\n  George must be her "date" tonight, but it seems he has already started to mingle./n    Before you reach Mirri she squeals,\n  "Snake! I\'m bit," and melts lifeless into her seat. Everyone stares and you see the snake slither off the chaise and\n  under an armoire.  George rushes close to her and exclaimed, "She\'s not breathing! Poison! Is there a doctor in the house?"\n  Staff interjected, "Keep away, move into the ballroom." as they shuffled the "panicked/laughing" patrons out\n  of the room and through the ballroom doors. He could have acted a little better, but now you wonder if you were also\n  meant to have a role in the night\'s plot.',
                     'acts'       : ['APPROACH Mirri and George','Look for the SNAKE','Follow the CROWD','Return to the FOYER','WAIT'],
                     'approach'   : '"Wait for the crowd, don\'t spoil it," George whispers.',
                     'snake'      : 'The crevice is too dark, and you certainly aren\'t putting a hand down there.',
@@ -44,6 +46,7 @@ rooms = {
                     'wait'       : 'wait',                    
                   },
         'wait'   :{
+                    'desc'       : 'LOUNGE:\n The room quickly empties leaving you, Mirri, and George. A lone waitstaff was busy wrangling out the snake.\n  "Finally, our fellow murderer is here," exclaimed Mirri.',
                     'acts'       : ['"That SNAKE was real."', '"Sorry I am late,"', '"How am I the MURDERER"', '"What happens NEXT."', 'FOLLOW Mirri', 'STAY behind'],
                     'snake'      : '"It\'s called acting darling.," Mirri teased, "No bite, ... just a tame python."',
                     'late'       : 'Not late. You were supposed to show up later than the rest of us." Mirri replied.',
@@ -53,6 +56,7 @@ rooms = {
                     'stay'       : 'stay',
                   },
         'stay'   :{
+                    'desc'       : 'LOUNGE:\n "How disappointing," you say, "I came to do some sleuthing, and I will do just that."/n /n  Okay then. But we have to leave to help the show. The foyer should be unlocked now. Enjoy the snakes, ... I mean snacks," Mirri replied.\n \n  Mirri, George, and the staff exit out a side door. Nothing but you and a room full of alcohol.',
                     'acts'       : ['Follow Mirri', 'Enter the BALLROOM', 'BANG on ballroom door', 'RETURN to the foyer'],
                     'follow'     : 'The side door is locked. I guess there is no second chance to jump on the bandwagon.',
                     'ballroom'   : 'Locked.',
@@ -60,11 +64,13 @@ rooms = {
                     'return'     : 'return',
                   },
         'follow' :{
+                    'desc'       : 'BALLROOM BALCONY:\n The pathway leads upstairs ending at a wide balcony far above the ballroom. "This is where the action happens,"\n explains Mirri, "This isn\'t just a mystery theater, it is an escape room."  The staff will play out recordings\n  to manipulate our partiers while we choose how the house deals out its cards.\n  Watch and I will guide you through it.',
                     'acts'       : ['OBSERVE the scene below', 'CLOSE your eyes'],
                     'observe'    : 'That\'s all folks. Tune in again for Part 2',
                     'close'      : 'You can\'t help but peek',
                   },                 
-        'return' :{
+        'foyer' :{
+                    'desc'       : 'FOYER:\n What happened to the lights and music? The foyer entrance is lit only a by sputtering candle. The darkness closes in.',
                     'acts'       : ['SEARCH the hall', 'Go OUTSIDE', 'CLOSE the door'],
                     'search'     : 'search',
                     'outside'    : 'outside',
@@ -72,42 +78,35 @@ rooms = {
   #                  'burn'       : 'The paper curls, chars, and crumbles to dust.',
                   },
         'outside':{
+                    'desc'       : 'OUTSIDE:\n The rain isn\'t letting up and your suit isn\'t getting any drier. Nothing to see but the long private drive shimmering\n with the reflection of a row of lamps.',
                     'acts'       : ['DELVE back into Monty Hall', 'CALL an uber'],
  #                   'return'     : 'dark',                   
                     'call'       : 'No reception. Monty Hall is just too far from civilization. Guess that helped the establishment and patrons avoid the law in the 1920s.',
                     'walk'       : 'Then again, maybe not. It was a 30-minute drive.',
                   },
         'search' :{
+                    'desc'       : 'DARKNESS:\n A gust from the entrance blows out the candle by the entrance. You are plunged into total darkness.',
                     'acts'       : ['DELVE further into the darkness', 'Make for the EXIT'],
 #                    'delve'      : 'delve',
 #                    'exit'       : ' ',
                   },
         'delve'  :{
+                    'desc'       : 'So dark ... All is the void.',
                     'acts'       : ['DELVE deeper', 'WAIT and LISTEN'],
-#                    'delve'      : 'delve',
-#                    'wait'       : 'Did you hear that? Did it hear you?',
+#                   'delve'      : 'delve, delve, fumble',
+#                   'wait'       : 'Did you hear that? Did it hear you?',
+                  },
+        'fumble'  :{
+                    'desc'       : 'SIDEROOMS:\n You bump into something in the darkness. Something feathery, overdressed, and with a bony elbow.\n \n "Ouch. Who bumped me?" It whispered.\n \n  Recognizing the voice you question, "Mirri?"\n \n  "Glad you decided to show, but you, George, and I need to hurry to the balcony. I will fill you in as we go along."',
+                    'acts'       : ['DELVE deeper', 'WAIT and LISTEN'],
+#                   'follow'     : 'follow',
+                   'turn'       : ['act', 'TURN around', 'Mirri pulls your arm. "Nope. You are going this way."'],
                   }
         }
 inventory =       {  
-                    'lint' : 'lint',
+                    'lint' : ['item', 'lint', 'Fluff. Always to be found when you need it.'],
                   }
 
-room_desc =       {
-                    'length'     : 'X==========X=====================================================================================================================XX=====================================================================================================================XX=====================================================================================================================XX=====================================================================================================================XX=====================================================================================================================XX=====================================================================================================================XX=====================================================================================================================XX=====================================================================================================================XX=====================================================================================================================XX=====================================================================================================================X',
-                    'porch'      : 'MONTY HALL PORCH:\n  Your driver pulls up to the curb and you get out. Drizzling rain hastens you up the steps to Monty Hall.\n  Renovated in the last three months, the old estate was awash with lights and pouring with music.\n  Costumed up for the bootleg era, you are eager to join your co-workers in the interactive mystery murder theater.',        
-                    'curb'       : 'CURBSIDE:\n  Your ride already left. Nothing at the curb except deep puddles, lamps, and trees swaying in the wind.',
-                    'reception'  : 'RECETPION:\n  You take off your fedora and clack into the polished halls of an impressive foyer overlooked by a deep gallery\n  and steeped in jazz. The wait staff perks up from behind a reception counter and gestures to you.\n  "Hurry to the lounge on your left. Your soiree\'s mystery is about to kick off."',
-                    'gallery'    : 'GALLERY:\n Taking your own time, you opt for a view from the gallery. The walls are littered with insets of period art,\n  memorabilia, and summaries of historical significance. Leaning over the railings, you imagine yourself as the host,\n  like a wealthy Jay Gatsby and patron of endless parties. As you stare into the scintillating chandelier,\n  the lights dash leaving you blind with a rainbowed afterimage. The music stopped and all is silent.',
-                    'lounge'     : 'LOUNGE:\n    You enter the lounge. It is art deco at its highest. The deep room hosted small army of chairs and hors d\'oeuvres.\n  No speakeasy would be complete without a bar, and there it is, a long counter highlighted by a cascade of  bottles.\n  Nothing stood out so much as the period ash tray with the sign "No Smoking." Anachronisms aside, you scour the room\n  for your party.\n    There is Mirri on the chaise. She went all out sporting a giant red hat topped with a back-dyed plume.\n  George must be her "date" tonight, but it seems he has already started to mingle./n    Before you reach Mirri she squeals,\n  "Snake! I\'m bit," and melts lifeless into her seat. Everyone stares and you see the snake slither off the chaise and\n  under an armoire.  George rushes close to her and exclaimed, "She\'s not breathing! Poison! Is there a doctor in the house?"\n  Staff interjected, "Keep away, move into the ballroom." as they shuffled the "panicked/laughing" patrons out\n  of the room and through the ballroom doors. He could have acted a little better, but now you wonder if you were also\n  meant to have a role in the night\'s plot.',
-                    'wait'       : 'LOUNGE:\n The room quickly empties leaving you, Mirri, and George. A lone waitstaff was busy wrangling out the snake.\n  "Finally, our fellow murderer is here," exclaimed Mirri.',
-                    'stay'       : 'LOUNGE:\n "How disappointing," you say, "I came to do some sleuthing, and I will do just that."/n /n  Okay then. But we have to leave to help the show. The foyer should be unlocked now. Enjoy the snakes, ... I mean snacks," Mirri replied.\n \n  Mirri, George, and the staff exit out a side door. Nothing but you and a room full of alcohol.',
-                    'follow'     : 'BALLROOM BALCONY:\n The pathway leads upstairs ending at a wide balcony far above the ballroom. "This is where the action happens,"\n explains Mirri, "This isn\'t just a mystery theater, it is an escape room."  The staff will play out recordings\n  to manipulate our partiers while we choose how the house deals out its cards.\n  Watch and I will guide you through it.',
-                    'return'     : 'FOYER:\n What happened to the lights and music? The foyer entrance is lit only a by sputtering candle. The darkness closes in.',
-                    'outside'    : 'OUTSIDE:\n The rain isn\'t letting up and your suit isn\'t getting any drier. Nothing to see but the long private drive shimmering\n with the reflection of a row of lamps. ',
-                    'search'     : 'DARKNESS:\n A gust from the entrance blows out the candle by the entrance. You are plunged into total darkness.',
-                    'delve'      : 'DARKNESS:\n So dark ... All is the void.',
-                    'fumble'     : 'SIDEROOMS:\n You bump into something in the darkness. Something feathery, overdressed, and with a bony elbow.\n \n "Ouch. Who bumped me?" It whispered.\n \n  Recognizing the voice you question, "Mirri?"\n \n  "Glad you decided to show, but you, George, and I need to hurry to the balcony. I will fill you in as we go along."',
-                  }
 item_desc =       {
                     'lint'       : 'Fluff. Always to be found when you need it.',
                     'wet paper'  : 'Dripping, but readable:\nHi. George and I are attending the opening night for the Monty Hall dinner/mystery theater on 4 May. I bet you already heard about the place, but do not forget to dress the part. We will be swinging the old-timesy fashion at 7pm./n /n Your seat is paid, so if you are late .../n I will kill you. LOL!/n /n  - Mirri',
@@ -122,10 +121,6 @@ destroy_items =   {
                   }
 # ========== INITIAL STATE ===============
 current_room = 'porch'
-#current_desc = rooms[current_room]['desc']
-#current_acts = rooms[current_room]['acts']
-#current_item = rooms[current_room]['item']
-#current_inv = inv.values()
 
 # ========== STATUS SCREEN ==========
 def status():
@@ -137,22 +132,17 @@ def status():
                                      ╩ ╩╚═╝╝╚╝ ╩  ╩   ╩ ╩╩ ╩╩═╝╩═╝  ╩ ╩╚═╝╩╚══╩╝╚═╝╩╚═
 =======================================================================================================================''')
   print()
-  print(room_desc[current_room], "\n")
+  print(rooms[current_room]['desc'], "\n")
   print('=======================================================================================================================')
 
   print(f"INVENTORY:  ", end="")
   for inv_elements in inventory.values():
     print(f"{inv_elements.upper()}, ", end="")
-  print()
- 
-#  print(f"ACTIONS:")
-#  for acts_elements in rooms[current_room]['acts']:
-#    print(f" - {acts_elements}")
 
-  print(f"ACTIONS:")
+  print("\nACTIONS:")
   for act_elements in rooms[current_room]:
     if rooms[current_room][act_elements][0] == "move":
-      print(f" - {rooms[current_room][act_elements][1]}")
+      print(f" - {rooms[current_room][act_elements][2]}")
     if rooms[current_room][act_elements][0] == "act":
       print(f" - {rooms[current_room][act_elements][1]}")
 
@@ -192,8 +182,12 @@ while True:
           continue
         break
 
-    elif rooms[current_room][choice] in room_desc:                     # CHANGE ROOM
-        current_room = rooms[current_room][choice]
+#    elif rooms[current_room][choice] in room_desc:                     # CHANGE ROOM
+#        current_room = rooms[current_room][choice]
+#        break
+
+    elif choice == rooms[current_room][choice] and rooms[current_room][choice][0] == "move":
+        current_room = rooms[current_room][choice][1]
         break
 
 #    elif choice in rooms[current_room]:                               # ACTIONS
