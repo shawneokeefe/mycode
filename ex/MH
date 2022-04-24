@@ -25,7 +25,7 @@ rooms = {
                     'lounge'     : 'lounge',
                     'gallery'    : 'gallery',
                     'backrooms'  : 'The staff bars your entry, "No. This leads to the exit and offices. Go to the lounge."',
-                    'call'       : 'No reception. Monty Hall is just too far from civilization. Guess that helped the establishment and patrons avoid the law in the 1920s',
+                    'call'       : 'No reception. Monty Hall is just too far from civilization. Guess that helped the establishment and patrons avoid the law in the 1920s.',
                   },
         'gallery'   :{
                     'acts'       : ['WAIT a moment', 'Carefully SEARCH your way downstairs to the foyer', 'CALL to the wait staff'],
@@ -58,48 +58,34 @@ rooms = {
                     'return'     : 'return',
                   },
         'follow' :{
-                    'acts'      : [' '],
-                    ''      : ' ',
-                    ''      : ' ',
-                    ''      : ' ',
-                    ''      : ' ',
-                  },
-
-
-
-
-
-                  
+                    'acts'       : ['OBSERVE the scene below', 'CLOSE your eyes'],
+                    'observe'    : 'That\'s all folks. Tune in again for Part 2',
+                    'close'      : 'You can\'t help but peek',
+                  },                 
         'return' :{
-                    'acts'      : [' '],
-                    ''      : ' ',
-                    ''      : ' ',
-                    ''      : ' ',
-                    ''      : ' ',
+                    'acts'       : ['SEARCH the hall', 'Go OUTSIDE', 'CLOSE the door'],
+                    'search'     : 'search',
+                    'outside'    : 'outside',
+  #                  'close'      : 'search',
+  #                  'burn'       : 'The paper curls, chars, and crumbles to dust.',
                   },
-        'outside'   :{
-                    'acts'      : [' '],
-                    ''      : ' ',
-                    ''      : ' ',
-                    ''      : ' ',
-                    ''      : ' ',
+        'outside':{
+                    'acts'       : ['DELVE back into Monty Hall', 'CALL an uber'],
+ #                   'return'     : 'dark',                   
+                    'call'       : 'No reception. Monty Hall is just too far from civilization. Guess that helped the establishment and patrons avoid the law in the 1920s.',
+                    'walk'       : 'Then again, maybe not. It was a 30-minute drive.',
                   },
         'search' :{
-                    'acts'      : [' '],
-                    ''      : ' ',
-                    ''      : ' ',
-                    ''      : ' ',
-                    ''      : ' ',
+                    'acts'       : ['DELVE further into the darkness', 'Make for the EXIT'],
+                    'delve'      : 'delve',
+#                    'exit'       : ' ',
                   },
         'delve'  :{
-                    'acts'      : [' '],
-                    ''      : ' ',
-                    ''      : ' ',
-                    ''      : ' ',
-                    ''      : ' ',
-                  },
+                    'acts'       : ['DELVE deeper', 'WAIT and LISTEN'],
+#                    'delve'      : 'delve',
+#                    'wait'       : 'Did you hear that? Did it hear you?',
                   }
-
+        }
 inventory =       {
                     'lint'       : 'lint',
                   }
