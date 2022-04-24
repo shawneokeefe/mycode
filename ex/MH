@@ -139,8 +139,8 @@ def status():
 
   print(f"ITEMS:  ", end="")
   for elements in rooms[current_room]:
-    if elements in rooms[current_room] and elements in item_desc:
-      print(f"{elements.upper()},  ", end="")
+    if elements in rooms[current_room][elements][0]:
+      print(f"{rooms[current_room][elements][1].upper()},  ", end="")
   print()
 
   print('======================================================================================================================')
@@ -156,21 +156,21 @@ while True:
     choice = choice.lower()
 
     if choice == 'teleport':
-      print("AVAILABLE ROOMS: ")
-      for room_names in rooms.keys():
-        print(f"{room_names}  ", end="")
-      q_teleport = input("\n\n, Teleport to which room? \n> ")
-      if q_teleport in rooms.keys():
-        current_room = q_teleport
-      else:
-        choice = ''
-        continue         
-      break
+        print("AVAILABLE ROOMS:")
+          for room_names in rooms.keys():
+              print(f"{room_names}  ", end="")
+          q_teleport = input("\n\n, Teleport to which room? \n> ")
+        ` if q_teleport in rooms.keys():
+              current_room = q_teleport
+          else:
+              choice = ''
+              continue         
+        break
     else:
-      choice = ''
-      continue
+        choice = ''
+        continue
 
-    if choice in rooms[current_room] and rooms[current_room][choice][0] == "item":         # ADD TO INVENTORY, REMOVE FROM ROOM
+    elif choice in rooms[current_room] and rooms[current_room][choice][0] == "item":         # ADD TO INVENTORY, REMOVE FROM ROOM
         inventory[choice] = ['item', rooms[current_room][choice][1], rooms[current_room][choice][0]]
         del rooms[current_room][choice]
         input(f"Added {choice.upper()} to inventory. Press enter to continue. \n")
@@ -222,9 +222,9 @@ while True:
           break
 
     else:
-      print("Action not available.")
-      choice = ''
-      continue
+        print("Action not available.")
+        choice = ''
+        continue
 
   else: continue
 
