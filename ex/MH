@@ -6,66 +6,121 @@ import os
 # ========== DICTIONARIES / LISTS ===============
 rooms = {
         'porch'  :{
-                    'desc'       : 'MONTY HALL PORCH: Your driver pulls up to the curb and you get out. Drizzling rain hastens you up the steps to Monty Hall. Renovated in the last three months, the old estate was awash with lights and pouring with music. Costumed up for the bootleg era, you are eager to join your co-workers in the interactive mystery murder theater.',
-                    'acts'       : [' - Return to the CURB', ' - Go to the RECEPTION', ' - Check your INVITATION'],
+                    'acts'       : ['Return to the CURB', 'Go to the RECEPTION', 'Check your INVITE'],
                     'curb'       : 'curb',
                     'reception'  : 'reception',
-                    'invitation' : 'Hmmm. Surely it was here? Did I leave it on the back seat?',
-                    'item'       : '',
+                    'invite'     : 'Hmmm. Surely it was here? Did I leave it on the seat?',
                   },
-
         'curb'  :{
-                    'desc'       : 'CURBSIDE: Your ride already left. Nothing at the curb except deep puddles, lamps, and trees swaying in the wind.',
-                    'acts'       : [' - Enter the FOYER', ' - Call an uber and go HOME', ' - Search again for your INVITATION', ' - Jump in the PUDDLES'],
+                    'acts'       : ['Enter the FOYER', 'Call an uber and go HOME', 'Jump in the PUDDLES'],
                     'foyer'      : 'foyer',
-                    'home'       : 'home',
+                    'home'       : 'Then again, maybe not.',
                     'porch'      : 'porch',
-                    'puddles'    :  'Splash, splash, splash!',
-                    'item'       : 'INVITATION',
+                    'puddles'    : 'Splash, splash, splash!',
+                    'wet paper'  : 'wet paper',
+                    'candle'     : 'candle',
                   },
+        ''   :{}
+                    ''
+                    ''
+                    ''
+                    ''
+                    ''
+        ''   :{}
+                    ''
+                    ''
+                    ''
+                    ''
+                    ''
+        ''   :{}
+                    ''
+                    ''
+                    ''
+                    ''
+                    ''
+        ''   :{}
+                    ''
+                    ''
+                    ''
+                    ''
+                    ''
+        ''   :{}
+                    ''
+                    ''
+                    ''
+                    ''
+                    ''
+        ''   :{}
+                    ''
+                    ''
+                    ''
+                    ''
+                    ''
+        ''   :{}
+                    ''
+                    ''
+                    ''
+                    ''
+                    ''
+
         }
-inv = { 'Item' : 'Lint'}
-item_desc = {
-                    'Lint'       : 'Fluff. Always to be found when you need it.',
-                    'Invitation' : 'Found it! The email reads:   Hi. George and I are attending the opening night for the Monty Hall dinner/mystery theater on 4 May. I bet you already heard about the place, but do not forget to dress the part. We will be swinging the old-timesy fashion at 7pm. Your seat is paid, so if you are late ... I will kill you. LOL!  - Mirri',
-                    'Candle'     : 'Mmmm! Pumpkin spice.',
+inventory = {
+                    'lint'       : 'lint',
             }
+room_desc = {
+                    'porch'      : 'MONTY HALL PORCH:\n  Your driver pulls up to the curb and you get out. Drizzling rain hastens you up the steps to Monty Hall.\n  Renovated in the last three months, the old estate was awash with lights and pouring with music.\n  Costumed up for the bootleg era, you are eager to join your co-workers in the interactive mystery murder theater.',
+                    'curb'       : 'CURBSIDE:\n  Your ride already left. Nothing at the curb except deep puddles, lamps, and trees swaying in the wind.',
+            }
+item_desc = {
+                    'lint'       : 'Fluff. Always to be found when you need it.',
+                    'wet paper'  : 'Dripping, but readable:\nHi. George and I are attending the opening night for the Monty Hall dinner/mystery theater on 4 May. I bet you already heard about the place, but do not forget to dress the part. We will be swinging the old-timesy fashion at 7pm. Your seat is paid, so if you are late ... I will kill you. LOL!  - Mirri',
+                    'candle'     : 'Mmmm! Pumpkin spice.',
+            }
+remove_acts = {
+                    'invite'      : 'invite',
+              }
+destroy_items = {
+                    'wet paper'   : 'wet paper',
+                    'candle'      : 'candle',
+              }
 # ========== INITIAL STATE ===============
 current_room = 'porch'
-current_desc = rooms[current_room]['desc']
-current_acts = rooms[current_room]['acts']
-current_item = rooms[current_room]['item']
-current_inv = inv.values()
+#current_desc = rooms[current_room]['desc']
+#current_acts = rooms[current_room]['acts']
+#current_item = rooms[current_room]['item']
+#current_inv = inv.values()
 
 # ========== STATUS SCREEN ==========
 def status():
   os.system("clear")
-  
   print('''
-=========================================================================================
-                      ╔╦╗╔═╗╔╗╔╔╦╗╦ ╦  ╦ ╦╔═╗╦  ╦    ╔╦╗╦ ╦╦═╗╔╦╗╔═╗╦═╗
-                      ║║║║ ║║║║ ║ ╚╦╝  ╠═╣╠═╣║  ║    ║║║║ ║╠╦╝ ║║║╣ ╠╦╝
-                      ╩ ╩╚═╝╝╚╝ ╩  ╩   ╩ ╩╩ ╩╩═╝╩═╝  ╩ ╩╚═╝╩╚══╩╝╚═╝╩╚═
-=========================================================================================''')
+=======================================================================================================================
+                                     ╔╦╗╔═╗╔╗╔╔╦╗╦ ╦  ╦ ╦╔═╗╦  ╦    ╔╦╗╦ ╦╦═╗╔╦╗╔═╗╦═╗
+                                     ║║║║ ║║║║ ║ ╚╦╝  ╠═╣╠═╣║  ║    ║║║║ ║╠╦╝ ║║║╣ ╠╦╝
+                                     ╩ ╩╚═╝╝╚╝ ╩  ╩   ╩ ╩╩ ╩╩═╝╩═╝  ╩ ╩╚═╝╩╚══╩╝╚═╝╩╚═
+=======================================================================================================================''')
   print()
-  print(current_desc, "\n")
-  print('=========================================================================================')
+  print(room_desc[current_room], "\n")
+  print('=======================================================================================================================')
 
-  print(f"INVENTORY: ", end="")
-  for inv_elements in current_inv:
-    print(inv_elements, "\n")
-
+  print(f"INVENTORY:  ", end="")
+  for inv_elements in inventory.values():
+    print(f"{inv_elements.upper()}, ", end="")
+  print()
+ 
   print(f"ACTIONS:")
-  for acts_elements in current_acts:
-    print(acts_elements)
+  for acts_elements in rooms[current_room]['acts']:
+    print(f" - {acts_elements}")
 
-  print(f"ITEMS:  ", current_item, end="")
-  #for item_elements in current_item:
-  #  print(str(item_elements))
+  print(f"ITEMS:  ", end="")
+  for elements in rooms[current_room]:
+    if elements in rooms[current_room] and elements in item_desc:
+      print(f"{elements.upper()},  ", end="")
   print()
 
-  print('========================================================================================')
-  print('=======================   Type a KEYWORD to make your actions.   =======================', '\n')
+  print('======================================================================================================================')
+  print('======================================   Type a KEYWORD to make your actions.   ======================================', '\n')
+
 # ========== GAME LOOP ===============
 while True:
   status()
@@ -74,34 +129,36 @@ while True:
   while choice == '':
     choice = input('> ',)
     choice = choice.lower()
-  
-    if "item" in rooms[current_room] and choice in rooms[current_room]['item']:         # ADD TO INVENTORY, REMOVE FROM ROOM
-        current_inv += choice.upper()
-        del rooms[current_room]['item']
+
+    if choice in rooms[current_room] and choice in item_desc:         # ADD TO INVENTORY, REMOVE FROM ROOM
+        #inventory += choice
+        inventory[choice] = choice
+        del rooms[current_room][choice]
+        input(f"Added: {choice.upper()} to inventory. Press enter to continue. \n")
         break
 
-    elif choice in current_inv and choice in item_desc:                                 # CHECK ITEM, DROP INTO ROOM
-        print(item_desc[choice])
-        q_drop = input("Drop item? (Y/N)")
-        if q_drop == "Y":
-          print(f"Dropped: {choice.upper()}")
-          add.rooms[current_room][line]
+    elif choice in inventory and choice in item_desc:                 # CHECK ITEM, DROP INTO ROOM
+        print(f"{item_desc[choice]}  \n")
+        q_drop = input("Drop item? (Y/N) \n> ")
+        if q_drop == "Y" or q_drop == "y":
+          inventory.pop(choice)
+          rooms[current_room][choice] = choice
+          input(f"Dropped: {choice.upper()}. Press enter to continue. \n")
         else:
           choice = ''
           continue
         break
 
-    elif choice in rooms:                                                               # CHANGE ROOM & UPDATE ALL ROOM VARIABLES
+    elif choice in rooms and choice in room_desc:                     # CHANGE ROOM
         current_room = rooms[current_room][choice]
-        current_desc = rooms[current_room]['desc']
-        current_acts = rooms[current_room]['acts']
-        current_item = rooms[current_room]['item']
         break
 
-    elif choice in rooms[current_room]:                                                 # ACTIONS
-      # and choice != 'desc' and choice != 'acts
-        print(rooms[current_room][choice])
-        print("\n")
+    elif choice in rooms[current_room]:                               # ACTIONS
+        print(f"{rooms[current_room][choice]} \n")
+        if choice in remove_acts:
+          rooms[current_room].pop(choice)
+        if choice in inventory and choice in destroy_items:
+          inventory.pop(choice)
         choice = ''
         continue
 
