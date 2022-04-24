@@ -14,7 +14,7 @@ rooms = {
   'curb'         :{
                     'desc'       : 'CURBSIDE:\n  Your ride already left. Nothing at the curb except deep puddles, lamps, and trees swaying in the wind.',
                     'return'     : ['move', 'lobby', 'RETURN to Monty Hall'],
-                    'call'       : ['act', 'CALL an uber and go home', 'Then again, maybe not. You came here to enjoy yourself. Might as well do it.'],
+                    'call'       : ['act', 'CALL an uber and go home', 'Then again, maybe not. You came here to enjoy yourself. Might as well do it.', 'keep', 'requirement','cell phone'],
                     'jump'       : ['act', 'JUMP in the puddles', 'Splash, splash, splash!'],
                     'wet paper'  : ['item', 'wet paper', 'Dripping, but readable:\n Hi. George and I are attending the opening night for the Monty Hall dinner/mystery theater on 4 May. I bet you already heard about the place, but do not forget to dress the part. We will be swinging the old-timesy fashion at 7pm./n /n Your seat is paid, so if you are late .../n I will kill you. LOL!/n /n  - Mirri'],
                   },
@@ -25,7 +25,7 @@ rooms = {
                     'mirri'      : ['act', '"I am with MIRRI\'s group. They arrive?"','"So, you\'re the third. It\'s a fun role. Go on ahead before you get replaced. " the receptionist answered.'],
                     'return'     : ['act', 'RETURN to the curb', 'Alas! You can see your ride already disappearing down the driveway.'],
                     'call'       : ['act', 'CALL your friends', 'Better luck shouting ... or just go into the lounge.', 'keep', 'requirement','cell phone'],
-                    'check'      : ['act', 'CHECK your invitation', 'Hmm, where is it. Oh well, better just get moving.'],                 
+                    'check'      : ['act', 'CHECK your invitation', 'Hmm, where is it? Oh well, better just get moving.'],                 
                   },
   'gallery'      :{
                     'desc'       : 'GALLERY:\n  Taking your own time, you opt for a view from the gallery. The walls are littered with insets of period art,\n  memorabilia, and summaries of historical significance. As you scroll the displays, the lights fall. The music too has into the scintillating chandelier,\n  the lights dash leaving you blind with a rainbowed afterimage. The music stopped and all is silent.',
@@ -149,7 +149,7 @@ while True:
         choice = input('> ',)
         choice = choice.lower()
 
-        if choice == 'teleport':
+        if choice == 'teleport':                                                                            # TELEPORT
             print("AVAILABLE ROOMS:")
             for room_names in rooms.keys():
                 print(f"{room_names}  ", end="")
@@ -180,19 +180,21 @@ while True:
             break
 
         elif choice in rooms[current_room] and rooms[current_room][choice][0] == "act":                     # PERFORM ACTIONS
-            if rooms[current_room][choice][4] == "requirement" and rooms[current_room][choice][5] not in inventory:
-                print(f"Cannot do that without {rooms[current_room][choice][5]}")
-                continue
-            elif rooms[current_room][choice][3] == "remove":
+            try:
+                if rooms[current_room][choice][4] == "requirement" and rooms[current_room][choice][5] not in inventory:
+                    print(f"Cannot do that without {rooms[current_room][choice][5].upper()}.")
+                    continue
+                elif rooms[current_room][choice][3] == "remove":
+                    print(f"{rooms[current_room][choice][2]} \n")
+                    rooms[current_room].pop(choice)
+                    input("Press enter to continue.\n")
+                    break
+            except:
                 print(f"{rooms[current_room][choice][2]} \n")
-                rooms[current_room].pop(choice)
-                input("Press enter to continue.\n")
-                break
-            else:
-                print(f"{rooms[current_room][choice][2]} \n")
                 continue
-
-        else:
+            print(f"{rooms[current_room][choice][2]} \n")
+            
+        else:    
             print("Action not available.")
             continue
 

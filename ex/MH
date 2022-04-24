@@ -228,3 +228,9 @@ while True:
 
   else: continue
 
+            #finally:
+                #if "requirement" not in rooms[current_room][choice]:
+                
+                #continue
+                #else:
+               #     continue
