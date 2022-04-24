@@ -11,23 +11,24 @@ rooms = {
                     'return'     : ['move', 'curb', 'RETURN to the curb'],
                     'check'      : ['act', 'CHECK your invitation', 'Hmmm. Surely it was here? Did I leave it on the seat?'],
                   },
-  'curb'         :{
+   'curb'         :{
                     'desc'       : 'CURBSIDE:\n  Your ride already left. Nothing at the curb except deep puddles, lamps, and trees swaying in the wind.',
-                    'return'     : ['move', 'foyer', 'RETURN to Monty Hall'],
-                    'porch'      : ['move', 'porch', 'Return to the PORCH'], 
+                    'return'     : ['move', 'lobby', 'RETURN to Monty Hall'],
                     'call'       : ['act', 'CALL an uber and go home', 'Then again, maybe not. You came here to enjoy yourself. Might as well do it.'],
                     'jump'       : ['act', 'JUMP in the puddles', 'Splash, splash, splash!'],
                     'wet paper'  : ['item', 'wet paper', 'Dripping, but readable:\nHi. George and I are attending the opening night for the Monty Hall dinner/mystery theater on 4 May. I bet you already heard about the place, but do not forget to dress the part. We will be swinging the old-timesy fashion at 7pm./n /n Your seat is paid, so if you are late .../n I will kill you. LOL!/n /n  - Mirri'],
                   },
   'reception'    :{
-                    'desc'       : 'RECEPTION:\n  You take off your fedora and clack into the polished halls of an impressive foyer overlooked by a deep gallery\n  and steeped in jazz. The wait staff perks up from behind a reception counter and gestures to you.\n  "Hurry to the lounge on your left. Your soiree\'s mystery is about to kick off."',
-                    'turn'       : ['move', 'loung', 'TURN into the lounge'],
+                    'desc'       : 'RECEPTION:\n  You take off your fedora and clack into the polished halls of an impressive foyer overlooked by a deep gallery and steeped in jazz.\n  The wait staff perks up from behind a reception counter and gestures to you.\n "Hurry to the lounge on your left. Your party\'s mystery is about to kick off."',
+                    'turn'       : ['move', 'lounge', 'TURN into the lounge'],
                     'wander'     : ['move', 'gallery', 'WANDER up the gallery'],
-                    'sneak'      : ['act', 'SNEAK into the backrooms', 'The staff bars your entry, "No. This leads to the exit and offices. Go to the lounge."'],
-                    'call'       : ['act', 'CALL your friends', 'No reception. Monty Hall is just too far from civilization. Guess that helped the establishment and patrons avoid the law in the 1920s.'],
+                    'mirri'      : ['act', '"Did MIRRI check in yet"','"Yes. She is ahead in the lounge. She got you the deluxe role tonight," the receptionist answered'],
+                    'return'     : ['act', 'RETURN to the curb', 'Alas! You can see your ride already disappearing down the driveway.'],
+                    'call'       : ['act', 'CALL your friends', 'Better luck shouting ... or just go into the lounge.'],
+                    'check'      : ['act', 'CHECK your invitation', 'Hmm, where is it. Oh well, better just get moving.'],                 
                   },
-  'gallery'      :{
-                    'desc'       : 'GALLERY:\n Taking your own time, you opt for a view from the gallery. The walls are littered with insets of period art,\n  memorabilia, and summaries of historical significance. Leaning over the railings, you imagine yourself as the host,\n  like a wealthy Jay Gatsby and patron of endless parties. As you stare into the scintillating chandelier,\n  the lights dash leaving you blind with a rainbowed afterimage. The music stopped and all is silent.',
+  'gallery'         :{
+                    'desc'       : 'GALLERY:\n  Taking your own time, you opt for a view from the gallery. The walls are littered with insets of period art,\n  memorabilia, and summaries of historical significance. Leaning over the railings, you imagine yourself as the host,\n  like a wealthy Jay Gatsby and patron of endless parties. As you stare into the scintillating chandelier,\n  the lights dash leaving you blind with a rainbowed afterimage. The music stopped and all is silent.',
                     'search'     : ['move', 'lobby', 'Carefully SEARCH your way downstairs'],
                     'wait'       : ['act', 'WAIT a moment', 'The false colors fade, but no time restores the lights. Only a small candle flickers from down below.', 'remove'],
                     'call'       : ['act', 'CALL out to the staff', 'No response. Perhaps the staff are in the lounge or backrooms.' ],
@@ -56,45 +57,45 @@ rooms = {
                     'enter'      : ['act', 'ENTER the ballroom', 'Locked.', 'remove'],
                     'bang'       : ['act', 'BANG on ballroom door', 'No response. What is going on in there?'],
                   },
-    'balcony'     :{
+  'balcony'      :{
                     'desc'       : 'BALLROOM BALCONY:\n The pathway leads upstairs ending at a wide balcony far above the ballroom. You can hear a cacophony of murmering and laughter down below.\n  "This is where the action happens," explains Mirri, "This isn\'t just a mystery theater, it is an escape room."  The staff will play out recordings\n  to manipulate our partiers while we choose how the house deals out its cards from behind the scenes.\n  Watch and I will guide you through it.',
                     'observe'    : ['act', 'OBSERVE the scene below', 'That\'s all folks. Tune in again for Part 2'],
                     'close'      : ['act', 'CLOSE your eyes', 'You can\'t help but peek'],
                   },                 
-    'lobby'      :{
+  'lobby'        :{
                     'desc'       : 'LOBBY:\n What happened to the lights and music? The entrance is lit only a by sputtering candle. The darkness closes in.',
-                    'search'     : ['move', 'lobby dark','SEARCH the hall'],
+                    'search'     : ['move', 'lobby_dark','SEARCH the hall'],
                     'go'         : ['move', 'outside', 'GO outside'],
                     'close'      : ['move', 'lobby dark', 'CLOSE the door'],
                     'candle'     : ['item', 'candle', 'Mmmm! Pumpkin spice.'],
                     #'burn'      : ['use', 'invitation', 'BURN your invitation'The paper curls, chars, and crumbles to dust.'],
                   },
-    'outside'    :{
+  'outside'      :{
                     'desc'       : 'OUTSIDE:\n The rain isn\'t letting up and your suit isn\'t getting any drier. Nothing to see but the long private drive shimmering\n with the reflection of a row of lamps.',
                     'return'     : ['move', 'darkness', 'RETURN to Monty Hall'],
                     'call'       : ['act', 'CALL an uber', 'No reception. Monty Hall is just too far from civilization. Guess that helped the establishment and patrons avoid the law in the 1920s.'],
                     'walk'       : ['act', 'WALK home', 'Then again, maybe not. It was a 30-minute drive.'],
                   },
-    'lobby dark'      :{
+  'lobby_dark'   :{
                     'desc'       : 'DARKNESS:\n A gust from the entrance blows out the candle by the entrance. You are plunged into total darkness.',
                     'delve'      : ['move', 'darkness', 'DELVE further into the darkness'],
                     'turn'       : ['move', 'outside', 'TURN for the exit'],
                   },
-    'darkness'      :{
+  'darkness'     :{
                     'desc'       : 'So dark ... All is the void.',
                     'delve'      : ['move', 'backrooms', 'DELVE deeper. Maybe you will find a door.'],
-                    'wait'        : ['act', 'WAIT and listen', 'Did you hear that? Did it hear you?'],
+                    'wait'       : ['act', 'WAIT and listen', 'Did you hear that? Did it hear you?'],
                   },
-    'backrooms'     :{
+  'backrooms'    :{
                     'desc'       : 'BACKROOMS:\n Fumbling into the backrooms and up a flight of stairs, you bump into something in the darkness. Something feathery, overdressed, and with a bony elbow.\n \n "Ouch. Who bumped me?" It whispered.\n \n  Recognizing the voice you question, "Mirri?"\n \n  "Glad you decided to show, but you, George, and I need to hurry to the balcony. I will fill you in as we go along."',
                     'follow'     : ['move', 'balcony', 'FOLLOW Mirri'],
                     'turn'       : ['act', 'TURN around', 'Mirri pulls your arm. "Nope. You are going this way."'],
                   }
         }
 inventory =       {  
+                    'cell phone' : ['item', 'cell phone', 'Powered, but only one bar here. Maybe I should climb a tree.'],
                     'lint'       : ['item', 'lint', 'Fluff. Always to be found when you need it.'],
-                    'cell phone' : ['item', 'cell phone', '.'],
-                    'lint'       : ['item', 'lint', 'Fluff. Always to be found when you need it.'],
+                    'wallet'     : ['item', 'wallet', 'Cards ... check.\n Cash ... check.\n Breath mints ... darn.'],
                   }
 
 item_desc =       {
@@ -154,6 +155,21 @@ while True:
     choice = input('> ',)
     choice = choice.lower()
 
+    if choice == 'teleport':
+      print("AVAILABLE ROOMS: ")
+      for room_names in rooms.keys():
+        print(f"{room_names}  ", end="")
+      q_teleport = input("\n\n, Teleport to which room? \n> ")
+      if q_teleport in rooms.keys():
+        current_room = q_teleport
+      else:
+        choice = ''
+        continue         
+      break
+    else:
+      choice = ''
+      continue
+
     if choice in rooms[current_room] and rooms[current_room][choice][0] == "item":         # ADD TO INVENTORY, REMOVE FROM ROOM
         inventory[choice] = ['item', rooms[current_room][choice][1], rooms[current_room][choice][0]]
         del rooms[current_room][choice]
@@ -166,17 +182,29 @@ while True:
 #        input(f"Added {choice.upper()} to inventory. Press enter to continue. \n")
 #        break
 
-    elif choice in inventory and choice in item_desc:                 # CHECK ITEM DESCRIPTION, DROP INTO ROOM
-        print(f"{item_desc[choice]}  \n")
+    elif choice in inventory:                 # CHECK ITEM DESCRIPTION, DROP INTO ROOM
+        print(f"{inventory[choice][2]}  \n")
         q_drop = input("Drop item? (Y/N) \n> ")
         if q_drop == "Y" or q_drop == "y":
+          rooms[current_room][choice] = inventory[choice]          
           inventory.pop(choice)
-          rooms[current_room][choice] = choice
           input(f"Dropped {choice.upper()}. Press enter to continue. \n")
         else:
           choice = ''
           continue
         break
+
+#    elif choice in inventory and choice in item_desc:                 # CHECK ITEM DESCRIPTION, DROP INTO ROOM
+#        print(f"{item_desc[choice]}  \n")
+#        q_drop = input("Drop item? (Y/N) \n> ")
+#        if q_drop == "Y" or q_drop == "y":
+#          inventory.pop(choice)
+#          rooms[current_room][choice] = choice
+#          input(f"Dropped {choice.upper()}. Press enter to continue. \n")
+#        else:
+#          choice = ''
+#          continue
+#        break
 
     elif choice in rooms[current_room] and rooms[current_room][choice][0] == "move":
         current_room = rooms[current_room][choice][1]
