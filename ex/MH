@@ -2,6 +2,7 @@
 
 # ========== IMPORTS ==========
 import os
+import sys
 
 # ========== DICTIONARIES / LISTS ===============
 rooms = {
@@ -34,12 +35,12 @@ rooms = {
                     'call'       : ['act', 'CALL out to the staff', 'No response. Perhaps the staff are in the lounge or backrooms.'],
                   },
   'lounge'       :{
-                    'desc'       : 'LOUNGE:\n    You enter the lounge. It is art deco at its highest. The deep room hosted small army of chairs and hors d\'oeuvres.\n  No speakeasy would be complete without a bar, and there it is, a long counter highlighted by a cascade of  bottles.\n  Nothing stood out so much as the period ash tray with the sign "No Smoking." Anachronisms aside, you scour the room\n  for your party.\n    There is Mirri on the chaise. She went all out sporting a giant red hat topped with a back-dyed plume.\n  George must be her "date" tonight, but it seems he has already started to mingle./n    Before you reach Mirri she squeals,\n  "Snake! I\'m bit," and melts lifeless into her seat. Everyone stares and you see the snake slither off the chaise and\n  under an armoire.  George rushes close to her and exclaimed, "She\'s not breathing! Poison! Is there a doctor in the house?"\n  Staff interjected, "Keep away, move into the ballroom." as they shuffled the "panicked/laughing" patrons out\n  of the room and through the ballroom doors. He could have acted a little better, but now you wonder if you were also\n  meant to have a role in the night\'s plot.',
+                    'desc'       : 'LOUNGE:\n    You enter the lounge. It is art deco at its highest. The deep room hosted small army of chairs and hors d\'oeuvres.\n  No speakeasy would be complete without a bar, and there it is, a long counter highlighted by a cascade of  bottles.\n  Nothing stood out so much as the period ash tray with the sign "No Smoking." Anachronisms aside, you scour the room\n  for your party.\n\n    There is Mirri on the chaise. She went all out sporting a giant red hat topped with a back-dyed plume.\n  George must be her "date" tonight, but it seems he has already started to mingle./n    Before you reach Mirri she squeals,\n  "Snake! I\'m bit," and melts lifeless into her seat. Everyone stares and you see the snake slither off the chaise and\n  under an armoire.  George rushes close to her and exclaimed, "She\'s not breathing! Poison! Is there a doctor in the house?"\n\n    Staff interjected, "Keep away, move into the ballroom." as they shuffled the "panicked/laughing" patrons out\n  of the room and through the ballroom doors. He could have acted a little better, but now you wonder if you were also\n  meant to have a role in the night\'s plot.',
                     'wait'       : ['move', 'lounge_empty', 'WAIT'],
                     'approach'   : ['act', 'APPROACH Mirri and George', '"Wait for the crowd, don\'t spoil it," George whispers.'],
                     'look'       : ['act', 'LOOK for the snake', 'The crevice is too dark, and you certainly aren\'t putting a hand down there.'],
                     'follow'     : ['act', 'FOLLOW the crowd', 'As you move to the ballroom, a waiter stops you, "Wait a moment and see your friends."'],
-                    'return'     : ['act', 'RETURN to the foyer', 'You try the doors. Locked... they won\t budge.'],                  
+                    'return'     : ['act', 'RETURN to the foyer', 'You try the doors. Locked... they won\'t budge.'],                  
                   },
   'lounge_2'     :{
                     'desc'       : 'LOUNGE:\n The room quickly empties leaving you, Mirri, and George. A lone waitstaff was busy wrangling out the snake.\n  "Finally, our fellow murderer is here," exclaimed Mirri.',
@@ -51,8 +52,8 @@ rooms = {
                     'next'       : ['act', '"What happens NEXT."', '"Ask later, come on." Mirri beckoned.', 'remove'],
                   },
   'lounge_empty' :{
-                    'desc'       : 'LOUNGE:\n  "How disappointing," you say, "I came to do some sleuthing, and I will do just that."/n /n  Okay then. But we have to leave to help the show. The foyer should be unlocked now. Enjoy the snakes, ... I mean snacks," Mirri replied.\n \n  Mirri, George, and the staff exit out a side door. Nothing but you and a room full of alcohol.',
-                    'return'     : ['move', 'foyer', 'RETURN to the foyer'],
+                    'desc'       : 'LOUNGE:\n  "How disappointing," you say, "I came to do some sleuthing, and I will do just that."\n \n  "Okay then, go on back, but we have to do our part. Enjoy the snakes, ... I mean snacks," Mirri replied.\n \n  Mirri, George, and the staff exit out a side door. Nothing but you and a room full of alcohol.',
+                    'return'     : ['move', 'lobby', 'RETURN to the foyer'],
                     'follow'     : ['act', 'FOLLOW Mirri', 'The side door is locked. I guess there is no second chance to jump on the bandwagon.'],
                     'enter'      : ['act', 'ENTER the ballroom', 'Locked.', 'remove'],
                     'bang'       : ['act', 'BANG on ballroom door', 'No response. What is going on in there?'],
@@ -66,14 +67,14 @@ rooms = {
                     'desc'       : 'LOBBY:\n  What happened to the lights and music? The entrance is lit only a by sputtering candle. The darkness closes in.',
                     'search'     : ['move', 'lobby_dark','SEARCH the hall'],
                     'go'         : ['move', 'outside', 'GO outside'],
-                    'close'      : ['move', 'lobby dark', 'CLOSE the door'],
+                    'close'      : ['move', 'lobby_dark', 'CLOSE the door'],
                     'candle'     : ['item', 'candle', 'Mmmm! Pumpkin spice.'],
                     #'burn'      : ['use', 'invitation', 'BURN your invitation'The paper curls, chars, and crumbles to dust.'],
                   },
   'outside'      :{
                     'desc'       : 'OUTSIDE:\n The rain isn\'t letting up and your suit isn\'t getting any drier. Nothing to see but the long private drive shimmering\n with the reflection of a row of lamps.',
                     'return'     : ['move', 'darkness', 'RETURN to Monty Hall'],
-                    'call'       : ['act', 'CALL an uber', 'No reception. Monty Hall is just too far from civilization. Guess that helped the establishment and patrons avoid the law in the 1920s.'],
+                    'call'       : ['act', 'CALL an uber', 'No reception. Monty Hall is just too far from civilization. Guess that helped the establishment and patrons avoid the law in the 1920s.', 'keep', 'requirement','cell phone'],
                     'walk'       : ['act', 'WALK home', 'Then again, maybe not. It was a 30-minute drive.'],
                   },
   'lobby_dark'   :{
@@ -87,7 +88,7 @@ rooms = {
                     'wait'       : ['act', 'WAIT and listen', 'Did you hear that? Did it hear you?'],
                   },
   'backrooms'    :{
-                    'desc'       : 'BACKROOMS:\n  Fumbling into the backrooms and up a flight of stairs, you bump into something in the darkness. Something feathery, overdressed, and with a bony elbow.\n \n "Ouch. Who bumped me?" It whispered.\n \n  Recognizing the voice you question, "Mirri?"\n \n  "Glad you decided to show, but you, George, and I need to hurry to the balcony. I will fill you in as we go along."',
+                    'desc'       : 'BACKROOMS:\n  Fumbling into the backrooms and up a flight of stairs, you bump into something in the darkness. Something feathery,\n overdressed, and with a bony elbow. "Ouch. Who bumped me?" It whispered.\n \n  Recognizing the voice you question, "Mirri?"\n \n  "Glad you decided to show, but you, George, and I need to hurry to the balcony. I will fill you in as we go along."',
                     'follow'     : ['move', 'balcony', 'FOLLOW Mirri'],
                     'turn'       : ['act', 'TURN around', 'Mirri pulls your arm, "Nope. You are going this way."'],
                   },
@@ -95,7 +96,7 @@ rooms = {
 inventory =       {  
                     'cell phone' : ['item', 'cell phone', 'Powered, but only one bar here. Maybe I should climb a tree.'],
                     'lint'       : ['item', 'lint', 'Fluff. Always to be found when you need it.'],
-                    'wallet'     : ['item', 'wallet', '- Cards ... check.\n-Cash ... check.\n-Breath mints ... darn.'],
+                    'wallet'     : ['item', 'wallet', '- Cards ... check.\n- Cash ... check.\n- Breath mints ... darn.'],
                   } 
 remove_acts =     {
                     'invite'      : 'invite',
@@ -107,7 +108,8 @@ destroy_items =   {
 
 # ========== INITIAL STATE ===============
 current_room = 'porch'
-
+grue = 0
+game_over = 0
 # ========== STATUS SCREEN ==========
 def status():
   os.system("clear")
@@ -142,10 +144,20 @@ def status():
   print('======================================   Type a KEYWORD to make your actions.   ======================================', '\n')
 
 # ========== GAME LOOP ===============
+#def main():
+#  grue = 0
+#  game_over = 0
+
 while True:
     status()
 
-    while True:
+    if game_over == 1:                                                                                      # EXIT AFTER GAME OVER
+        if grue == 3:
+            print("You were eaten by a grue! - GAME OVER")
+        input("Press ENTER to exit.")
+        sys.exit()
+    
+    while game_over == 0:
         choice = input('> ',)
         choice = choice.lower()
 
@@ -180,6 +192,11 @@ while True:
             break
 
         elif choice in rooms[current_room] and rooms[current_room][choice][0] == "act":                     # PERFORM ACTIONS
+            if current_room == "darkness" and choice == "wait":                                               # EATEN BY GRUE
+                grue += 1
+                if grue == 3:
+                    game_over = 1
+                    break
             try:
                 if rooms[current_room][choice][4] == "requirement" and rooms[current_room][choice][5] not in inventory:
                     print(f"Cannot do that without {rooms[current_room][choice][5].upper()}.")
@@ -197,5 +214,9 @@ while True:
         else:    
             print("Action not available.")
             continue
-
     else: continue
+
+#if __name__ == "__main__":
+#
+#  while True:
+#      main()
