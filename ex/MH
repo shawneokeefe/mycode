@@ -23,7 +23,7 @@ rooms = {
                     'desc'       : 'RECEPTION:\n  You take off your fedora and clack into the polished halls of an impressive foyer overlooked by a deep gallery\n  and steeped in jazz.  The lone receptionist perks up from behind a reception counter and gestures to you.\n "All parties are meeting in the lounge on your left. Lockout starts soon."',
                     'turn'       : ['move', 'lounge', 'TURN into the lounge'],
                     'wander'     : ['move', 'gallery', 'WANDER up the gallery'],
-                    'suse'      : ['act', '"I am with SUSE\'s group. They arrive?"','"So, you\'re the third. It\'s a fun role. Go on ahead before you get replaced. " the receptionist answered.'],
+                    'suse'       : ['act', '"I am with SUSE. She arrive?"','"So, you\'re her partner. It\'s a fun role. Join her in the lounge before you get replaced. " the receptionist answered.'],
                     'return'     : ['act', 'RETURN to the curb', 'Alas! You can see your ride already disappearing down the driveway.'],
                     'call'       : ['act', 'CALL your friends', 'Better luck shouting ... or just go into the lounge.', 'keep', 'requirement','cell phone'],
                     'check'      : ['act', 'CHECK your invitation', 'Hmm, where is it? Oh well, better just get moving.'],                 
