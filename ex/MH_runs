@@ -22,18 +22,19 @@ rooms = {
                   },
   'reception'    :{
                     'desc'       : 'RECEPTION:\n  You take off your fedora and clack into the polished halls of an impressive foyer overlooked by a deep gallery\n  and steeped in jazz.  The lone receptionist perks up from behind a reception counter and gestures to you.\n "All parties are meeting in the lounge on your left. Lockout starts soon."',
-                    'turn'       : ['move', 'lounge', 'TURN into the lounge'],
-                    'wander'     : ['move', 'gallery', 'WANDER up the gallery'],
+                    'turn'       : ['move', 'lounge', 'TURN left into the lounge'],
+                    'wander'     : ['move', 'gallery', 'WANDER right into the gallery'],
                     'suse'       : ['act', '"I am with SUSE. She arrive?"','"So, you\'re her partner. It\'s a fun role. Join her in the lounge before you get replaced. " the receptionist answered.'],
                     'return'     : ['act', 'RETURN to the curb', 'Alas! You can see your ride already disappearing down the driveway.'],
                     'call'       : ['act', 'CALL your friends', 'Better luck shouting ... or just go into the lounge.', 'keep', 'requirement','cell phone'],
                     'check'      : ['act', 'CHECK your invitation', 'Hmm, where is it? Oh well, better just get moving.'],                 
                   },
   'gallery'      :{
-                    'desc'       : 'GALLERY:\n  Taking your own time, you opt for a view from the gallery. The walls are littered with insets of period art,\n  memorabilia, and summaries of historical significance. As you scroll the displays, the lights fall. The music too has into the scintillating chandelier,\n  the lights dash leaving you blind with a rainbowed afterimage. The music stopped and all is silent.',
-                    'search'     : ['move', 'lobby', 'Carefully SEARCH your way downstairs'],
-                    'wait'       : ['act', 'WAIT a moment', 'The false colors fade, but no time restores the lights. Only a small candle flickers from down below.', 'remove'],
+                    'desc'       : 'GALLERY:\n  Taking your own time, you opt to explore the gallery. The walls are littered with insets of period art,\n  memorabilia, and summaries of historical significance. As you scroll the displays, the lights fall, all goes silent.',
+                    'fumble'     : ['move', 'lobby', 'Carefully FUMBLE your your way back to the lobby'],
+                    'wait'       : ['act', 'WAIT a moment', 'No time restores the lights.'],
                     'call'       : ['act', 'CALL out to the staff', 'No response. Perhaps the staff are in the lounge or backrooms.'],
+
                   },
   'lounge'       :{
                     'desc'       : 'LOUNGE:\n  You entered the lounge, perhaps just barely soon enough. Guests were already filtering out and into the ballroom beyond.\n  Bright lights, art deco, and a glass gallery for a bar. Nothing stood out so much as the period ash tray with the sign,\n  "No Smoking."  Anachronisms aside, you spot Suse instantly, centered on the bar balancing a cocktail in her hand, a\n  giant plumed red hat on her head, and serpent around the shoulders.\n\n  She spots you and calls out, "Glad you could make it, and we got matching hats. How sweet of you." She rang a little\n  bell on the counter and beckoned you over. Mirri handed off her snake to the staff.\n\n  "Don\'t mind Mr. Rossum, I don\'t even know why I brought him tonight. You however have a purpose. Follow me."',
@@ -55,10 +56,10 @@ rooms = {
                   },                 
   'lobby'        :{
                     'desc'       : 'LOBBY:\n  What happened to the lights and music? The entrance is lit only a by sputtering candle. The darkness closes in.',
-                    'search'     : ['move', 'lobby_dark','SEARCH the hall'],
+                    'delve'      : ['move', 'darkness','DELVE into the darkness'],
                     'go'         : ['move', 'outside', 'GO outside'],
-                    'close'      : ['move', 'lobby_dark', 'CLOSE the door'],
-                    'candle'     : ['item', 'candle', 'Mmmm! Mint and cinnamon.'],
+                    'close'      : ['act', 'CLOSE the door', 'A gust from the entrance blows out the candle. You are plunged into total darkness'],
+                    'lit candle' : ['item', 'lit candle', 'Mmmm! Mint and cinnamon.'],
                     #'burn'       : ['use', 'invitation', 'BURN your invitation', 'The paper curls, chars, and crumbles to dust.'],
                   },
   'outside'      :{
@@ -66,11 +67,6 @@ rooms = {
                     'return'     : ['move', 'darkness', 'RETURN to Monty Hall'],
                     'call'       : ['act', 'CALL an uber', 'No reception. Monty Hall is just too far from civilization. Guess that helped the establishment and patrons avoid the law in the 1920s.', 'keep', 'requirement','cell phone'],
                     'walk'       : ['act', 'WALK home', 'Then again, maybe not. It was a 30-minute drive.'],
-                  },
-  'lobby_dark'   :{
-                    'desc'       : 'LOBBY:\n  A gust from the entrance blows out the candle by the entrance. You are plunged into total darkness.',
-                    'delve'      : ['move', 'darkness', 'DELVE further into the darkness'],
-                    'turn'       : ['move', 'outside', 'TURN for the exit'],
                   },                
   'darkness'     :{
                     'desc'       : 'DARKNESS:\n  So dark ... All is the void.',
@@ -112,7 +108,7 @@ def status():
                                      ╩ ╩╚═╝╝╚╝ ╩  ╩   ╩ ╩╩ ╩╩═╝╩═╝  ╩ ╩╚═╝╩╚══╩╝╚═╝╩╚═
 =======================================================================================================================''')
     print()
-    print(rooms[current_room]['desc'], "\n")
+    print(f"{rooms[current_room]['desc']} \n")
     print('=======================================================================================================================')
 
     print(f"INVENTORY:  ", end="")
@@ -182,9 +178,10 @@ while True:
             break
 
         elif choice in rooms[current_room] and rooms[current_room][choice][0] == "act":                     # PERFORM ACTIONS
-            if current_room == "darkness" and choice == "wait":                                             # EATEN BY GRUE
+
+            if current_room == "darkness" or "gallery" and choice == "wait":                                # EATEN BY GRUE
                 grue += 1
-                if grue == 3:
+                if grue >= 3 and "lit candle" not in inventory or "lit candle" not in current_room:
                     game_over = 1
                     break
             try:
@@ -199,6 +196,14 @@ while True:
             except:
                 print(f"{rooms[current_room][choice][2]} \n")
                 continue
+            finally:
+                if choice == "close" and current_room == "lobby" and "lit candle" not in inventory:              # CONVERT CANDLE
+                    del rooms[current_room]["lit candle"]
+                    rooms[current_room] = ['item', 'candle', 'At least it stil smells good.']
+                    #print(f"{rooms[current_room][choice][2]} \n")
+                    input("Press enter to continue.\n")
+                    break
+
             print(f"{rooms[current_room][choice][2]} \n")
         
         else:    

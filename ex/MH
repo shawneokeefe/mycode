@@ -182,7 +182,7 @@ def main():
                 break
 
             elif choice in rooms[current_room] and rooms[current_room][choice][0] == "act":                     # PERFORM ACTIONS
-                if current_room == "darkness" and choice == "wait":                                             # EATEN BY GRUE
+                if current_room == "darkness" or "gallery" and choice == "wait":                                             # EATEN BY GRUE
                     grue += 1
                     if grue == 3:
                         game_over = 1
