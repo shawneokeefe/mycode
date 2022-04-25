@@ -1,10 +1,11 @@
 #!/usr/bin/env python3
+'''This module is a text-based RPG.'''
 
-# ========== IMPORTS ==========
-import os
-import sys
+# ======================================== IMPORTS
+import os             #ENABLES FUNCTIONS: os.system("clear")
+import sys            #ENABLES FUNCTIONS: system.exit()
 
-# ========== DICTIONARIES / LISTS ===============
+# ======================================== DICTIONARIES / LISTS
 rooms = {
   'porch'        :{
                     'desc'       : 'MONTY HALL PORCH:\n  Your driver pulls up to the curb and you get out. Drizzling rain hastens you up the steps to Monty Hall.\n  Renovated in the last three months, the old estate is awash with lights and pouring with music.\n  Costumed up for the bootleg era, you are eager to join your co-workers in the interactive mystery murder theater.',
@@ -58,7 +59,7 @@ rooms = {
                     'go'         : ['move', 'outside', 'GO outside'],
                     'close'      : ['move', 'lobby_dark', 'CLOSE the door'],
                     'candle'     : ['item', 'candle', 'Mmmm! Mint and cinnamon.'],
-                    #'burn'      : ['use', 'invitation', 'BURN your invitation'The paper curls, chars, and crumbles to dust.'],
+                    #'burn'       : ['use', 'invitation', 'BURN your invitation', 'The paper curls, chars, and crumbles to dust.'],
                   },
   'outside'      :{
                     'desc'       : 'OUTSIDE:\n The rain isn\'t letting up and your suit isn\'t getting any drier. Nothing to see but the long private drive shimmering\n with the reflection of a row of lamps.',
@@ -95,117 +96,115 @@ destroy_items =   {
                     'candle'      : 'candle',
                   }
 
-# ========== INITIAL STATE ===============
+# ======================================== INITIAL STATE
 current_room = 'porch'
-grue = 0
 game_over = 0
-# ========== STATUS SCREEN ==========
+grue = 0
+
+# ======================================== STATUS SCREEN
 def status():
-  os.system("clear")
-  print('''
+    '''This function refreshes the screen and prints the current status of the RPG scenario.'''
+    os.system("clear")
+    print('''
 =======================================================================================================================
                                      ╔╦╗╔═╗╔╗╔╔╦╗╦ ╦  ╦ ╦╔═╗╦  ╦    ╔╦╗╦ ╦╦═╗╔╦╗╔═╗╦═╗
                                      ║║║║ ║║║║ ║ ╚╦╝  ╠═╣╠═╣║  ║    ║║║║ ║╠╦╝ ║║║╣ ╠╦╝
                                      ╩ ╩╚═╝╝╚╝ ╩  ╩   ╩ ╩╩ ╩╩═╝╩═╝  ╩ ╩╚═╝╩╚══╩╝╚═╝╩╚═
 =======================================================================================================================''')
-  print()
-  print(rooms[current_room]['desc'], "\n")
-  print('=======================================================================================================================')
+    print()
+    print(rooms[current_room]['desc'], "\n")
+    print('=======================================================================================================================')
 
-  print(f"INVENTORY:  ", end="")
-  for inv_elements in inventory.keys():
-    print(f"{inv_elements.upper()}, ", end="")
+    print(f"INVENTORY:  ", end="")
+    for inv_elements in inventory.keys():
+        print(f"{inv_elements.upper()}, ", end="")
 
-  print("\nACTIONS:")
-  for act_elements in rooms[current_room]:
-    if rooms[current_room][act_elements][0] == "act":
-      print(f" - {rooms[current_room][act_elements][1]}")
-    if rooms[current_room][act_elements][0] == "move":
-      print(f" - {rooms[current_room][act_elements][2]}")
+    print("\nACTIONS:")
+    for act_elements in rooms[current_room]:
+        if rooms[current_room][act_elements][0] == "act":
+            print(f" - {rooms[current_room][act_elements][1]}")
+        if rooms[current_room][act_elements][0] == "move":
+            print(f" - {rooms[current_room][act_elements][2]}")
 
-  print(f"ITEMS IN ROOM:  ", end="")
-  for elements in rooms[current_room]:
-    if rooms[current_room][elements][0] == 'item':
-      print(f"{rooms[current_room][elements][1].upper()},  ", end="")
-  print()
+    print(f"ITEMS IN ROOM:  ", end="")
+    for elements in rooms[current_room]:
+        if rooms[current_room][elements][0] == 'item':
+            print(f"{rooms[current_room][elements][1].upper()},  ", end="")
+    print()
 
-  print('======================================================================================================================')
-  print('======================================   Type a KEYWORD to make your actions.   ======================================', '\n')
+    print('======================================================================================================================')
+    print('======================================   Type a KEYWORD to make your actions.   ======================================', '\n')
 
 # ========== GAME LOOP ===============
-#def main():
-#  grue = 0
-#  game_over = 0
+def main():
+    '''This function process the player's commands and calls for status screen updates.'''
+    while True:
+        status()
 
-while True:
-    status()
-
-    if game_over == 1:                                                                                      # EXIT AFTER GAME OVER
-        if grue == 3:
-            print("You were eaten by a grue! - GAME OVER")
-        input("Press ENTER to exit.")
-        sys.exit()
+        if game_over == 1:                                                                                      # EXIT AFTER GAME OVER
+            if grue == 3:
+                print("You were eaten by a grue! - GAME OVER")
+            input("Press ENTER to exit.")
+            sys.exit()
     
-    while game_over == 0:
-        choice = input('> ',)
-        choice = choice.lower()
+        while game_over == 0:
+            choice = input('> ',)
+            choice = choice.lower()
 
-        if choice == 'teleport':                                                                            # TELEPORT
-            print("AVAILABLE ROOMS:")
-            for room_names in rooms.keys():
-                print(f"{room_names}  ", end="")
-            q_teleport = input("\n\n, Teleport to which room? \n> ")
-            if q_teleport in rooms.keys():
-                current_room = q_teleport
-                break
-            else: continue         
-
-        elif choice in rooms[current_room] and rooms[current_room][choice][0] == "item":                    # ADD TO INVENTORY, REMOVE FROM ROOM
-            inventory[choice] = ['item', rooms[current_room][choice][1], rooms[current_room][choice][2]]
-            del rooms[current_room][choice]
-            input(f"Added {choice.upper()} to inventory. Press enter to continue. \n")
-            break
-
-        elif choice in inventory:                                                                           # CHECK ITEM DESCRIPTION, DROP INTO ROOM
-            print(f"{inventory[choice][2]}  \n")
-            q_drop = input(f"Drop {choice.upper()}? (Y/N) \n> ")
-            if q_drop == "Y" or q_drop == "y":
-                rooms[current_room][choice] = inventory[choice]          
-                inventory.pop(choice)
-                input(f"Dropped {choice.upper()}. Press enter to continue. \n")
-                break
-            else: continue
-
-        elif choice in rooms[current_room] and rooms[current_room][choice][0] == "move":                    # CHANGE ROOMS
-            current_room = rooms[current_room][choice][1]
-            break
-
-        elif choice in rooms[current_room] and rooms[current_room][choice][0] == "act":                     # PERFORM ACTIONS
-            if current_room == "darkness" and choice == "wait":                                               # EATEN BY GRUE
-                grue += 1
-                if grue == 3:
-                    game_over = 1
+            if choice == 'teleport':                                                                            # TELEPORT
+                print("AVAILABLE ROOMS:")
+                for room_names in rooms.keys():
+                    print(f"{room_names}  ", end="")
+                q_teleport = input("\n\n, Teleport to which room? \n> ")
+                if q_teleport in rooms.keys():
+                    current_room = q_teleport
                     break
-            try:
-                if rooms[current_room][choice][4] == "requirement" and rooms[current_room][choice][5] not in inventory:
-                    print(f"Cannot do that without {rooms[current_room][choice][5].upper()}.")
-                    continue
-                elif rooms[current_room][choice][3] == "remove":
+                else: continue         
+
+            elif choice in rooms[current_room] and rooms[current_room][choice][0] == "item":                    # ADD TO INVENTORY, REMOVE FROM ROOM
+                inventory[choice] = ['item', rooms[current_room][choice][1], rooms[current_room][choice][2]]
+                del rooms[current_room][choice]
+                input(f"Added {choice.upper()} to inventory. Press enter to continue. \n")
+                break
+
+            elif choice in inventory:                                                                           # CHECK ITEM DESCRIPTION, DROP INTO ROOM
+                print(f"{inventory[choice][2]}  \n")
+                q_drop = input(f"Drop {choice.upper()}? (Y/N) \n> ")
+                if q_drop == "Y" or q_drop == "y":
+                    rooms[current_room][choice] = inventory[choice]          
+                    inventory.pop(choice)
+                    input(f"Dropped {choice.upper()}. Press enter to continue. \n")
+                    break
+                else: continue
+
+            elif choice in rooms[current_room] and rooms[current_room][choice][0] == "move":                    # CHANGE ROOMS
+                current_room = rooms[current_room][choice][1]
+                break
+
+            elif choice in rooms[current_room] and rooms[current_room][choice][0] == "act":                     # PERFORM ACTIONS
+                if current_room == "darkness" and choice == "wait":                                             # EATEN BY GRUE
+                    grue += 1
+                    if grue == 3:
+                        game_over = 1
+                        break
+                try:
+                    if rooms[current_room][choice][4] == "requirement" and rooms[current_room][choice][5] not in inventory:
+                        print(f"Cannot do that without {rooms[current_room][choice][5].upper()}.")
+                        continue
+                    elif rooms[current_room][choice][3] == "remove":
+                        print(f"{rooms[current_room][choice][2]} \n")
+                        rooms[current_room].pop(choice)
+                        input("Press enter to continue.\n")
+                        break
+                except:
                     print(f"{rooms[current_room][choice][2]} \n")
-                    rooms[current_room].pop(choice)
-                    input("Press enter to continue.\n")
-                    break
-            except:
+                    continue
                 print(f"{rooms[current_room][choice][2]} \n")
-                continue
-            print(f"{rooms[current_room][choice][2]} \n")
             
-        else:    
-            print("Action not available.")
-            continue
-    else: continue
+            else:    
+                print("Action not available.")
+                continue
+        else: continue
 
-#if __name__ == "__main__":
-#
-#  while True:
-#      main()
+if __name__ == "__main__":
+    main()
