@@ -1,9 +1,11 @@
 #!/usr/bin/env python3
+'''This module is a text-based RPG.'''
 
-# ========== IMPORTS ==========
-import os
+# ======================================== IMPORTS
+import os             #ENABLES FUNCTIONS: os.system("clear")
+import sys            #ENABLES FUNCTIONS: system.exit()
 
-# ========== DICTIONARIES / LISTS ===============
+# ======================================== DICTIONARIES / LISTS
 rooms = {
   'porch'        :{
                     'desc'       : 'MONTY HALL PORCH:\n  Your driver pulls up to the curb and you get out. Drizzling rain hastens you up the steps to Monty Hall.\n  Renovated in the last three months, the old estate is awash with lights and pouring with music.\n  Costumed up for the bootleg era, you are eager to join your co-workers in the interactive mystery murder theater.',
@@ -16,13 +18,13 @@ rooms = {
                     'return'     : ['move', 'lobby', 'RETURN to Monty Hall'],
                     'call'       : ['act', 'CALL an uber and go home', 'Then again, maybe not. You came here to enjoy yourself. Might as well do it.', 'keep', 'requirement','cell phone'],
                     'jump'       : ['act', 'JUMP in the puddles', 'Splash, splash, splash!'],
-                    'wet paper'  : ['item', 'wet paper', 'Dripping, but readable:\n Hi. George and I are attending the opening night for the Monty Hall dinner/mystery theater on 4 May. I bet you already heard about the place, but do not forget to dress the part. We will be swinging the old-timesy fashion at 7pm./n /n Your seat is paid, so if you are late .../n I will kill you. LOL!/n /n  - Mirri'],
+                    'wet paper'  : ['item', 'wet paper', 'Dripping, but readable:\n\n Hi. Join me for Monty Hall\'s opening night for its dinner/mystery theater on 4 May. I bet you already heard about\n  the place, but do not forget to dress the part. We will be swinging the old-timesy fashion at 7pm.\n \n Your seat is paid, so if you are late ...\n I will kill you. LOL!\n \n  - Suse'],
                   },
   'reception'    :{
                     'desc'       : 'RECEPTION:\n  You take off your fedora and clack into the polished halls of an impressive foyer overlooked by a deep gallery\n  and steeped in jazz.  The lone receptionist perks up from behind a reception counter and gestures to you.\n "All parties are meeting in the lounge on your left. Lockout starts soon."',
                     'turn'       : ['move', 'lounge', 'TURN into the lounge'],
                     'wander'     : ['move', 'gallery', 'WANDER up the gallery'],
-                    'mirri'      : ['act', '"I am with MIRRI\'s group. They arrive?"','"So, you\'re the third. It\'s a fun role. Go on ahead before you get replaced. " the receptionist answered.'],
+                    'suse'       : ['act', '"I am with SUSE. She arrive?"','"So, you\'re her partner. It\'s a fun role. Join her in the lounge before you get replaced. " the receptionist answered.'],
                     'return'     : ['act', 'RETURN to the curb', 'Alas! You can see your ride already disappearing down the driveway.'],
                     'call'       : ['act', 'CALL your friends', 'Better luck shouting ... or just go into the lounge.', 'keep', 'requirement','cell phone'],
                     'check'      : ['act', 'CHECK your invitation', 'Hmm, where is it? Oh well, better just get moving.'],                 
@@ -34,31 +36,20 @@ rooms = {
                     'call'       : ['act', 'CALL out to the staff', 'No response. Perhaps the staff are in the lounge or backrooms.'],
                   },
   'lounge'       :{
-                    'desc'       : 'LOUNGE:\n    You enter the lounge. It is art deco at its highest. The deep room hosted small army of chairs and hors d\'oeuvres.\n  No speakeasy would be complete without a bar, and there it is, a long counter highlighted by a cascade of  bottles.\n  Nothing stood out so much as the period ash tray with the sign "No Smoking." Anachronisms aside, you scour the room\n  for your party.\n    There is Mirri on the chaise. She went all out sporting a giant red hat topped with a back-dyed plume.\n  George must be her "date" tonight, but it seems he has already started to mingle./n    Before you reach Mirri she squeals,\n  "Snake! I\'m bit," and melts lifeless into her seat. Everyone stares and you see the snake slither off the chaise and\n  under an armoire.  George rushes close to her and exclaimed, "She\'s not breathing! Poison! Is there a doctor in the house?"\n  Staff interjected, "Keep away, move into the ballroom." as they shuffled the "panicked/laughing" patrons out\n  of the room and through the ballroom doors. He could have acted a little better, but now you wonder if you were also\n  meant to have a role in the night\'s plot.',
-                    'wait'       : ['move', 'lounge_empty', 'WAIT'],
-                    'approach'   : ['act', 'APPROACH Mirri and George', '"Wait for the crowd, don\'t spoil it," George whispers.'],
-                    'look'       : ['act', 'LOOK for the snake', 'The crevice is too dark, and you certainly aren\'t putting a hand down there.'],
-                    'follow'     : ['act', 'FOLLOW the crowd', 'As you move to the ballroom, a waiter stops you, "Wait a moment and see your friends."'],
-                    'return'     : ['act', 'RETURN to the foyer', 'You try the doors. Locked... they won\t budge.'],                  
-                  },
-  'lounge_2'     :{
-                    'desc'       : 'LOUNGE:\n The room quickly empties leaving you, Mirri, and George. A lone waitstaff was busy wrangling out the snake.\n  "Finally, our fellow murderer is here," exclaimed Mirri.',
-                    'follow'     : ['move', 'balcony', 'FOLLOW Mirri'],
-                    'stay'       : ['move', 'lounge_empty', 'STAY behind'],
-                    'snake'      : ['act', '"That SNAKE was real."', '"It\'s called acting darling.," Mirri teased, "No bite, ... just a tame python."', 'remove'],
-                    'late'       : ['act', '"Sorry I am late,"', 'Not late. You were supposed to show up later than the rest of us." Mirri replied.', 'remove'],
-                    'murderer'   : ['act', '"How am I the MURDERER"', 'George grinned. "Because you get to be the mysterious Monty Hall! and we are your assistants! The place is named after him, and the three of us get to reenact his deeds"', 'remove'],
-                    'next'       : ['act', '"What happens NEXT."', '"Ask later, come on." Mirri beckoned.', 'remove'],
-                  },
-  'lounge_empty' :{
-                    'desc'       : 'LOUNGE:\n  "How disappointing," you say, "I came to do some sleuthing, and I will do just that."/n /n  Okay then. But we have to leave to help the show. The foyer should be unlocked now. Enjoy the snakes, ... I mean snacks," Mirri replied.\n \n  Mirri, George, and the staff exit out a side door. Nothing but you and a room full of alcohol.',
-                    'return'     : ['move', 'foyer', 'RETURN to the foyer'],
-                    'follow'     : ['act', 'FOLLOW Mirri', 'The side door is locked. I guess there is no second chance to jump on the bandwagon.'],
-                    'enter'      : ['act', 'ENTER the ballroom', 'Locked.', 'remove'],
-                    'bang'       : ['act', 'BANG on ballroom door', 'No response. What is going on in there?'],
+                    'desc'       : 'LOUNGE:\n  You entered the lounge, perhaps just barely soon enough. Guests were already filtering out and into the ballroom beyond.\n  Bright lights, art deco, and a glass gallery for a bar. Nothing stood out so much as the period ash tray with the sign,\n  "No Smoking."  Anachronisms aside, you spot Suse instantly, centered on the bar balancing a cocktail in her hand, a\n  giant plumed red hat on her head, and serpent around the shoulders.\n\n  She spots you and calls out, "Glad you could make it, and we got matching hats. How sweet of you." She rang a little\n  bell on the counter and beckoned you over. Mirri handed off her snake to the staff.\n\n  "Don\'t mind Mr. Rossum, I don\'t even know why I brought him tonight. You however have a purpose. Follow me."',
+                    'follow'     : ['move', 'balcony', 'FOLLOW Suse', 'remove'], #NEED TO REMOVE IF YOU CHOOSE TO STAY
+                    'exit'       : ['move', 'lobby', 'EXIT to the lobby'],
+                    'refuse'     : ['act', 'REFUSE and stay behind','"How disappointing," you say, "I came to do some sleuthing, and I will do just that."\n \n  "You\'ll regret this, but must bid you farewell to do my part. Enjoy the snakes, ... I mean snacks," Suse snapped.\n \n  Suse exitted out a side door. Nothing but you and a room full of alcohol.'],
+                    'friend'     : ['act', '"So, your FRIEND there."', '"Darling, ... it\'s called acting the part.," Suse teased, "Rossum is tame, even so python\'s are not venomous."', 'remove'],
+                    'late'       : ['act', '"Sorry I am LATE,"', 'Not late. You were supposed to show up later than the rest of us." Suse replied.', 'remove'],
+                    'purpose'    : ['act', '"PURPOSE?"', 'Suse grinned. "Because you get to be the mysterious Monty Hall!, and I am your lovely partner in crime.\n Were are going to reenact history tonight."', 'remove'],
+                    'enter'      : ['act', 'ENTER the ballroom', 'Locked.  What might be going on in there?', 'remove'],
+                    'next'       : ['act', '"What happens NEXT."', '"Ask later, come on." Suse beckoned.', 'remove'],
+                    'cocktail'   : ['item', 'cocktail', 'At least you had time to snag a drink. After all, none of this would be here without alcohol.'],
+                    'snacks'     : ['item', 'snacks', 'A doggy bag is okay, right?']
                   },
   'balcony'      :{
-                    'desc'       : 'BALLROOM BALCONY:\n  The pathway leads upstairs ending at a wide balcony far above the ballroom. You can hear a cacophony of murmering and laughter down below.\n  "This is where the action happens," explains Mirri, "This isn\'t just a mystery theater, it is an escape room."  The staff will play out recordings\n  to manipulate our partiers while we choose how the house deals out its cards from behind the scenes.\n  Watch and I will guide you through it.',
+                    'desc'       : 'BALLROOM BALCONY:\n  The pathway leads upstairs ending at a wide balcony far above the ballroom. You can hear a\n  cacophony of murmering and laughter down below.\n\n  "This is where the action happens," explains Suse, "This isn\'t just a mystery theater, it is an escape room."\n  The staff will play out recordings\n  to manipulate our partiers while we choose how the house deals out its cards\n  from behind the scenes. Watch and I will guide you through it.',
                     'observe'    : ['act', 'OBSERVE the scene below', 'That\'s all folks. Tune in again for Part 2'],
                     'close'      : ['act', 'CLOSE your eyes', 'You can\'t help but peek'],
                   },                 
@@ -66,14 +57,14 @@ rooms = {
                     'desc'       : 'LOBBY:\n  What happened to the lights and music? The entrance is lit only a by sputtering candle. The darkness closes in.',
                     'search'     : ['move', 'lobby_dark','SEARCH the hall'],
                     'go'         : ['move', 'outside', 'GO outside'],
-                    'close'      : ['move', 'lobby dark', 'CLOSE the door'],
-                    'candle'     : ['item', 'candle', 'Mmmm! Pumpkin spice.'],
-                    #'burn'      : ['use', 'invitation', 'BURN your invitation'The paper curls, chars, and crumbles to dust.'],
+                    'close'      : ['move', 'lobby_dark', 'CLOSE the door'],
+                    'candle'     : ['item', 'candle', 'Mmmm! Mint and cinnamon.'],
+                    #'burn'       : ['use', 'invitation', 'BURN your invitation', 'The paper curls, chars, and crumbles to dust.'],
                   },
   'outside'      :{
                     'desc'       : 'OUTSIDE:\n The rain isn\'t letting up and your suit isn\'t getting any drier. Nothing to see but the long private drive shimmering\n with the reflection of a row of lamps.',
                     'return'     : ['move', 'darkness', 'RETURN to Monty Hall'],
-                    'call'       : ['act', 'CALL an uber', 'No reception. Monty Hall is just too far from civilization. Guess that helped the establishment and patrons avoid the law in the 1920s.'],
+                    'call'       : ['act', 'CALL an uber', 'No reception. Monty Hall is just too far from civilization. Guess that helped the establishment and patrons avoid the law in the 1920s.', 'keep', 'requirement','cell phone'],
                     'walk'       : ['act', 'WALK home', 'Then again, maybe not. It was a 30-minute drive.'],
                   },
   'lobby_dark'   :{
@@ -87,15 +78,15 @@ rooms = {
                     'wait'       : ['act', 'WAIT and listen', 'Did you hear that? Did it hear you?'],
                   },
   'backrooms'    :{
-                    'desc'       : 'BACKROOMS:\n  Fumbling into the backrooms and up a flight of stairs, you bump into something in the darkness. Something feathery, overdressed, and with a bony elbow.\n \n "Ouch. Who bumped me?" It whispered.\n \n  Recognizing the voice you question, "Mirri?"\n \n  "Glad you decided to show, but you, George, and I need to hurry to the balcony. I will fill you in as we go along."',
-                    'follow'     : ['move', 'balcony', 'FOLLOW Mirri'],
-                    'turn'       : ['act', 'TURN around', 'Mirri pulls your arm, "Nope. You are going this way."'],
+                    'desc'       : 'BACKROOMS:\n  Fumbling into the backrooms and up a flight of stairs, you bump into something in the darkness. Something feathery,\n  overdressed, and with a bony elbow. "Ouch. Who bumped me?" It whispered.\n \n  Recognizing the voice you question, "Suse?"\n \n  "Glad you decided to show, but you and I need to hurry to the balcony. I will fill you in as we go along."',
+                    'follow'     : ['move', 'balcony', 'FOLLOW Suse'],
+                    'turn'       : ['act', 'TURN around', 'Suse pulls your arm, "Nope. You are going this way."'],
                   },
                   }
 inventory =       {  
                     'cell phone' : ['item', 'cell phone', 'Powered, but only one bar here. Maybe I should climb a tree.'],
                     'lint'       : ['item', 'lint', 'Fluff. Always to be found when you need it.'],
-                    'wallet'     : ['item', 'wallet', '- Cards ... check.\n-Cash ... check.\n-Breath mints ... darn.'],
+                    'wallet'     : ['item', 'wallet', '- Cards ... check.\n- Cash ... check.\n- Breath mints ... darn.'],
                   } 
 remove_acts =     {
                     'invite'      : 'invite',
@@ -105,47 +96,58 @@ destroy_items =   {
                     'candle'      : 'candle',
                   }
 
-# ========== INITIAL STATE ===============
+# ======================================== INITIAL STATE
 current_room = 'porch'
+game_over = 0
+grue = 0
 
-# ========== STATUS SCREEN ==========
+# ======================================== STATUS SCREEN
 def status():
-  os.system("clear")
-  print('''
+    '''This function refreshes the screen and prints the current status of the RPG scenario.'''
+    os.system("clear")
+    print('''
 =======================================================================================================================
                                      ╔╦╗╔═╗╔╗╔╔╦╗╦ ╦  ╦ ╦╔═╗╦  ╦    ╔╦╗╦ ╦╦═╗╔╦╗╔═╗╦═╗
                                      ║║║║ ║║║║ ║ ╚╦╝  ╠═╣╠═╣║  ║    ║║║║ ║╠╦╝ ║║║╣ ╠╦╝
                                      ╩ ╩╚═╝╝╚╝ ╩  ╩   ╩ ╩╩ ╩╩═╝╩═╝  ╩ ╩╚═╝╩╚══╩╝╚═╝╩╚═
 =======================================================================================================================''')
-  print()
-  print(rooms[current_room]['desc'], "\n")
-  print('=======================================================================================================================')
+    print()
+    print(rooms[current_room]['desc'], "\n")
+    print('=======================================================================================================================')
 
-  print(f"INVENTORY:  ", end="")
-  for inv_elements in inventory.keys():
-    print(f"{inv_elements.upper()}, ", end="")
+    print(f"INVENTORY:  ", end="")
+    for inv_elements in inventory.keys():
+        print(f"{inv_elements.upper()}, ", end="")
 
-  print("\nACTIONS:")
-  for act_elements in rooms[current_room]:
-    if rooms[current_room][act_elements][0] == "act":
-      print(f" - {rooms[current_room][act_elements][1]}")
-    if rooms[current_room][act_elements][0] == "move":
-      print(f" - {rooms[current_room][act_elements][2]}")
+    print("\nACTIONS:")
+    for act_elements in rooms[current_room]:
+        if rooms[current_room][act_elements][0] == "act":
+            print(f" - {rooms[current_room][act_elements][1]}")
+        if rooms[current_room][act_elements][0] == "move":
+            print(f" - {rooms[current_room][act_elements][2]}")
 
-  print(f"ITEMS IN ROOM:  ", end="")
-  for elements in rooms[current_room]:
-    if rooms[current_room][elements][0] == 'item':
-      print(f"{rooms[current_room][elements][1].upper()},  ", end="")
-  print()
+    print(f"ITEMS IN ROOM:  ", end="")
+    for elements in rooms[current_room]:
+        if rooms[current_room][elements][0] == 'item':
+            print(f"{rooms[current_room][elements][1].upper()},  ", end="")
+    print()
 
-  print('======================================================================================================================')
-  print('======================================   Type a KEYWORD to make your actions.   ======================================', '\n')
+    print('======================================================================================================================')
+    print('======================================   Type a KEYWORD to make your actions.   ======================================', '\n')
 
 # ========== GAME LOOP ===============
+#def main():
+#    '''This function process the player's commands and calls for status screen updates.'''
 while True:
     status()
 
-    while True:
+    if game_over == 1:                                                                                      # EXIT AFTER GAME OVER
+        if grue == 3:
+            print("You were eaten by a grue! - GAME OVER")
+        input("Press ENTER to exit.")
+        sys.exit()
+
+    while game_over == 0:
         choice = input('> ',)
         choice = choice.lower()
 
@@ -180,6 +182,11 @@ while True:
             break
 
         elif choice in rooms[current_room] and rooms[current_room][choice][0] == "act":                     # PERFORM ACTIONS
+            if current_room == "darkness" and choice == "wait":                                             # EATEN BY GRUE
+                grue += 1
+                if grue == 3:
+                    game_over = 1
+                    break
             try:
                 if rooms[current_room][choice][4] == "requirement" and rooms[current_room][choice][5] not in inventory:
                     print(f"Cannot do that without {rooms[current_room][choice][5].upper()}.")
@@ -193,9 +200,11 @@ while True:
                 print(f"{rooms[current_room][choice][2]} \n")
                 continue
             print(f"{rooms[current_room][choice][2]} \n")
-            
+        
         else:    
             print("Action not available.")
             continue
-
     else: continue
+
+#if __name__ == "__main__":
+#    main()
