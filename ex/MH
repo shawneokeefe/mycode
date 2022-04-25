@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-'''This module is a text-based RPG.'''
+'''This module is a text-based RPG. Made by Shawn O'Keefe'''
 
 # ======================================== IMPORTS
 import os             #ENABLES FUNCTIONS: os.system("clear")

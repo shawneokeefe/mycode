@@ -1,12 +1,13 @@
 #!/usr/bin/env python3
 # ============================== TEMPLATE ==============================
 # input(""(\n)*#)                                       if response.isdigit():   response=int()   break   else: continue
+# var = ~.split("delimiter", max # of splits) 
+
 # dir(function)                                         display possilbe functions/methods for function
 # type(object)                                          display class type of object
 
 # === LISTS & DICTIONARIES ===
-# LIST var_name = ["value","value","value"]             slice ~var_name[0,-1]        list()
-
+# LIST var_name = ["value","value","value"]             slice ~var_name[0,-1]        list()   ~.remove
 
 from filename import filename       
 counter = 1
@@ -37,7 +38,7 @@ for letter,answer in zip(letters,all_ansers):           takes two lists it combi
 # DICT lib_name = {"key": ["value"],"key":["value"]}    slice ~lib_name["key"][0], order irrelevant
 #      lib_name.get("string","if fails")                ~.keys()    ~.values()    add~["key"] = "value"   ~.pop("key")
 #                                                       lib_reformatted=", ".join(lib_name.keys())
-
+                                                        
 
 # === PRINT ===
 # PRINT(f"Insert text {'var/func'} here" )              print(r""" ABSOLUTE TEXT """) print(html.unescape(var/str))
