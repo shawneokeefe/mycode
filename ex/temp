@@ -6,6 +6,11 @@
 # dir(function)                                         display possilbe functions/methods for function
 # type(object)                                          display class type of object
 
+# === API ===
+# import requests
+# url_var= "http://api.open-notify.org/astros.json"
+# var_name = requests.get(url_var).json()
+
 # === LISTS & DICTIONARIES ===
 # LIST var_name = ["value","value","value"]             slice ~var_name[0,-1]        list()   ~.remove
 
@@ -38,7 +43,7 @@ for letter,answer in zip(letters,all_ansers):           takes two lists it combi
 # DICT lib_name = {"key": ["value"],"key":["value"]}    slice ~lib_name["key"][0], order irrelevant
 #      lib_name.get("string","if fails")                ~.keys()    ~.values()    add~["key"] = "value"   ~.pop("key")
 #                                                       lib_reformatted=", ".join(lib_name.keys())
-                                                        
+                                                        dict can use integers as keys (can look like a list element)
 
 # === PRINT ===
 # PRINT(f"Insert text {'var/func'} here" )              print(r""" ABSOLUTE TEXT """) print(html.unescape(var/str))
@@ -84,6 +89,23 @@ for letter,answer in zip(letters,all_ansers):           takes two lists it combi
 # return var_name.json()
 # url = ""      resp= requests.get(url)                 if ~.status_code == 200: return ~.json()     (200 = success)
 #
+# ============== FUNCTIONS ===============
+#Passing an argument to a fuction
+# def function_name(arg1, arg2):                        requires 2 arguments - they are positional (order of input matters)
+#    content of function
+# function_name(arg1, arg2)                             
+
+#============== VARIABLES
+x = y
+
+# global x        put inside a function to declare that x in the function will use the global version
+# return x, y     when function is done, brings variables outside
+# x, y = function()    
+
+# ===============ERRORS -                                List of Errors (Lab 58)       TypeError,  ~Value, ~Syntax, ~Key
+# try:                                                   go to except if there is an error
+# except TypeError:                                      if inside try, a specific type of error occurs, do this
+# finally                                                do regardless of error or not
 
 
 # ========== STANDARD LIBARY IMPORTS ==========         import filename.function (no .py req even if in filename)
@@ -106,6 +128,12 @@ import openpyxl      # panda - w/r (xlsx)
 # import pyexcel       # more basic than pandas
 import matplotlib    # chart/graph data
         # Create  h             DF.plot(kind="barh"             plt.savefig("path/file", bbox_inches="tight")
+import netifaces
+        # netifaces.interfaces()            returns list of if
+        # ~.ifaddresses("if_name")      returns dict for "if" > slicing varies to get IP address, so use AF
+        # ~.AF_.....                    _LINK (ethernet / link layer IF)       _INET             INET6
+import netmico
+
 
 
 # ========== DEFINING VARIABLES =========
