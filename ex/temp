@@ -14,6 +14,8 @@
 # === LISTS & DICTIONARIES ===
 # LIST var_name = ["value","value","value"]             slice ~var_name[0,-1]        list()   ~.remove
 
+#    --- TUPPLE --- list with parenthesis
+
 from filename import filename       
 counter = 1
 for x in trivia["results"]
@@ -43,7 +45,7 @@ for letter,answer in zip(letters,all_ansers):           takes two lists it combi
 # DICT lib_name = {"key": ["value"],"key":["value"]}    slice ~lib_name["key"][0], order irrelevant
 #      lib_name.get("string","if fails")                ~.keys()    ~.values()    add~["key"] = "value"   ~.pop("key")
 #                                                       lib_reformatted=", ".join(lib_name.keys())
-                                                        dict can use integers as keys (can look like a list element)
+#                                                        dict can use integers as keys (can look like a list element)
 
 # === PRINT ===
 # PRINT(f"Insert text {'var/func'} here" )              print(r""" ABSOLUTE TEXT """) print(html.unescape(var/str))
@@ -132,10 +134,27 @@ import netifaces
         # netifaces.interfaces()            returns list of if
         # ~.ifaddresses("if_name")      returns dict for "if" > slicing varies to get IP address, so use AF
         # ~.AF_.....                    _LINK (ethernet / link layer IF)       _INET             INET6
-import netmico
+import paramiko                         library, has custom classes      open SSH connection and execute connections
+        # conn = paramiko.SSHClient()                                                   object represents connection                 
+        # mykey = paramiko.RSAKey.from_private_key_file("/home/student.ssh/id_rsa")     harvest private keys
+        # conn.set_missing_host_key_policy(paramiko.AutoAddPolicy())                    auto-accept host public key
+        # conn.connect(hostname="10.10.2.3", username="bender", pkey=mykey)             set attrib on obj
+        # conn.exec_command("command_as_if_in_CLI")                                     automated actions >>> (ssh_stdin, ssh_stdout, ssh_stderr)      
+        # stdin, stdout, stderr = conn.exec_command("command as if in CLI")             set 3 var from tupple results
+        # stdout.read()                                                                                   
+        print(commandisssue(x, sshsession).decode('utg-8')                              tiny b (byte string) >>> actual string
+   
+
+
+#       --- DEVICE DICTIONARY
+device_list = {}
+ssh zoidberg@10.10.2.5
+ssh bender@10.20.2.3
 
 
 
+
+"be"
 # ========== DEFINING VARIABLES =========
 #variable_name = "value"
 

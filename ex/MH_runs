@@ -197,7 +197,7 @@ while True:
                 print(f"{rooms[current_room][choice][2]} \n")
                 continue
             finally:
-                if choice == "close" and current_room == "lobby" and "lit candle" not in inventory:              # CONVERT LIT CANDLE >>> CANDLE
+                if choice == "close" and current_room == "lobby" and "lit candle" in current_room:              # CONVERT LIT CANDLE >>> CANDLE
                     del rooms[current_room]["lit candle"]
                     rooms[current_room] = ['item', 'candle', 'No longer lit, but at least it still smells good.']
                     #print(f"{rooms[current_room][choice][2]} \n")
