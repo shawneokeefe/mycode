@@ -214,23 +214,22 @@ connection: ssh
 hosts: group_name (or indiv names), localhost           # !ignored_name/group
 gather_facts: yes                                       # gets host info and variables
 
+vars:
+v_name: v_value
+
 tasks: 
-- name:  
-    file: # file.py                                     # MODULE (.py inside ansible folders)
-        state: directory                                # ONLY INDENT PARAMETERS
-        path
+- name:
+  file: # file.py                                     # MODULE (.py inside ansible folders)
+    state: directory                                # ONLY INDENT PARAMETERS
+    path
 become: yes #(like sudu)                                # KEYWORDS NOT INDENTED
 register: var_name                                      # CAPTURES OUTPUT > VAR 
+when:                                                   # IF CONDITION
 
 - name: copy files in ___
-    copy: # copy.py
+  copy: # copy.py
         src: path
         dest: path                                      # use if dir does not exist
-
-
- - name: copy files in ___
-   vars:
-    v_name: v_value
 
   tasks:
   - name:                                               
