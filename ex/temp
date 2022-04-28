@@ -209,28 +209,34 @@ if __name__ == "__main__":                              # indirect call (import)
 # IDEMPOTENCE: when a playbook runs, all changes should be made first time, all green after
 # Host must have python installed for Ansible - else, use ansible to have the source comp. execute code to install python for them
 # Cannot install pyhon on router/switches > use vendor-specific ansible modules 
-
+# 22 PLACES VAR CAN BE DEFINED (inventory, playbook, command line, tasks) - EX: ans/inv/dev/hosts, 
+# inventory - edit path to inventory (user creates path) in ansible config file: ~/.ansible.cfg
+#    [defaults]
+#    host_key_checking = False
+#    inventory = /home/student/mycode/inv/dev/hosts
+          
 ---                                                     # NORMAL DEVICES                                            # NETWORK DEVICES
 name: name_of_playbook                              
 hosts: group_name (or indiv names), localhost           # !ignored_name/group                                       switches (group name)
 connection: ssh                                         # if local, the ansible machine executes the code           network_cli (use username / pw)
-gather_facts: yes                                       # gets host info and variables                              no (use vendor module)
+#inventory
+gather_facts: yes                                       # true (if not listed) gets host info and variables         no (use vendor module)
+become: yes                                             # at this level, all tasks exe. w/ root priv               
+become_method: enable                                   # default is sudu                                           enable ( = sudu)
+register: var_name                                      # CAPTURES OUTPUT > VAR 
+when:                                                   # IF CONDITION
 
-
-
-          
-          
           
 vars:                                                   # use loop to pass through a number of programs
 v_name:
           - v_value
           - v2_value
 ansible_ssh_pass: alta3
-
+# =========================================================================================================================================
 tasks:
 
 - name:
-  eso_facts: # file.       
+  eso_facts: # file.                                    # replaces gather_facts for arisa, creates many variables
     gather_subset: all
           
 - name:
@@ -238,8 +244,7 @@ tasks:
     state: directory                                    # ONLY INDENT PARAMETERS
     path
 become: yes #(like sudu)                                # KEYWORDS NOT INDENTED
-register: var_name                                      # CAPTURES OUTPUT > VAR 
-when:                                                   # IF CONDITION
+
 
 - name: copy files in ___
   copy: # copy.py
@@ -253,8 +258,10 @@ when:                                                   # IF CONDITION
   register: var_name                                    # CAPTURES OUTPUT > VAR 
 
 - name:
-  debug: prints during playback
-    var: ansible_os_family['slice']
+  debug: prints during playback                                                                           # runs locally, so can use for network
+    var:
+          - ansible_os_family['slice']
+          - ansible_net_config
     msg: "{{var_name}}"
     verbosity:                                          # only runs debug if ansible playbook is run at certain level
 
