@@ -186,15 +186,26 @@ while True:
 
         elif choice in rooms[current_room] and rooms[current_room][choice][0] == "act":                     # PERFORM ACTIONS
             act_execute = rooms[current_room][choice]
-            act_text = str(act_execute[2])
+            act_text = act_execute[2]
             act_remove = str(act_execute[3])
             item_required = str(act_execute[4])
-            act_effect = str(act_execute[5])
+            act_effect = act_execute[5]
 
-                                                                                                            # ALL ACTIONS RELATING TO ITEMS
-            if item_required != '' and item_required not in inventory:
-                print(f"Cannot do that without {item_required.upper()}.")
-                continue
+                                                                                                             # ALL ACTIONS RELATING TO ITEMS
+            if item_required != '':
+                if item_required not in inventory or item_required not in rooms[current_room]:
+                    print(f"Cannot do that without {item_required.upper()}.")
+                    continue
+
+            item_required != '' and item_required not in inventory:
+
+
+
+            
+
+
+
+
 
 
 

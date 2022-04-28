@@ -10,6 +10,7 @@
 # import requests
 # url_var= "http://api.open-notify.org/astros.json"
 # var_name = requests.get(url_var).json()
+# includes a lot of metadata, can get by slicing var_name
 
 # === LISTS & DICTIONARIES ===
 # LIST var_name = ["value","value","value"]             slice ~var_name[0,-1]        list()   ~.remove
@@ -204,34 +205,56 @@ if __name__ == "__main__":                              # indirect call (import)
 
 # ============= ANSIBLE ==============================   # MANAGES STATE OF REMOTE HOSTS (UPDATING)
 # TASKS - Green (no change), Y (change), R (error)       # USES YAML FOR SCRIPT (PLAYBOOK)
-name: move dem files
+# ansible-playbook name_of_playbook.yml -i file_name     # Launches playbook      -i (inventory) -v / vv (verbosity)
+# IDEMPOTENCE: when a playbook runs, all changes should be made first time, all green after
+
+---
+name: name_of_playbook                              
 connection: ssh
-hosts: gropu_name (or indiv names)
+hosts: group_name (or indiv names), localhost           # !ignored_name/group
+gather_facts: yes                                       # gets host info and variables
+
 tasks: 
-        name: create the dir_name dir    
-        file: # file.py
-            state: directory
-            path
-    - name: copy files in ___
+- name:  
+    file: # file.py                                     # MODULE (.py inside ansible folders)
+        state: directory                                # ONLY INDENT PARAMETERS
+        path
+become: yes #(like sudu)                                # KEYWORDS NOT INDENTED
+register: var_name                                      # CAPTURES OUTPUT > VAR 
+
+- name: copy files in ___
     copy: # copy.py
         src: path
-        dest: path          - if dir does not exist
+        dest: path                                      # use if dir does not exist
 
-# ansible-playbook name_of_playbook.yml -i file_name       # Launches playbook      -i (inventory)
-source_file_name
-[group_name]
-name ansible_host=10.10.2.3 ansible_user=name ansible_python_interpreter=/usr/bin/python3
 
-- name: Playbook - Install figlet
-  hosts: planetexpress:!farnsworth   # remove farnsworth from the list of available hosts
-  connection: ssh     # default is to use the connection plugin ssh.py
-  gather_facts: yes   # default is yes
+ - name: copy files in ___
+   vars:
+    v_name: v_value
 
   tasks:
-  - name: using apt to remove figlet
-    apt:                                                                        module
-        name:                                                                   parameter
-            - figlet                                                            input
+  - name:                                               
+      uri: 
+        url: 
+        register: var_name                                      # CAPTURES OUTPUT > VAR 
+
+
+    debug: prints during playback
+    
+        var: ansible_os_family['slice']
+        msg: "{{var_name}}"
+        verbosity: only runs debug if ansible playbook is run at certain level
+
+
+
+    apt:                                                                 module (.py inside ansible)
+        name:                                                            parameter
+            - figlet                                                     input
             - sl    (steam locomotive)                                                         
-        state: absent    # this will REMOVE the application                     choice (all can use)
-    become: yes
+        state: absent           # this will REMOVE the application              choice (all can use)
+  
+    
+
+ #   ============ API & URL
+# from a URL, anything after a ? is a query, with & between queries
+# you can use code to input into a URL to return a full URL
