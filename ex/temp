@@ -207,20 +207,35 @@ if __name__ == "__main__":                              # indirect call (import)
 # TASKS - Green (no change), Y (change), R (error)       # USES YAML FOR SCRIPT (PLAYBOOK)
 # ansible-playbook name_of_playbook.yml -i file_name     # Launches playbook      -i (inventory) -v / vv (verbosity)
 # IDEMPOTENCE: when a playbook runs, all changes should be made first time, all green after
+# Host must have python installed for Ansible - else, use ansible to have the source comp. execute code to install python for them
+# Cannot install pyhon on router/switches > use vendor-specific ansible modules 
 
----
+---                                                     # NORMAL DEVICES                                            # NETWORK DEVICES
 name: name_of_playbook                              
-connection: ssh
-hosts: group_name (or indiv names), localhost           # !ignored_name/group
-gather_facts: yes                                       # gets host info and variables
+hosts: group_name (or indiv names), localhost           # !ignored_name/group                                       switches (group name)
+connection: ssh                                         # if local, the ansible machine executes the code           network_cli (use username / pw)
+gather_facts: yes                                       # gets host info and variables                              no (use vendor module)
 
-vars:
-v_name: v_value
 
-tasks: 
+
+          
+          
+          
+vars:                                                   # use loop to pass through a number of programs
+v_name:
+          - v_value
+          - v2_value
+ansible_ssh_pass: alta3
+
+tasks:
+
 - name:
-  file: # file.py                                     # MODULE (.py inside ansible folders)
-    state: directory                                # ONLY INDENT PARAMETERS
+  eso_facts: # file.       
+    gather_subset: all
+          
+- name:
+  file: # file.py                                       # MODULE (.py inside ansible folders)
+    state: directory                                    # ONLY INDENT PARAMETERS
     path
 become: yes #(like sudu)                                # KEYWORDS NOT INDENTED
 register: var_name                                      # CAPTURES OUTPUT > VAR 
@@ -231,26 +246,25 @@ when:                                                   # IF CONDITION
         src: path
         dest: path                                      # use if dir does not exist
 
-  tasks:
-  - name:                                               
-      uri: 
-        url: 
-        register: var_name                                      # CAPTURES OUTPUT > VAR 
+
+- name:                                               
+  uri: 
+    url: 
+  register: var_name                                    # CAPTURES OUTPUT > VAR 
+
+- name:
+  debug: prints during playback
+    var: ansible_os_family['slice']
+    msg: "{{var_name}}"
+    verbosity:                                          # only runs debug if ansible playbook is run at certain level
 
 
-    debug: prints during playback
-    
-        var: ansible_os_family['slice']
-        msg: "{{var_name}}"
-        verbosity: only runs debug if ansible playbook is run at certain level
-
-
-
-    apt:                                                                 module (.py inside ansible)
-        name:                                                            parameter
-            - figlet                                                     input
-            - sl    (steam locomotive)                                                         
-        state: absent           # this will REMOVE the application              choice (all can use)
+-name:
+  apt:
+    name:   
+      - figlet
+      - sl    (steam locomotive)                                                         
+    state: absent                                        # this will REMOVE the application
   
     
 
