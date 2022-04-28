@@ -114,7 +114,7 @@ x = y
 import shutil        # shell util        shutil.copytree("s","d") ~.copy ~.move, relative path > exe in CWD (use os.chdir(""))
 import os            # access to OS commands                 #os.system("")
 import random as r   # create random values                  random()
-
+import getpass       # get input without displaying on screen
 #        *** EXTERNAL MODULES ***                       terminal: python3 -m pip install [modulename]
 import pandas as pd  # data tools, uses data frames
         # Call Dataframe        DF_name =  pd.read_csv("FN", index_col=#)     read_excel   read_json
@@ -134,16 +134,43 @@ import netifaces
         # netifaces.interfaces()            returns list of if
         # ~.ifaddresses("if_name")      returns dict for "if" > slicing varies to get IP address, so use AF
         # ~.AF_.....                    _LINK (ethernet / link layer IF)       _INET             INET6
-import paramiko                         library, has custom classes      open SSH connection and execute connections
-        # conn = paramiko.SSHClient()                                                   object represents connection                 
-        # mykey = paramiko.RSAKey.from_private_key_file("/home/student.ssh/id_rsa")     harvest private keys
-        # conn.set_missing_host_key_policy(paramiko.AutoAddPolicy())                    auto-accept host public key
-        # conn.connect(hostname="10.10.2.3", username="bender", pkey=mykey)             set attrib on obj
-        # conn.exec_command("command_as_if_in_CLI")                                     automated actions >>> (ssh_stdin, ssh_stdout, ssh_stderr)      
-        # stdin, stdout, stderr = conn.exec_command("command as if in CLI")             set 3 var from tupple results
-        # stdout.read()                                                                                   
-        print(commandisssue(x, sshsession).decode('utg-8')                              tiny b (byte string) >>> actual string
-   
+import paramiko                         #library, has custom classes      open SSH connection and execute connections
+
+    # mykey = paramiko.RSAKey.from_private_key_file("/home/student.ssh/id_rsa")     harvest private keys
+    # with open("results.log", "a") as foo:
+    #   for cred in cred_file:
+            # conn = paramiko.SSHClient()                                                   object represents connection                 
+            # conn.set_missing_host_key_policy(paramiko.AutoAddPolicy())                    auto-accept host public key
+            # label = "Connecting to... " + cred.get("un") + "@" + cred.get("ip")
+            # foo.write(logdata)                                                            write to logfile
+
+
+            # conn.connect(hostname=cred.get('ip'), username=cred.get("un"), pkey=mykey)    set attrib on obj
+            # conn.exec_command("command_as_if_in_CLI")                                     automated actions >>> (ssh_stdin, ssh_stdout, ssh_stderr)      
+            # conn.exec_command("touch /home/" + cred.get("un") + "/goodnews.everyone")
+        
+            # sessin, sessout, sesserr = conn.exe_command(ls /home/" + cred.get("un")       set 3 var from tupple results
+            # stdin, stdout, stderr = conn.exec_command("command as if in CLI")             set 3 var from tupple results
+
+            # logdata = sessout.read().decode('utf-8')                                      
+
+            # stdout.read()
+        
+            #   
+            # print(commandisssue(x, sshsession).decode('utf-8')                              tiny b (byte string) >>> actual string
+            # sshsession.close() 
+    # --- SFTP --- USING USERNAME & PASSWORD
+    dest_ip = "10.10.2.4"
+    dest_un = "fry"
+    dest_pw = getpass.getpass()
+    var_name = paramiko.Transport(des_ip, port)      # class object prepares file for moves
+    var_name.connect(username=desip, password=dest_pw)
+    conn = paramiko.SFTPClient.from_transport(var_name)                                                # open SFTP connection
+    conn.put("source_results.log","dest_results.log")                                                    #source file, dest fil
+
+
+
+
 
 
 #       --- DEVICE DICTIONARY
@@ -175,4 +202,36 @@ if __name__ == "__main__":                              # indirect call (import)
         if rerun.lower() != "y":
             break
 
+# ============= ANSIBLE ==============================   # MANAGES STATE OF REMOTE HOSTS (UPDATING)
+# TASKS - Green (no change), Y (change), R (error)       # USES YAML FOR SCRIPT (PLAYBOOK)
+name: move dem files
+connection: ssh
+hosts: gropu_name (or indiv names)
+tasks: 
+        name: create the dir_name dir    
+        file: # file.py
+            state: directory
+            path
+    - name: copy files in ___
+    copy: # copy.py
+        src: path
+        dest: path          - if dir does not exist
 
+# ansible-playbook name_of_playbook.yml -i file_name       # Launches playbook      -i (inventory)
+source_file_name
+[group_name]
+name ansible_host=10.10.2.3 ansible_user=name ansible_python_interpreter=/usr/bin/python3
+
+- name: Playbook - Install figlet
+  hosts: planetexpress:!farnsworth   # remove farnsworth from the list of available hosts
+  connection: ssh     # default is to use the connection plugin ssh.py
+  gather_facts: yes   # default is yes
+
+  tasks:
+  - name: using apt to remove figlet
+    apt:                                                                        module
+        name:                                                                   parameter
+            - figlet                                                            input
+            - sl    (steam locomotive)                                                         
+        state: absent    # this will REMOVE the application                     choice (all can use)
+    become: yes

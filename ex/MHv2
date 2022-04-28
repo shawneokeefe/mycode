@@ -80,12 +80,12 @@ rooms = {
                     'turn'       : ['act', 'TURN around', 'Suse pulls your arm, "Nope. You are going this way."'],
                   },
         }
-inventory =      :{  
+inventory =       {  
                     'cell phone' : ['item', 'cell phone', 'Powered, but only one bar here. Maybe I should climb a tree.'],
                     'lint'       : ['item', 'lint', 'Fluff. Always to be found when you need it.'],
                     'wallet'     : ['item', 'wallet', '- Cards ... check.\n- Cash ... check.\n- Breath mints ... darn.'],
                   }
-item_transform = :{
+item_transform =  {
                     'candle'      : ['item', 'candle', 'Snuffed out, but it still smells good'],
                     'happy accident' : ['item', 'happy accident', 'We don\'t make mistakes, only happy accidents. Surely the baguette was meant to be free.'],
                   }
@@ -176,16 +176,15 @@ while True:
             break
 
         elif choice in rooms[current_room] and rooms[current_room][choice][0] == "act":                     # PERFORM ACTIONS
-            execute_act = rooms[current_room][choice]
+            act_execute = rooms[current_room][choice]
 
             try:
-                req_check = execute_act[4]
-                item_required = execute_act[5]
-                act_effect = execute_act[6]
+                act_remove = act_execute[3]
+                item_required = act_execute[4]
+                act_effect = act_execute[5]
             
             finally:
-                act_text = execute_act[2]
-                remove_act = execute_act[3]
+                act_text = act_execute[2]
 
             if current_room == "darkness" or "gallery" and choice == "wait" and "lit candle" not in current_room:    # EATEN BY GRUE
                 grue += 1
@@ -194,11 +193,11 @@ while True:
                     break
 
             try:                                                                                            # ALL ACTIONS RELATING TO ITEMS
-                if item_required in execute_act and item_required not in inventory:
+                if item_required in act_execute and item_required not in inventory:
                     print(f"Cannot do that without {item_required.upper()}.")
                     continue
 
-                elif item_required in execute_act and item_required in inventory:
+                elif item_required in act_execute and item_required in inventory:
                     for each_item in inventory:
                         if act_effect == each_item[3]:
 
@@ -215,7 +214,7 @@ while True:
 
                             if act_effect.startswith("keep_") == False:                                     # FOR: destroy_(INVITATION)
                                 inventory.pop('item_required')
-                                rooms.current_room.pop('execute_act')
+                                rooms.current_room.pop('act_execute')
                                 print(f"{act_text}")
                                 input("Press enter to continue.\n")
                                 break

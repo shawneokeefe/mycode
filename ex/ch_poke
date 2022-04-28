@@ -1,0 +1,36 @@
+#!/usr/bin/env python3
+
+import requests
+import wget
+
+def main():
+    pokenum= input("Pick a number between 1 and 151!\n>")
+    pokeapi= requests.get("https://pokeapi.co/api/v2/pokemon/" + pokenum).json()
+
+    # PART 1 - SPRITES
+    print(f"{pokeapi['sprites']['front_default']}")
+    imgurl = pokeapi['sprites']['front_default']
+
+    # PART 2 - MOVES
+    #for each_element in pokeapi['moves']:
+    #    print(f"{pokeapi['moves']['move']['name']}")
+    #    input("check")
+
+    #for x in pokeapi['moves']:
+    #    print('  >', x['move']['name'])
+
+    # PART 3 - GAMES
+    game_indices = 0
+    for g in pokeapi['game_indices']:
+        game_indices += 1
+    print(f"Total Games: {game_indices}")
+       
+    # BONUS 1
+    wget.download(imgurl, "/home/student/static/")
+
+
+
+    # print(len(pokeapi['game_indices']))
+#
+#
+main()
