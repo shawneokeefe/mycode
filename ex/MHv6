@@ -52,7 +52,7 @@ rooms = {
                     'friend'     : ['act', '"So, your FRIEND there."', '"Darling, ... it\'s called acting the part.," Suse teased, "Rossum is tame, even so pythons are not venomous."', 'remove', '', '', '', '', '', ''],
                     'purpose'    : ['act', '"PURPOSE?"', 'Suse grinned. "Because you get to be the mysterious Monty Hall!, and I am your lovely partner in crime.\n Were are going to reenact history tonight."', 'remove', '', '', '', '', '', '', ''],
                     'enter'      : ['act', 'ENTER the ballroom', 'Locked.  What might be going on in there?', 'remove', '', '', '', '', '', ''],
-                    'enjoy'      : ['act', 'ENJOY a drink', 'Maybe you should have savored that one a bit more', 'remove', 'cocktail', '', 'destroy_item', 'coctail', '', ''],
+                    'enjoy'      : ['act', 'ENJOY a drink', 'Maybe you should have savored that one a bit more', 'remove', 'cocktail', '', 'destroy_item', 'cocktail', '', ''],
                     'try'        : ['act', 'TRY the fingerfood', 'Whoops. That baguette took a trip to the floor.', 'remove', 'baguette', '', 'trans_move_item', 'baguette', 'happy accident', ''],
                     'cocktail'   : ['item', 'cocktail', 'At least you had time to snag a drink. After all, none of this would be here without alcohol.'],
                     'baguette'   : ['item', 'baguette', 'Slippery, slathered in cream cheese. Can I get a doggy bag?'],
@@ -118,6 +118,7 @@ def XX(wait):
     input(f"WAITING: {wait}")
  # ======================================== ACTION FUNCTIONS======================================================================
 def add_action(act_a, act_b, act_c):
+    XX('ADD ACTION')
     add_act_list = [act_a, act_b, act_c]
     for element in add_act_list: 
         if element in add_actions[current_room] and element != '':
@@ -125,8 +126,9 @@ def add_action(act_a, act_b, act_c):
             rooms[current_room][element] = [act_n[0], act_n[1], act_n[2], act_n[3], act_n[4], act_n[5], act_n[6], act_n[7], act_n[8], act_n[9]]
             add_acts_dict[current_room].pop(element)
 
-def remove_action(act_a, act_b, act_3):
-    remove_act_list = [item_a, item_b, item_c]
+def remove_action(act_a, act_b, act_c):
+    XX('REMOVE ITEM')
+    remove_act_list = [act_a, act_b, act_c]
     for element in remove_act_list:
         if element in rooms[current_room] and element != '':
             rooms[current_room].pop(element)
@@ -167,7 +169,7 @@ def trans_item(item_a, item_b):
 
 def trans_move_item(item_a, item_b):
     XX('TRANSFORM AND MOVE ITEM')
-    TRAN = transformed_items_dict[item_a]
+    TRAN = transformed_items_dict[item_b]
     if item_a in inventory and item_a != '':
         inventory.pop(item_a)
         rooms[current_room][item_b] = [TRAN[0], TRAN[1], TRAN[2]]

@@ -193,27 +193,16 @@ def main():
 
             elif choice in rooms[current_room] and rooms[current_room][choice][0] == "act":                     # PERFORM ACTIONS
                 act_execute = rooms[current_room][choice]                                                       # - list
-                TP(act_execute)
                 act_text = act_execute[2]                                                                       # - string
-                TP(act_text)
                 act_remove = act_execute[3]                                                                     # - string
-                TP(act_remove)
                 item_required = act_execute[4]                                                                  # - string
-                TP(item_required)
                 act_effect = act_execute[5]                                                                     # - string
-                TP(act_effect)
                 I2R = inventory['item_required']
-                TP(I2R)
                 item_act_inv = inventory[item_required][3]
-                TP(item_act_inv)
                 R2I = rooms[current_room][item_required]
-                TP(R2I)
                 item_act_room = rooms[current_room][item_required][3]
-                TP(item_act_room)
                 transformed_item_inv = inventory[item_required][4]
-                TP(transformed_item_inv)
                 transformed_item_room = rooms[current_room][item_required][4]
-                TP(transformed_item_room)
                 return act_execute, act_text, act_remove, item_required, act_effect
                                                                                                                 # ALL ACTIONS RELATING TO ITEMS
                 if item_required != '':
