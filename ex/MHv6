@@ -282,19 +282,17 @@ def main():
                 act_func_p3 = rooms[current_room][choice][9]
                 #return act_func_p1, act_func_p2
 
-                XX('ACTS')
-
+                XX('CHECK REQ ITEM')
                 if act_item_req_inv not in inventory and act_item_req_inv != '':                                # CHECKS FOR REQUIRED ITEMS - INV / ROOM
-                        XX('CHECK REQ ITEM')
                         print(f"I need to get {act_item_req_inv.upper()} first.")
                         continue
                 if act_item_req_room not in rooms[current_room] and act_item_req_room != '':
                     print(f"{act_item_req_room.upper()} needs to be in the room first.")
                     continue
 
-                elif rooms[current_room][choice][4] != '':                                                      # CALLS THE FUNCTION IN THE ACTION LIST
-                    XX('CALLING ACTION FUNCTION')
- 
+                XX('CHECK ACT FUNCTIONS')
+                if act_func != '':                                                                            # CALLS THE FUNCTION IN THE ACTION LIST
+
                     if act_func == 'add_action':
                         XX('CALLING ADD ACTION')
                         add_action(act_func_p1, act_func_p2, act_func_p3)
@@ -308,11 +306,11 @@ def main():
                         destroy_item(act_func_p1, act_func_p2, act_func_p3)
 
                     elif act_func == 'move_item':
-                        XX('CALLING MOVE')
+                        XX('CALLING MOVE ITEM')
                         move_item(act_func_p1, act_func_p2, act_func_p3)
 
                     elif act_func == 'trans_item':
-                        XX('CALLING TRANS')
+                        XX('CALLING TRANS ITEM')
                         trans_item(act_func_p1, act_func_p2)
 
                     elif act_func == 'trans_move_item':
@@ -325,7 +323,7 @@ def main():
                     break                                   
 
                 else:
-                    XX('EVERYTHING ELSE')
+                    XX('ACTS - EVERYTHING ELSE')
                     print(f"{act_text}")                                                                        # FOR EVERYTHING ELSE
                     if "remove" in act_remove:
                         rooms[current_room].pop(choice)
