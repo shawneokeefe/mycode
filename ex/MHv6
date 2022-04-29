@@ -48,8 +48,8 @@ rooms = {
                     'desc'       : 'LOUNGE:\n  You entered the lounge, perhaps just barely soon enough. Guests were already filtering out and into the ballroom beyond.\n  Bright lights, art deco, and a glass gallery for a bar. Nothing stood out so much as the period ash tray with the sign,\n  "No Smoking."  Anachronisms aside, you spot Suse instantly, centered on the bar balancing a cocktail in her hand, a\n  giant plumed red hat on her head, and serpent around the shoulders.\n\n  She spots you and calls out, "Glad you could make it, and we got matching hats. How sweet of you." She rang a little\n  bell on the counter and beckoned you over. Mirri handed off her snake to the staff.\n\n  "Don\'t mind Mr. Rossum, I don\'t even know why I brought him tonight. You however have a purpose. Follow me."',
                     'follow'     : ['move', 'balcony', 'FOLLOW Suse',],
                     'exit'       : ['move', 'lobby', 'EXIT to the lobby'],
-                    'refuse'     : ['act', 'REFUSE and stay behind','"How disappointing," you say, "I came to do some sleuthing, and I will do just that."\n \n  "You\'ll regret this, but must bid you farewell to do my part. Enjoy the snakes, ... I mean snacks," Suse snapped.\n \n  Suse exitted out a side door. Nothing but you and a room full of alcohol.', 'remove', 'remove_action', '', '', '', 'follow', 'follow', 'purpose', 'friend'],
-                    'friend'     : ['act', '"So, your FRIEND there."', '"Darling, ... it\'s called acting the part.," Suse teased, "Rossum is tame, even so python\'s are not venomous."', 'remove', '', '', '', '', '', ''],
+                    'refuse'     : ['act', 'REFUSE and stay behind','"How disappointing," you say, "I came to do some sleuthing, and I will do just that."\n \n  "You\'ll regret this, but must bid you farewell to do my part. Enjoy the snakes, ... I mean snacks," Suse snapped.\n \n  Suse exitted out a side door. Nothing but you and a room full of alcohol.', 'remove', '', '', 'remove_action', 'follow', 'purpose', 'friend'],
+                    'friend'     : ['act', '"So, your FRIEND there."', '"Darling, ... it\'s called acting the part.," Suse teased, "Rossum is tame, even so pythons are not venomous."', 'remove', '', '', '', '', '', ''],
                     'purpose'    : ['act', '"PURPOSE?"', 'Suse grinned. "Because you get to be the mysterious Monty Hall!, and I am your lovely partner in crime.\n Were are going to reenact history tonight."', 'remove', '', '', '', '', '', '', ''],
                     'enter'      : ['act', 'ENTER the ballroom', 'Locked.  What might be going on in there?', 'remove', '', '', '', '', '', ''],
                     'enjoy'      : ['act', 'ENJOY a drink', 'Maybe you should have savored that one a bit more', 'remove', 'cocktail', '', 'destroy_item', 'coctail', '', ''],
@@ -274,13 +274,12 @@ def main():
                 XX('ACT VARIABLES')
                 act_text = rooms[current_room][choice][2]
                 act_remove = rooms[current_room][choice][3]
-                act_func = rooms[current_room][choice][4]
-                act_item_req_inv = rooms[current_room][choice][5]
-                act_item_req_room = rooms[current_room][choice][6]
-                act_item_transformed = rooms[current_room][choice][7]
-                act_remove_action = rooms[current_room][choice][8]
-                act_func_p1 = rooms[current_room][choice][9]
-                act_func_p2 = rooms[current_room][choice][10]
+                act_item_req_inv = rooms[current_room][choice][4]
+                act_item_req_room = rooms[current_room][choice][5]
+                act_func = rooms[current_room][choice][6]
+                act_func_p1 = rooms[current_room][choice][7]
+                act_func_p2 = rooms[current_room][choice][8]
+                act_func_p3 = rooms[current_room][choice][9]
                 #return act_func_p1, act_func_p2
 
                 XX('ACTS')
@@ -295,18 +294,22 @@ def main():
 
                 elif rooms[current_room][choice][4] != '':                                                      # CALLS THE FUNCTION IN THE ACTION LIST
                     XX('CALLING ACTION FUNCTION')
-                    
-                    if act_func == 'remove_action':
+ 
+                    if act_func == 'add_action':
+                        XX('CALLING ADD ACTION')
+                        add_action(act_func_p1, act_func_p2, act_func_p3)
+
+                    elif act_func == 'remove_action':
                         XX('CALLING REMOVE ACTION')
-                        remove_action(act_func_p1, act_func_p2)
+                        remove_action(act_func_p1, act_func_p2, act_func_p3)
 
                     elif act_func == 'destroy_item':
                         XX('CALLING DESTROY ITEM')
-                        destroy_item(act_func_p1, act_func_p2)
+                        destroy_item(act_func_p1, act_func_p2, act_func_p3)
 
                     elif act_func == 'move_item':
                         XX('CALLING MOVE')
-                        move_item(act_func_p1, act_func_p2)
+                        move_item(act_func_p1, act_func_p2, act_func_p3)
 
                     elif act_func == 'trans_item':
                         XX('CALLING TRANS')
