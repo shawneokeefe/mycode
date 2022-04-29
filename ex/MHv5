@@ -115,18 +115,23 @@ grue = 0
 def TP(test_print):
     input("TEST PRINT")
     print(f"{type(test_print)} -- {str('test_print')} -- {test_print}")
+def XX(wait):
+    input(f"WAITING: {wait}")
+
 # ======================================== ACTION FUNCTIONS======================================================================
 def remove_action(act_a):
     if act_a in rooms[current_room]:
        rooms[current_room].pop(act_a)
 
 def destroy_item(item_a):
+    XX('DESTROY ITEM')
     if item_a in inventory:
         inventory.pop(item_a)
     if item_a in rooms[current_room]:
        rooms[current_room].pop(item_a)
 
 def move_item(item_a):
+    XX('MOVE ITEM')
     if item_a in inventory:
         I2R = inventory[item_a]
         rooms[current_room][item_a] = [I2R[0], I2R[1], I2R[2]]
@@ -137,6 +142,7 @@ def move_item(item_a):
         rooms[current_room].pop(item_a)
 
 def trans_item(item_a):
+    XX('TRANSFORM ITEM')
     TRAN = transformed_items[item_a]
     if item_a in inventory:
         inventory.pop(item_a)
@@ -146,6 +152,7 @@ def trans_item(item_a):
         rooms[current_room][item_a] = [TRAN[0], TRAN[1], TRAN[2]]
 
 def trans_move_item(item_a, item_b):
+    XX('TRANSFORM AND MOVE ITEM')
     TRAN = transformed_items[item_a]
     if item_a in inventory:
         inventory.pop(item_a)
@@ -254,6 +261,7 @@ def main():
                 act_item_req_room = rooms[current_room][choice][6]
 
                 if act_item_req_inv not in inventory and act_item_req_inv != '':                                # CHECKS FOR REQUIRED ITEMS - INV / ROOM
+                        XX('CHECK REQ ITEM')
                         print(f"I need to get {act_item_req_inv.upper()} first.")
                         continue
                 if act_item_req_room not in rooms[current_room] and act_item_req_room != '':
@@ -261,7 +269,7 @@ def main():
                     continue
 
                 elif rooms[current_room][choice][4] != '':                                                      # ALL ACTIONS RELATING TO ITEMS
-
+                    XX('CALLING ACTION FUNCTION')
                     rooms[current_room][choice][4]                                                              # CALLS THE FUNCTION IN THE ACTION LIST
                     rooms[current_room].pop(choice)
                     print(f"{act_text}")
@@ -269,6 +277,7 @@ def main():
                     break                                   
 
                 else:
+                    XX('EVERYTHING ELSE')
                     print(f"{act_text}")                                                                        # FOR EVERYTHING ELSE
                     if "remove" in act_remove:
                         rooms[current_room].pop(choice)
