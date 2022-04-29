@@ -4,7 +4,24 @@
 # ======================================== IMPORTS ==============================================================================
 import os             #ENABLES FUNCTIONS: os.system("clear")
 import sys            #ENABLES FUNCTIONS: system.exit()
+def TP(test_print):
+    input("TEST PRINT")
+    print(f"{type(test_print)} -- {str('test_print')} -- {test_print}")
+# ======================================== FALSE ACTION FUNCTIONS================================================================
+def remove_action(act_a):
+    print("item_a")
 
+def destroy_item(item_a):
+    print("item_a")
+
+def move_item(item_a):
+    print("item_a")
+
+def trans_item(item_a):
+    print("item_a")
+
+def trans_move_item(item_a, item_b):
+    print("item_a, item_b")
 # ======================================== DICTIONARIES / LISTS =================================================================
 rooms = {
   'porch'        :{
@@ -27,13 +44,13 @@ rooms = {
                     'suse'       : ['act', '"I am with SUSE. She arrive?"','"So, you\'re her partner. It\'s a fun role. Join her in the lounge before you get replaced. " the receptionist answered.', 'remove', '', '', ''],
                     'return'     : ['act', 'RETURN to the curb', 'Alas! You can see your ride already disappearing down the driveway.', 'remove', '', '', ''],
                     'call'       : ['act', 'CALL your friends', 'Better luck shouting ... or just go into the lounge.', '', '','cell phone',''],
-                    'check'      : ['act', 'CHECK your invitation', 'Hmm, where is it? Oh well, better just get moving.', '', '', '', ''],                 
+                    'check'      : ['act', 'CHECK your invitation', 'Hmm, where is it? Oh well, better just get moving.', 'remove', '', '', ''],                 
                   },
   'gallery'      :{
                     'desc'       : 'GALLERY:\n  Taking your own time, you opt to explore the gallery. The walls are littered with insets of period art,\n  memorabilia, and summaries of historical significance. As you scroll the displays, the lights fall, all goes silent.',
                     'fumble'     : ['move', 'lobby', 'Carefully FUMBLE your your way back to the lobby'],
                     'wait'       : ['act', 'WAIT a moment', 'No time restores the lights.', '', '', '', ''],
-                    'call'       : ['act', 'CALL out to the staff', 'No response. Perhaps the staff are in the lounge or backrooms.', '', '', 'cell phone', ''],
+                    'call'       : ['act', 'CALL out to the staff', 'No response. Perhaps the staff are in the lounge or backrooms.', '', '', '', ''],
                   },
   'lounge'       :{
                     'desc'       : 'LOUNGE:\n  You entered the lounge, perhaps just barely soon enough. Guests were already filtering out and into the ballroom beyond.\n  Bright lights, art deco, and a glass gallery for a bar. Nothing stood out so much as the period ash tray with the sign,\n  "No Smoking."  Anachronisms aside, you spot Suse instantly, centered on the bar balancing a cocktail in her hand, a\n  giant plumed red hat on her head, and serpent around the shoulders.\n\n  She spots you and calls out, "Glad you could make it, and we got matching hats. How sweet of you." She rang a little\n  bell on the counter and beckoned you over. Mirri handed off her snake to the staff.\n\n  "Don\'t mind Mr. Rossum, I don\'t even know why I brought him tonight. You however have a purpose. Follow me."',
@@ -46,7 +63,7 @@ rooms = {
                     'enter'      : ['act', 'ENTER the ballroom', 'Locked.  What might be going on in there?', 'remove', '', '', ''],
                     'next'       : ['act', '"What happens NEXT."', '"Ask later, come on." Suse beckoned.', 'remove', '', '', ''],
                     'enjoy'      : ['act', 'ENJOY a drink', 'Maybe you should have savored that one a bit more', 'remove', destroy_item('cocktail'), 'cocktail', ''],
-                    'try'        : ['act', 'TRY the fingerfood', 'Whoops. That baguette took a trip to the floor.', 'remove', trans_move_item('baguette'), 'baguette', ''],
+                    'try'        : ['act', 'TRY the fingerfood', 'Whoops. That baguette took a trip to the floor.', 'remove', trans_move_item('baguette', 'happy accident'), 'baguette', ''],
                     'cocktail'   : ['item', 'cocktail', 'At least you had time to snag a drink. After all, none of this would be here without alcohol.'],
                     'baguette'   : ['item', 'baguette', 'Slippery, slathered in cream cheese. Can I get a doggy bag?'],
                   },
@@ -59,7 +76,7 @@ rooms = {
                     'desc'       : 'LOBBY:\n  What happened to the lights and music? The entrance is lit only a by sputtering candle. The darkness closes in.',
                     'delve'      : ['move', 'darkness','DELVE into the darkness'],
                     'go'         : ['move', 'outside', 'GO outside'],
-                    'close'      : ['act', 'CLOSE the door', 'A gust from the entrance blows out the candle. You are plunged into total darkness', 'remove', transform_item('lit candle'), '', 'lit candle'],
+                    'close'      : ['act', 'CLOSE the door', 'A gust from the entrance blows out the candle. You are plunged into total darkness', 'remove', trans_item('lit candle'), '', 'lit candle'],
                     'lit candle' : ['item', 'lit candle', 'Mmmm! Mint and cinnamon.'],
                     'burn'       : ['act', 'BURN your invitation', 'The paper curls, chars, and crumbles to dust.', 'remove', destroy_item('invitation'), 'invitation', 'lit candle'],
                   },
@@ -210,7 +227,7 @@ def main():
 
             elif choice in rooms[current_room] and rooms[current_room][choice][0] == "item":                    # ADD TO INVENTORY, REMOVE FROM ROOM
                 item_get = rooms[current_room][choice]                                                          
-                inventory[choice] = [item_get[0], item_get[1], item_get[2], item_get[3], item_get[4]]           
+                inventory[choice] = [item_get[0], item_get[1], item_get[2]]           
                 rooms[current_room].pop(choice)
                 input(f"Added {choice.upper()} to inventory. Press enter to continue. \n")
                 break
@@ -220,7 +237,7 @@ def main():
                 print(f"{inventory[choice][2]}  \n")
                 q_drop = input(f"Drop {choice.upper()}? (Y/N) \n> ")
                 if q_drop == "Y" or q_drop == "y":
-                    rooms[current_room][choice] = [item_drop[0], item_drop[1], item_drop[2], item_drop[3], item_drop[4]]         
+                    rooms[current_room][choice] = [item_drop[0], item_drop[1], item_drop[2]]         
                     inventory.pop(choice)
                     input(f"Dropped {choice.upper()}. Press enter to continue. \n")
                     break
@@ -236,13 +253,12 @@ def main():
                 act_item_req_inv = rooms[current_room][choice][5]
                 act_item_req_room = rooms[current_room][choice][6]
 
-                if act_item_req_inv not in inventory and act_item_req_inv != '':
-                        print(f"I need to get {act_item_req.upper()} first.")
+                if act_item_req_inv not in inventory and act_item_req_inv != '':                                # CHECKS FOR REQUIRED ITEMS - INV / ROOM
+                        print(f"I need to get {act_item_req_inv.upper()} first.")
                         continue
-
-                elif act_item_req_room not in rooms[current_room] and act_item_req_inv != '':
-                        print(f"{act_item_req.upper()} needs to be in the room first.")
-                        continue
+                if act_item_req_room not in rooms[current_room] and act_item_req_room != '':
+                    print(f"{act_item_req_room.upper()} needs to be in the room first.")
+                    continue
 
                 elif rooms[current_room][choice][4] != '':                                                      # ALL ACTIONS RELATING TO ITEMS
 
@@ -256,6 +272,7 @@ def main():
                     print(f"{act_text}")                                                                        # FOR EVERYTHING ELSE
                     if "remove" in act_remove:
                         rooms[current_room].pop(choice)
+                        input("Press enter to continue.\n")
                         break    
                     continue
                             

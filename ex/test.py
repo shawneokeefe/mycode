@@ -1,5 +1,9 @@
 #!/usr/bin/env python3
 
+def T2(item1, item2):
+        print(f"Replaced function line 1 {item1}")
+        print(f"Replaced function line 2 {item2}")   
+        print(f"{inv}")
 # =========================================
 def TT():
         input("TEST TEXT")
@@ -7,18 +11,16 @@ def T2(item1, item2):
         print(f"Original item {item1}")
         print(f"New item {item2}")
 # =========================================
-inv =       { 'lint'       : ['item', 'lint', 'Fluff.'],
-              'muffin'     : ['item', 'muffin', 'Yum.']
-            }
-trans =     { 'tin'       : ['item', 'tin', 'Fluff.'],
-              'nut'     : ['item', 'nut', 'hard.']
-            }
+rooms =       { 'porch'      : {'act'     : ['act_call', 'act_name', T2("lint", "tin"), 'lint', 'tin'],
+                                'muffin'  : ['item', 'muffin', 'Yum.']                                       }  }
 
-act_list = ['act1', 'act_call' 'act_name', T2("lint", "tin"), 'lint', 'tin']
-#     }
+inv   =       { 'lint'       : ['item', 'lint', 'Fluff.'],
+                'muffin'     : ['item', 'muffin', 'Yum.']                                                       }
+
+trans =       { 'tin'        : ['item', 'tin', 'Fluff.'],
+                'muffin top' : ['item', 'nut', 'hard.']                                                         }
+# =========================================
+current_room = rooms['porch']
 # =========================================
 
-#choice = input("make choice 1")
-#choice2 = input("make choice 2")
-
-act_list[3]
+current_room['act'][2]
