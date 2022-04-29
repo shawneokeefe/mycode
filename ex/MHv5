@@ -37,16 +37,16 @@ rooms = {
                   },
   'lounge'       :{
                     'desc'       : 'LOUNGE:\n  You entered the lounge, perhaps just barely soon enough. Guests were already filtering out and into the ballroom beyond.\n  Bright lights, art deco, and a glass gallery for a bar. Nothing stood out so much as the period ash tray with the sign,\n  "No Smoking."  Anachronisms aside, you spot Suse instantly, centered on the bar balancing a cocktail in her hand, a\n  giant plumed red hat on her head, and serpent around the shoulders.\n\n  She spots you and calls out, "Glad you could make it, and we got matching hats. How sweet of you." She rang a little\n  bell on the counter and beckoned you over. Mirri handed off her snake to the staff.\n\n  "Don\'t mind Mr. Rossum, I don\'t even know why I brought him tonight. You however have a purpose. Follow me."',
-                    'follow'     : ['move', 'balcony', 'FOLLOW Suse', 'remove'], #NEED TO REMOVE IF YOU CHOOSE TO STAY
+                    'follow'     : ['move', 'balcony', 'FOLLOW Suse',],
                     'exit'       : ['move', 'lobby', 'EXIT to the lobby'],
-                    'refuse'     : ['act', 'REFUSE and stay behind','"How disappointing," you say, "I came to do some sleuthing, and I will do just that."\n \n  "You\'ll regret this, but must bid you farewell to do my part. Enjoy the snakes, ... I mean snacks," Suse snapped.\n \n  Suse exitted out a side door. Nothing but you and a room full of alcohol.', 'remove', '', '', ''],
+                    'refuse'     : ['act', 'REFUSE and stay behind','"How disappointing," you say, "I came to do some sleuthing, and I will do just that."\n \n  "You\'ll regret this, but must bid you farewell to do my part. Enjoy the snakes, ... I mean snacks," Suse snapped.\n \n  Suse exitted out a side door. Nothing but you and a room full of alcohol.', 'remove', remove_action('follow'), '', ''],
                     'friend'     : ['act', '"So, your FRIEND there."', '"Darling, ... it\'s called acting the part.," Suse teased, "Rossum is tame, even so python\'s are not venomous."', 'remove', '', '', ''],
                     'late'       : ['act', '"Sorry I am LATE,"', 'Not late. You were supposed to show up later than the rest of us." Suse replied.', 'remove', '', '', ''],
                     'purpose'    : ['act', '"PURPOSE?"', 'Suse grinned. "Because you get to be the mysterious Monty Hall!, and I am your lovely partner in crime.\n Were are going to reenact history tonight."', 'remove', '', '', ''],
                     'enter'      : ['act', 'ENTER the ballroom', 'Locked.  What might be going on in there?', 'remove', '', '', ''],
                     'next'       : ['act', '"What happens NEXT."', '"Ask later, come on." Suse beckoned.', 'remove', '', '', ''],
-                    'enjoy'      : ['act', 'ENJOY a drink', 'Maybe you should have savored that one a bit more', 'remove', destroy_item(cocktail), 'cocktail', ''],
-                    'try'        : ['act', 'TRY the fingerfood', 'Whoops. That baguette took a trip to the floor.', 'remove', trans_move_item(baguette), 'baguette', ''],
+                    'enjoy'      : ['act', 'ENJOY a drink', 'Maybe you should have savored that one a bit more', 'remove', destroy_item('cocktail'), 'cocktail', ''],
+                    'try'        : ['act', 'TRY the fingerfood', 'Whoops. That baguette took a trip to the floor.', 'remove', trans_move_item('baguette'), 'baguette', ''],
                     'cocktail'   : ['item', 'cocktail', 'At least you had time to snag a drink. After all, none of this would be here without alcohol.'],
                     'baguette'   : ['item', 'baguette', 'Slippery, slathered in cream cheese. Can I get a doggy bag?'],
                   },
@@ -61,7 +61,7 @@ rooms = {
                     'go'         : ['move', 'outside', 'GO outside'],
                     'close'      : ['act', 'CLOSE the door', 'A gust from the entrance blows out the candle. You are plunged into total darkness', 'remove', transform_item('lit candle'), '', 'lit candle'],
                     'lit candle' : ['item', 'lit candle', 'Mmmm! Mint and cinnamon.'],
-                    'burn'       : ['act', 'BURN your invitation', 'The paper curls, chars, and crumbles to dust.', 'remove', destroy_item(invitation), 'invitation', 'lit candle'],
+                    'burn'       : ['act', 'BURN your invitation', 'The paper curls, chars, and crumbles to dust.', 'remove', destroy_item('invitation'), 'invitation', 'lit candle'],
                   },
   'outside'      :{
                     'desc'       : 'OUTSIDE:\n The rain isn\'t letting up and your suit isn\'t getting any drier. Nothing to see but the long private drive shimmering\n with the reflection of a row of lamps.',
@@ -94,11 +94,15 @@ transformed_items =  {
 current_room = 'porch'
 game_over = 0
 grue = 0
-# ======================================== ACTION FUNCTIONS======================================================================
+# ======================================== TEST FUNCTIONS======================================================================
 def TP(test_print):
     input("TEST PRINT")
     print(f"{type(test_print)} -- {str('test_print')} -- {test_print}")
-#
+# ======================================== ACTION FUNCTIONS======================================================================
+def remove_action(act_a):
+    if act_a in rooms[current_room]:
+       rooms[current_room].pop(act_a)
+
 def destroy_item(item_a):
     if item_a in inventory:
         inventory.pop(item_a)
@@ -231,10 +235,6 @@ def main():
                 act_remove = rooms[current_room][choice][3]
                 act_item_req_inv = rooms[current_room][choice][5]
                 act_item_req_room = rooms[current_room][choice][6]
-
-                #if act_item_req_inv not in inventory or act_item_req_room not in rooms[current_room]:
-               #             print(f"Cannot do that without {item_required.upper()}.")
-               #             continue
 
                 if act_item_req_inv not in inventory and act_item_req_inv != '':
                         print(f"I need to get {act_item_req.upper()} first.")
