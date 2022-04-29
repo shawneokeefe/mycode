@@ -2,15 +2,17 @@
 '''This module is a text-based RPG. Made by Shawn O'Keefe'''
 
 # ======================================== IMPORTS ==============================================================================
-import os             #ENABLES FUNCTIONS: os.system("clear")
-import sys            #ENABLES FUNCTIONS: system.exit()
-def TP(test_print):
-    input("TEST PRINT")
-    print(f"{type(test_print)} -- {str('test_print')} -- {test_print}")
+import os             # ENABLES FUNCTIONS: os.system("clear")
+import sys            # ENABLES FUNCTIONS: system.exit()
 
 # ======================================== DICTIONARIES / LISTS =================================================================
-# ======================================== DICTIONARIES / LISTS =================================================================
-rooms = {        # = ACT ======= ACT_CALL == ACT _DESC == ACT_REMOVE == ACT_FUNCTION == ACT_ITEM_REQ_INV == ACT_ITEM_REQ_ROOM == TRANSFORMED_ITEM == PARAMETER 1 == PARAMETER 2 ==
+                 # = 0           1           2            3             4                   5                 6                    7              8              9
+                                                                                                              # remove_action      act1           act2           act3
+                                                                                                              # destroy_item       item1          item2          ''
+                                                                                                              # move_item          item1          item2          ''
+                                                                                                              # trans_item         item           transformed    ''
+                                                                                                              # trans_move_item    item           tramsformed    ''
+rooms = {        # = ACT ======= ACT_CALL == ACT _DESC == ACT_REMOVE == ACT_ITEM_REQ_INV == ACT_ITEM_REQ_ROOM == ACT_FUNCTION == PARAMETER 1 == PARAMETER 2 == PARAMETER 3 ==
 
   'porch'        :{
                     'desc'       : 'MONTY HALL PORCH:\n  Your driver pulls up to the curb and you get out. Drizzling rain hastens you up the steps to Monty Hall.\n  Renovated in the last three months, the old estate is awash with lights and pouring with music.\n  Costumed up for the bootleg era, you are eager to join your co-workers in the interactive mystery murder theater.',
@@ -21,35 +23,35 @@ rooms = {        # = ACT ======= ACT_CALL == ACT _DESC == ACT_REMOVE == ACT_FUNC
   'curb'         :{
                     'desc'       : 'CURBSIDE:\n  Your ride already left. Nothing at the curb except deep puddles, lamps, and trees swaying in the wind.',
                     'return'     : ['move', 'lobby', 'RETURN to Monty Hall'],
-                    'call'       : ['act', 'CALL an uber and go home', 'Then again, maybe not. You came here to enjoy yourself. Might as well do it.', 'remove', '','cell phone', '', '', '', ''],
-                    'jump'       : ['act', 'JUMP in the puddles', 'Splash, splash, splash!', '', '', '', '', '', '', '', ''],
+                    'call'       : ['act', 'CALL an uber and go home', 'Then again, maybe not. You came here to enjoy yourself. Might as well do it.', 'remove', '','cell phone', '', '', '', '',],
+                    'jump'       : ['act', 'JUMP in the puddles', 'Splash, splash, splash!', '', '', '', '', '', '', ''],
                     'invitation' : ['item', 'invitation', 'Dripping, but readable:\n\n  Hi. Join me for Monty Hall\'s opening night for its dinner/mystery theater on 4 May. I bet you already heard about\n  the place, but do not forget to dress the part. We will be swinging the old-timesy fashion at 7pm.\n \n Your seat is paid, so if you are late ...\n I will kill you. LOL!\n \n  - Suse'],
                   },
   'reception'    :{
                     'desc'       : 'RECEPTION:\n  You take off your fedora and clack into the polished halls of an impressive foyer overlooked by a deep gallery\n  and steeped in jazz.  The lone receptionist perks up from behind a reception counter and gestures to you.\n "All parties are meeting in the lounge on your left. Lockout starts soon."',
                     'turn'       : ['move', 'lounge', 'TURN left into the lounge'],
                     'wander'     : ['move', 'gallery', 'WANDER right into the gallery'],
-                    'suse'       : ['act', '"I am with SUSE. She arrive?"','"So, you\'re her partner. It\'s a fun role. Join her in the lounge before you get replaced. " the receptionist answered.', 'remove', '', '', '', '', '', '', ''],
-                    'return'     : ['act', 'RETURN to the curb', 'Alas! You can see the lights of your ride already disappearing down the driveway.', 'remove', '', '', '', '', '', '', ''],
-                    'call'       : ['act', 'CALL your friends', 'Better luck shouting ... or just go into the lounge.', '', '','cell phone','', '', '', '', ''],
-                    'check'      : ['act', 'CHECK your invitation', 'Hmm, where is it? Oh well, better just get moving.', 'remove', '', '', '', '', '', '', ''],                 
+                    'suse'       : ['act', '"I am with SUSE. She arrive?"','"So, you\'re her partner. It\'s a fun role. Join her in the lounge before you get replaced. " the receptionist answered.', 'remove', '', '', '', '', '', '', '', ''],
+                    'return'     : ['act', 'RETURN to the curb', 'Alas! You can see the lights of your ride already disappearing down the driveway.', 'remove', '', '', '', '', '', '', '', ''],
+                    'call'       : ['act', 'CALL your friends', 'Better luck shouting ... or just go into the lounge.', 'remove', '','cell phone','', '', '', '', '', ''],
+                    'check'      : ['act', 'CHECK your invitation', 'Hmm, where is it? Oh well, better just get moving.', 'remove', '', '', '', '', '', '', '', ''],                 
                   },
   'gallery'      :{
                     'desc'       : 'GALLERY:\n  Taking your own time, you opt to explore the gallery. The walls are littered with insets of period art,\n  memorabilia, and summaries of historical significance. As you scroll the displays, the lights fall, all goes silent.',
                     'fumble'     : ['move', 'lobby', 'Carefully FUMBLE your your way back to the lobby'],
-                    'wait'       : ['act', 'WAIT a moment', 'No time restores the lights.', '', '', '', '', '', '', '', ''],
-                    'call'       : ['act', 'CALL out to the staff', 'No response. Perhaps the staff are in the lounge or backrooms.', 'remove', '', '', '', '', '', '', ''],
+                    'wait'       : ['act', 'WAIT a moment', 'No time restores the lights.', '', '', '', '', '', '', '', '', ''],
+                    'call'       : ['act', 'CALL out to the staff', 'No response. Perhaps the staff are in the lounge or backrooms.', 'remove', '', '', '', '', '', '', '', ''],
                   },
   'lounge'       :{
                     'desc'       : 'LOUNGE:\n  You entered the lounge, perhaps just barely soon enough. Guests were already filtering out and into the ballroom beyond.\n  Bright lights, art deco, and a glass gallery for a bar. Nothing stood out so much as the period ash tray with the sign,\n  "No Smoking."  Anachronisms aside, you spot Suse instantly, centered on the bar balancing a cocktail in her hand, a\n  giant plumed red hat on her head, and serpent around the shoulders.\n\n  She spots you and calls out, "Glad you could make it, and we got matching hats. How sweet of you." She rang a little\n  bell on the counter and beckoned you over. Mirri handed off her snake to the staff.\n\n  "Don\'t mind Mr. Rossum, I don\'t even know why I brought him tonight. You however have a purpose. Follow me."',
                     'follow'     : ['move', 'balcony', 'FOLLOW Suse',],
                     'exit'       : ['move', 'lobby', 'EXIT to the lobby'],
-                    'refuse'     : ['act', 'REFUSE and stay behind','"How disappointing," you say, "I came to do some sleuthing, and I will do just that."\n \n  "You\'ll regret this, but must bid you farewell to do my part. Enjoy the snakes, ... I mean snacks," Suse snapped.\n \n  Suse exitted out a side door. Nothing but you and a room full of alcohol.', 'remove', 'remove_action', '', '', '', 'follow', 'follow', ''],
+                    'refuse'     : ['act', 'REFUSE and stay behind','"How disappointing," you say, "I came to do some sleuthing, and I will do just that."\n \n  "You\'ll regret this, but must bid you farewell to do my part. Enjoy the snakes, ... I mean snacks," Suse snapped.\n \n  Suse exitted out a side door. Nothing but you and a room full of alcohol.', 'remove', 'remove_action', '', '', '', 'follow', 'follow', 'purpose', 'friend'],
                     'friend'     : ['act', '"So, your FRIEND there."', '"Darling, ... it\'s called acting the part.," Suse teased, "Rossum is tame, even so python\'s are not venomous."', 'remove', '', '', '', '', '', '', ''],
-                    'late'       : ['act', '"Sorry I am LATE,"', 'Not late. You were supposed to show up later than the rest of us." Suse replied.', 'remove', '', '', '', '', ''],
+                    #'late'       : ['act', '"Sorry I am LATE,"', 'Not late. You were supposed to show up later than the rest of us." Suse replied.', 'remove', '', '', '', '', '', '', ''],
                     'purpose'    : ['act', '"PURPOSE?"', 'Suse grinned. "Because you get to be the mysterious Monty Hall!, and I am your lovely partner in crime.\n Were are going to reenact history tonight."', 'remove', '', '', '', '', '', '', ''],
                     'enter'      : ['act', 'ENTER the ballroom', 'Locked.  What might be going on in there?', 'remove', '', '', '', '', '', ''],
-                    'next'       : ['act', '"What happens NEXT."', '"Ask later, come on." Suse beckoned.', 'remove', '', '', '', '', '', '', ''],
+                    #'next'       : ['act', '"What happens NEXT."', '"Ask later, come on." Suse beckoned.', 'remove', '', '', '', '', '', '', ''],
                     'enjoy'      : ['act', 'ENJOY a drink', 'Maybe you should have savored that one a bit more', 'remove', 'destroy_item', 'cocktail', '', '', '', 'cocktail', ''],
                     'try'        : ['act', 'TRY the fingerfood', 'Whoops. That baguette took a trip to the floor.', 'remove', 'trans_move_item', 'baguette', '', 'happy accident', '', 'baguette', ''],
                     'cocktail'   : ['item', 'cocktail', 'At least you had time to snag a drink. After all, none of this would be here without alcohol.'],
@@ -90,7 +92,11 @@ inventory =       {
                     'lint'       : ['item', 'lint', 'Fluff. Always to be found when you need it.'],
                     'wallet'     : ['item', 'wallet', '- Cards ... check.\n- Cash ... check.\n- Breath mints ... darn.'],
                   }
-transformed_items =  {
+transformed_items_dict =  {
+                    'candle'      : ['item', 'candle', 'Snuffed out, but it still smells good'],
+                    'happy accident' : ['item', 'happy accident', 'We don\'t make mistakes, only happy accidents. Surely the baguette was meant to be free.'],
+                  }
+followon_dialogue =  {
                     'candle'      : ['item', 'candle', 'Snuffed out, but it still smells good'],
                     'happy accident' : ['item', 'happy accident', 'We don\'t make mistakes, only happy accidents. Surely the baguette was meant to be free.'],
                   }
@@ -106,47 +112,65 @@ def TP(test_print):
 def XX(wait):
     input(f"WAITING: {wait}")
  # ======================================== ACTION FUNCTIONS======================================================================
-def remove_action(act_a):
-    if act_a in rooms[current_room]:
+def remove_action(act_a, act_b):
+    if act_a in rooms[current_room] and act_a != '':
        rooms[current_room].pop(act_a)
+    if act_b in rooms[current_room] and act_b != '':
+       rooms[current_room].pop(act_b)
 
-def destroy_item(item_a):
+def destroy_item(item_a, item_b):
     XX('DESTROY ITEM')
-    if item_a in inventory:
+    if item_a in inventory and item_a != '':
         inventory.pop(item_a)
     if item_a in rooms[current_room]:
        rooms[current_room].pop(item_a)
+    if item_b in inventory and item_b != '':
+        inventory.pop(item_b)
+    if item_b in rooms[current_room]:
+       rooms[current_room].pop(item_b)
 
-def move_item(item_a):
+def move_item(item_a, item_b):
     XX('MOVE ITEM')
-    if item_a in inventory:
+    if item_a in inventory and item_a != '':
         I2R = inventory[item_a]
         rooms[current_room][item_a] = [I2R[0], I2R[1], I2R[2]]
         inventory.pop(item_a)
-    if item_a in rooms[current_room]:
+    if item_a in rooms[current_room] and item_a != '':
         R2I = inventory[item_a]
         inventory[item_a] = [R2I[0], R2I[1], R2I[2]]
         rooms[current_room].pop(item_a)
+    if item_b in inventory and item_b != '':
+        I2R = inventory[item_b]
+        rooms[current_room][item_b] = [I2R[0], I2R[1], I2R[2]]
+        inventory.pop(item_b)
+    if item_b in rooms[current_room] and item_b != '':
+        R2I = inventory[item_b]
+        inventory[item_b] = [R2I[0], R2I[1], R2I[2]]
+        rooms[current_room].pop(item_b)
 
-def trans_item(item_a):
+def trans_item(item_a, item_b):
     XX('TRANSFORM ITEM')
-    TRAN = transformed_items[item_a]
-    if item_a in inventory:
+    TRAN = transformed_items_dict[item_b]
+    if item_a in inventory and item_a != '':
         inventory.pop(item_a)
-        inventory[item_a] = [TRAN[0], TRAN[1], TRAN[2]]
-    if item_a in rooms[current_room]:
+        inventory[item_b] = [TRAN[0], TRAN[1], TRAN[2]]
+        transformed_items_dict.pop(item_b)
+    if item_a in rooms[current_room] and item_a != '':
         rooms[current_room].pop(item_a)
-        rooms[current_room][item_a] = [TRAN[0], TRAN[1], TRAN[2]]
+        rooms[current_room][item_b] = [TRAN[0], TRAN[1], TRAN[2]]
+        transformed_items_dict.pop(item_b)
 
 def trans_move_item(item_a, item_b):
     XX('TRANSFORM AND MOVE ITEM')
-    TRAN = transformed_items[item_a]
-    if item_a in inventory:
+    TRAN = transformed_items_dict[item_a]
+    if item_a in inventory and item_a != '':
         inventory.pop(item_a)
         rooms[current_room][item_b] = [TRAN[0], TRAN[1], TRAN[2]]
-    if item_a in rooms[current_room]:
+        transformed_items_dict.pop(item_b)
+    if item_a in rooms[current_room] and item_a != '':
         rooms[current_room].pop(item_a)
         inventory[item_b] = [TRAN[0], TRAN[1], TRAN[2]]
+        transformed_items_dict.pop(item_b)
 
 # ======================================== STATUS SCREEN ========================================================================
 def status():  
@@ -242,6 +266,7 @@ def main():
                 break
 
             elif choice in rooms[current_room] and rooms[current_room][choice][0] == "act":                     # PERFORM ACTIONS
+                XX('ACT VARIABLES')
                 act_text = rooms[current_room][choice][2]
                 act_remove = rooms[current_room][choice][3]
                 act_func = rooms[current_room][choice][4]
@@ -251,6 +276,9 @@ def main():
                 act_remove_action = rooms[current_room][choice][8]
                 act_func_p1 = rooms[current_room][choice][9]
                 act_func_p2 = rooms[current_room][choice][10]
+                #return act_func_p1, act_func_p2
+
+                XX('ACTS')
 
                 if act_item_req_inv not in inventory and act_item_req_inv != '':                                # CHECKS FOR REQUIRED ITEMS - INV / ROOM
                         XX('CHECK REQ ITEM')
@@ -260,9 +288,29 @@ def main():
                     print(f"{act_item_req_room.upper()} needs to be in the room first.")
                     continue
 
-                elif rooms[current_room][choice][4] != '':                                                      # ALL ACTIONS RELATING TO ITEMS
+                elif rooms[current_room][choice][4] != '':                                                      # CALLS THE FUNCTION IN THE ACTION LIST
                     XX('CALLING ACTION FUNCTION')
-                    rooms[current_room][choice][4]                                                              # CALLS THE FUNCTION IN THE ACTION LIST
+                    
+                    if act_func == 'remove_action':
+                        XX('CALLING REMOVE ACTION')
+                        remove_action(act_func_p1, act_func_p2)
+
+                    elif act_func == 'destroy_item':
+                        XX('CALLING DESTROY ITEM')
+                        destroy_item(act_func_p1, act_func_p2)
+
+                    elif act_func == 'move_item':
+                        XX('CALLING MOVE')
+                        move_item(act_func_p1, act_func_p2)
+
+                    elif act_func == 'trans_item':
+                        XX('CALLING TRANS')
+                        trans_item(act_func_p1, act_func_p2)
+
+                    elif act_func == 'trans_move_item':
+                        XX('CALLING TRANS MOVE ITEM')
+                        trans_move_item(act_func_p1, act_func_p2)
+                    
                     rooms[current_room].pop(choice)
                     print(f"{act_text}")
                     input("Press enter to continue.\n")
