@@ -35,7 +35,7 @@ rooms = {
                     'wander'     : ['move', 'gallery', 'WANDER right into the gallery'],
                     'suse'       : ['act', '"I am with SUSE. She arrive?"','"So, you\'re her partner. It\'s a fun role. Join her in the lounge before you get replaced. " the receptionist answered.', 'remove', '', '', '', '', '', ''],
                     'return'     : ['act', 'RETURN to the curb', 'Alas! You can see the lights of your ride already disappearing down the driveway.', 'remove', '', '', '', '', '', '',],
-                    'call'       : ['act', 'CALL your friends', 'Better luck shouting ... or just go into the lounge.', 'remove', 'cell phone','', '', '', '', ''],
+                    'call'       : ['act', 'CALL your friends', 'Better luck shouting ... or just go into the lounge.', '', 'cell phone','', '', '', '', ''],
                     'check'      : ['act', 'CHECK your invitation', 'Hmm, where is it? Oh well, better just get moving.', 'remove', '', '', '', '', '', '',],                 
                   },
   'gallery'      :{
@@ -66,7 +66,7 @@ rooms = {
                     'desc'       : 'LOBBY:\n  What happened to the lights and music? The entrance is lit only a by sputtering candle. The darkness closes in.',
                     'delve'      : ['move', 'darkness','DELVE into the darkness'],
                     'go'         : ['move', 'outside', 'GO outside'],
-                    'close'      : ['act', 'CLOSE the door', 'A gust from the entrance blows out the candle. You are plunged into total darkness', 'remove', '', 'lit candle', 'trans_item', 'lit candle', 'candle', ''],
+                    'close'      : ['act', 'CLOSE the door', 'A gust from the entrance blows out the candle. You are plunged into total darkness', 'remove', '', '', 'trans_item', 'lit candle', 'candle', ''],
                     'lit candle' : ['item', 'lit candle', 'Mmmm! Mint and cinnamon.'],
                     'burn'       : ['act', 'BURN your invitation', 'The paper curls, chars, and crumbles to dust.', 'remove', 'invitation', 'lit candle', 'destroy_item',  'invitation', '', ''],
                   },
