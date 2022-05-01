@@ -4,6 +4,7 @@
 # ======================================== IMPORTS ==============================================================================
 import os             # ENABLES FUNCTIONS: os.system("clear")
 import sys            # ENABLES FUNCTIONS: system.exit()
+from sys import platform
 
 # ======================================== DICTIONARIES / LISTS ============================================== * Actions can have any number of assigned functions, but the code indexes/assigns them in groups of 4. Use '' as necessary.
                  #   ___________required for all actions_____________                                                                             _________________________ function_1 _____________________    ____________________ function_2 ________________________  >>>>>
@@ -127,7 +128,7 @@ def WW(wait):
  # ======================================== ACTION FUNCTIONS======================================================================
 
 def transfer(element, source, dest):                                                                               # ELEMENT (act, item),       SOURCE/DEST (rooms, inventory, bank)
-    WW('TRANSFER')
+#    WW('TRANSFER')
     
     if element in inventory and source == 'inventory':
         if dest == 'bank':
@@ -155,11 +156,12 @@ def status():
     '''This function refreshes the screen and prints the current status of the RPG scenario.'''
     global current_room
 
-    try:
+    if sys.platform.startswith('linux'):
         os.system("clear")
-    except:
-        os.system("cls")
-        
+    if sys.platform.startswith('win'):
+        os.system("cls")  
+#    print(f"{platform}")
+
     print('''
 =======================================================================================================================                                    
                             ╔╦╗ ╔═╗ ╔╗╔ ╔╦╗ ╦ ╦    ╦ ╦ ╔═╗ ╦  ╦      ╔╦╗ ╦ ╦ ╦═╗ ╔╦╗ ╔═╗ ╦═╗
