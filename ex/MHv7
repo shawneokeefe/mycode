@@ -105,8 +105,6 @@ transformed_items_dict =  {
                     'happy accident' : ['item', 'happy accident', 'We don\'t make mistakes, only happy accidents. Surely the baguette was meant to be free.'],
                   }
 add_item_dict =  {
-  'test room'    :{
-                    'desc'       : 'TEST ROOM:\n  Welcome to the test room."',
                     'test item 1' : ['', '', ''],
                     'test item 2' : ['', '', ''],
                     'test item 3' : ['', '', ''],
@@ -117,7 +115,6 @@ add_item_dict =  {
                     'test item 8' : ['', '', ''],
                     'test item 9' : ['', '', ''],
                     'test item 10' : ['', '', ''],
-                  },  
                   }
 add_acts_dict =   {
 
@@ -158,9 +155,8 @@ def remove_act(act_a, act_b, act_c):
 def add_item(item_a, item_b, item_c):                                   # ITEM_A (add to inv), ITEM_B (add to room) -- USES ADD_ITEM_DICT
 #    XX('ADD ITEM')
     add_list = [item_a, item_b, item_c]
+    AID = add_item_dict[current_room][element]
     for element in add_list:
-        if element != '':
-            AID = add_item_dict[current_room][element]
         if element == item_a and element != '':
             inventory[element] = [AID[0], AID[1], AID[2]]
             add_item_dict[current_room].pop(element)
